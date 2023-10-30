@@ -12,27 +12,19 @@ const connection = mysql.createConnection({
 });
 connection.connect((err) => err && console.log(err));
 
-/******************
- * WARM UP ROUTES *
- ******************/
 
 // Route 1: GET /author/:type
 const author = async function(req, res) {
-  // TODO (TASK 1): replace the values of name and pennKey with your own
-  const name = 'Yang Fu';
-  const pennKey = 'yangfu';
+  // Show author names
+  const team = 'Team HomePros';
 
   // checks the value of type the request parameters
-  // note that parameters are required and are specified in server.js in the endpoint by a colon (e.g. /author/:type)
-  if (req.params.type === 'name') {
+  if (req.params.type === 'team') {
     // res.send returns data back to the requester via an HTTP response
-    res.send(`Created by ${name}`);
-  } else if (req.params.type === 'pennkey') {
-    // TODO (TASK 2): edit the else if condition to check if the request parameter is 'pennkey' and if so, send back response 'Created by [pennkey]'
-    res.send(`Created by ${pennKey}`);
+    res.send(`Created by ${team}`);
   } else {
     // we can also send back an HTTP status code to indicate an improper request
-    res.status(400).send(`'${req.params.type}' is not a valid author type. Valid types are 'name' and 'pennkey'.`);
+    res.status(400).send(`'${req.params.type}' is not a valid author type. Valid type is 'team'.`);
   }
 }
 
