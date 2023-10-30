@@ -12,8 +12,12 @@ const connection = mysql.createConnection({
 });
 connection.connect((err) => err && console.log(err));
 
+/********************************
+ * Author Information Routes *
+ ********************************/
 
 // Route 1: GET /author/:type
+// Get the author team information
 const author = async function(req, res) {
   // Show author names
   const team = 'Team HomePros';
@@ -28,15 +32,15 @@ const author = async function(req, res) {
   }
 }
 
-// Route 2: GET /random
-const random = async function(req, res) {
-  // you can use a ternary operator to check the value of request query values
-  // which can be particularly useful for setting the default value of queries
-  // note if users do not provide a value for the query it will be undefined, which is falsey
-  const explicit = req.query.explicit === 'true' ? 1 : 0;
+/********************************
+ * Editorial Suggestion Routes *
+ ********************************/
 
-  // Here is a complete example of how to query the database in JavaScript.
-  // Only a small change (unrelated to querying) is required for TASK 3 in this route.
+// Route 2: GET /editorial
+// Show recommendations of a list of cities to live in based on editorial suggestions (based on pre-set filters)
+const random = async function(req, res) {
+ 
+  // query pending updates
   connection.query(`
     SELECT *
     FROM Songs
@@ -65,10 +69,11 @@ const random = async function(req, res) {
 }
 
 /********************************
- * BASIC SONG/ALBUM INFO ROUTES *
+ * Basic City/State Info Routes *
  ********************************/
 
-// Route 3: GET /song/:song_id
+// Route 3: GET /city/:city_id
+// Show housing, crime, tax and other info about the city
 const song = async function(req, res) {
   // TODO (TASK 4): implement a route that given a song_id, returns all information about the song
   // Hint: unlike route 2, you can directly SELECT * and just return data[0]
@@ -88,7 +93,8 @@ const song = async function(req, res) {
   });
 }
 
-// Route 4: GET /album/:album_id
+// Route 4: GET /state/:state_id
+// Show cities in the state based on ???
 const album = async function(req, res) {
   // TODO (TASK 5): implement a route that given a album_id, returns all information about the album
   const album_id = req.params.album_id;
@@ -106,7 +112,8 @@ const album = async function(req, res) {
   })
 }
 
-// Route 5: GET /albums
+// Route 5: GET /states
+// Show all 50 states in a list
 const albums = async function(req, res) {
   // TODO (TASK 6): implement a route that returns all albums ordered by release date (descending)
   // Note that in this case you will need to return multiple albums, so you will need to return an array of objects
@@ -124,7 +131,7 @@ const albums = async function(req, res) {
   })
 }
 
-// Route 6: GET /album_songs/:album_id
+// Route 6: ----
 const album_songs = async function(req, res) {
   // TODO (TASK 7): implement a route that given an album_id, returns all songs on that album ordered by track number (ascending)
   const album_id = req.params.album_id;
@@ -144,7 +151,7 @@ const album_songs = async function(req, res) {
 }
 
 /************************
- * ADVANCED INFO ROUTES *
+ * Search Info Routes *
  ************************/
 
 // Route 7: GET /top_songs
@@ -238,6 +245,7 @@ const top_albums = async function(req, res) {
 }
 
 // Route 9: GET /search_songs
+// search for cities based on condition
 const search_songs = async function(req, res) {
   // TODO (TASK 12): return all songs that match the given search query with parameters defaulted to those specified in API spec ordered by title (ascending)
   // Some default parameters have been provided for you, but you will need to fill in the rest
