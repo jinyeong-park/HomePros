@@ -1,0 +1,9 @@
+{
+  "rds_host": "database-1.cc8druorhp4a.us-east-2.rds.amazonaws.com",
+  "rds_port": "3306",
+  "rds_user": "admin",
+  "rds_password": "UP550sql",
+  "rds_db": "SWIFTIFY",
+  "server_host": "localhost",
+  "server_port": "8080"
+}
