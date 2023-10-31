@@ -38,7 +38,7 @@ const author = async function(req, res) {
 
 // Route 2: GET /editorial
 // Show recommendations of a list of cities to live in based on editorial suggestions (based on pre-set filters)
-const random = async function(req, res) {
+const editorial = async function(req, res) {
  
   // query pending updates
   connection.query(`
@@ -74,11 +74,11 @@ const random = async function(req, res) {
 
 // Route 3: GET /city/:city_id
 // Show housing, crime, tax and other info about the city
-const song = async function(req, res) {
+const city = async function(req, res) {
   // TODO (TASK 4): implement a route that given a song_id, returns all information about the song
   // Hint: unlike route 2, you can directly SELECT * and just return data[0]
   // Most of the code is already written for you, you just need to fill in the query
-  const song_id = req.params.song_id;
+  const city_id = req.params.city_id;
   connection.query(`
     SELECT *
     FROM Songs
@@ -95,9 +95,9 @@ const song = async function(req, res) {
 
 // Route 4: GET /state/:state_id
 // Show cities in the state based on ???
-const album = async function(req, res) {
+const state = async function(req, res) {
   // TODO (TASK 5): implement a route that given a album_id, returns all information about the album
-  const album_id = req.params.album_id;
+  const state_id = req.params.state_id;
   connection.query(`
     SELECT *
     FROM Albums
@@ -112,141 +112,15 @@ const album = async function(req, res) {
   })
 }
 
-// Route 5: GET /states
-// Show all 50 states in a list
-const albums = async function(req, res) {
-  // TODO (TASK 6): implement a route that returns all albums ordered by release date (descending)
-  // Note that in this case you will need to return multiple albums, so you will need to return an array of objects
-  connection.query(`
-    SELECT *
-    FROM Albums
-    ORDER BY release_date DESC
-  `, (err, data) => {
-    if (err || data.length === 0) {
-      console.log(err);
-      res.json([]);
-    } else {
-      res.json(data);
-    }
-  })
-}
-
-// Route 6: ----
-const album_songs = async function(req, res) {
-  // TODO (TASK 7): implement a route that given an album_id, returns all songs on that album ordered by track number (ascending)
-  const album_id = req.params.album_id;
-  connection.query(`
-    SELECT song_id, title, number, duration, plays
-    FROM Songs
-    WHERE album_id = '${album_id}'
-    ORDER BY number
-  `, (err, data) => {
-    if (err || data.length === 0) {
-      console.log(err);
-      res.json([]);
-    } else {
-      res.json(data);
-    }
-  })
-}
 
 /************************
  * Search Info Routes *
  ************************/
 
-// Route 7: GET /top_songs
-const top_songs = async function(req, res) {
-  const page = req.query.page;
-  // TODO (TASK 8): use the ternary (or nullish) operator to set the pageSize based on the query or default to 10
-  const pageSize = req.query.page_size ?? 10;
 
-  if (!page) {
-    // TODO (TASK 9)): query the database and return all songs ordered by number of plays (descending)
-    // Hint: you will need to use a JOIN to get the album title as well
-    connection.query(`
-      SELECT s.song_id, s.title, a.album_id, a.title AS album, s.plays
-      FROM Songs s
-      JOIN Albums a
-      ON s.album_id = a.album_id
-      ORDER BY s.plays DESC
-    `, (err, data) => {
-      if (err || data.length === 0) {
-        console.log(err);
-        res.json([]);
-      } else {
-        res.json(data);
-      }
-    })
-
-  } else {
-    // TODO (TASK 10): reimplement TASK 9 with pagination
-    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
-    connection.query(`
-      SELECT s.song_id, s.title, a.album_id, a.title AS album, s.plays
-      FROM Songs s
-      JOIN Albums a
-      ON s.album_id = a.album_id
-      ORDER BY s.plays DESC
-      LIMIT ${pageSize} OFFSET ${pageSize * (page-1)}
-    `, (err, data) => {
-      if (err || data.length === 0) {
-        console.log(err);
-        res.json([]);
-      } else {
-        res.json(data);
-      }
-    })
-  }
-}
-
-// Route 8: GET /top_albums
-const top_albums = async function(req, res) {
-  // TODO (TASK 11): return the top albums ordered by aggregate number of plays of all songs on the album (descending), with optional pagination (as in route 7)
-  // Hint: you will need to use a JOIN and aggregation to get the total plays of songs in an album
-  const page = req.query.page;
-  const pageSize = req.query.page_size ?? 10;
-
-  if (!page) {
-    connection.query(`
-      SELECT a.album_id, a.title, SUM(s.plays) AS plays
-      FROM Songs s
-      JOIN Albums a
-      ON s.album_id = a.album_id
-      GROUP BY a.album_id, a.title
-      ORDER BY plays DESC
-    `, (err, data) => {
-      if (err || data.length === 0) {
-        console.log(err);
-        res.json([]);
-      } else {
-        res.json(data);
-      }
-    })
-
-  } else {
-    // with pagination
-    connection.query(`
-      SELECT a.album_id, a.title, SUM(s.plays) AS plays
-      FROM Songs s
-      JOIN Albums a
-      ON s.album_id = a.album_id
-      GROUP BY a.album_id, a.title
-      ORDER BY plays DESC
-      LIMIT ${pageSize} OFFSET ${pageSize * (page-1)}
-    `, (err, data) => {
-      if (err || data.length === 0) {
-        console.log(err);
-        res.json([]);
-      } else {
-        res.json(data);
-      }
-    })
-  }
-}
-
-// Route 9: GET /search_songs
+// Route 5: GET /search_cities
 // search for cities based on condition
-const search_songs = async function(req, res) {
+const search_cities = async function(req, res) {
   // TODO (TASK 12): return all songs that match the given search query with parameters defaulted to those specified in API spec ordered by title (ascending)
   // Some default parameters have been provided for you, but you will need to fill in the rest
   const title = req.query.title ?? '';
@@ -285,12 +159,8 @@ const search_songs = async function(req, res) {
 
 module.exports = {
   author,
-  random,
-  song,
-  album,
-  albums,
-  album_songs,
-  top_songs,
-  top_albums,
-  search_songs,
+  editorial,
+  city,
+  state,
+  search_cities,
 }
