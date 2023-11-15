@@ -1,9 +1,9 @@
 {
-  "rds_host": "host address pending update",
+  "rds_host": "homepro-database1.cm0evc9yl91h.us-east-1.rds.amazonaws.com",
   "rds_port": "3306",
-  "rds_user": "admin",
-  "rds_password": "password pending update",
-  "rds_db": "db name pending update",
+  "rds_user": "homepro_admin",
+  "rds_password": "homepro1234",
+  "rds_db": "HomePros",
   "server_host": "localhost",
   "server_port": "8080"
 }
