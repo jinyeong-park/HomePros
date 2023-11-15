@@ -13,57 +13,98 @@ const connection = mysql.createConnection({
 connection.connect((err) => err && console.log(err));
 
 /********************************
- * Author Information Routes *
+ * Top cities Routes *
  ********************************/
 
-// Route 1: GET /author/:type
-// Get the author team information
-const author = async function(req, res) {
-  // Show author names
-  const team = 'Team HomePros';
-
-  // checks the value of type the request parameters
-  if (req.params.type === 'team') {
-    // res.send returns data back to the requester via an HTTP response
-    res.send(`Created by ${team}`);
-  } else {
-    // we can also send back an HTTP status code to indicate an improper request
-    res.status(400).send(`'${req.params.type}' is not a valid author type. Valid type is 'team'.`);
-  }
-}
-
-/********************************
- * Editorial Suggestion Routes *
- ********************************/
-
-// Route 2: GET /editorial
-// Show recommendations of a list of cities to live in based on editorial suggestions (based on pre-set filters)
-const editorial = async function(req, res) {
+// Route 1: GET /top_cities
+const top_cities = async function(req, res) {
  
   // query pending updates
   connection.query(`
-    SELECT *
-    FROM Songs
-    WHERE explicit <= ${explicit}
-    ORDER BY RAND()
-    LIMIT 1
+  WITH Crime2019 AS
+  (
+  SELECT city_id, (violent_crime + property_crime) AS total_crimes
+  FROM Crime
+  WHERE year = 2019
+  )
+  
+  , HomeSales2022 AS
+  (
+  SELECT city_id, AVG(median_sale_price) AS avg_sales_price
+  FROM HomeSales
+  WHERE year = 2022
+  GROUP BY city_id
+  )
+  
+  , Rent2022 AS
+  (
+  SELECT city_id, AVG(rental_price) AS avg_rental_price
+  FROM Rent
+  WHERE year = 2022
+  GROUP BY city_id
+  )
+  
+  SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, t.state_local_tax_burden AS tax_burden
+  FROM City c
+  JOIN Crime2019 cri
+  ON c.city_id = cri.city_id
+  JOIN HomeSales2022 h
+  ON c.city_id = h.city_id
+  JOIN Rent2022 r
+  ON c.city_id = r.city_id
+  JOIN Tax t
+  ON c.state = t.state
+  WHERE c.population > 10000
+  AND cri.total_crimes < 1000
+  AND h.avg_sales_price <= 700000
+  AND r.avg_rental_price <= 2000
+  AND t.state_local_tax_burden < 0.1
+  ORDER BY h.avg_sales_price
+  LIMIT 10
   `, (err, data) => {
     if (err || data.length === 0) {
-      // If there is an error for some reason, or if the query is empty (this should not be possible)
-      // print the error message and return an empty object instead
       console.log(err);
-      // Be cognizant of the fact we return an empty object {}. For future routes, depending on the
-      // return type you may need to return an empty array [] instead.
       res.json({});
     } else {
-      // Here, we return results of the query as an object, keeping only relevant data
-      // being song_id and title which you will add. In this case, there is only one song
-      // so we just directly access the first element of the query results array (data)
-      // TODO (TASK 3): also return the song title in the response
-      res.json({
-        song_id: data[0].song_id,
-        title: data[0].title
-      });
+      res.json(data);
+    }
+  });
+}
+
+
+/********************************
+ * Top_states Routes *
+ ********************************/
+
+// Route 2: GET /top_states
+// Show recommendations of a list of states to live in based on editorial suggestions (based on pre-set filters)
+const top_states = async function(req, res) {
+ 
+  // query pending updates
+  connection.query(`
+    WITH Crime2019 AS
+    (
+    SELECT city_id, (violent_crime + property_crime) AS total_crimes
+    FROM Crime
+    WHERE year = 2019
+    )
+    
+    SELECT c.state, t.state_local_tax_burden, SUM(cri.total_crimes) AS total_crimes,
+    (0.5 * ((SUM(cri.total_crimes) - AVG(SUM(cri.total_crimes)) OVER()) / STDDEV( SUM(cri.total_crimes)) OVER())) + (0.5 * ((SUM(t.state_local_tax_burden) - AVG(SUM(t.state_local_tax_burden)) OVER()) / STDDEV( SUM(t.state_local_tax_burden)) OVER())) AS index_score
+    FROM City c
+    JOIN Crime2019 cri
+    ON c.city_id = cri.city_id
+    JOIN Tax t
+    ON c.state = t.state
+    GROUP BY c.state, t.state_local_tax_burden
+    ORDER BY index_score
+    LIMIT 5
+  `, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
     }
   });
 }
@@ -158,8 +199,8 @@ const search_cities = async function(req, res) {
 }
 
 module.exports = {
-  author,
-  editorial,
+  top_cities,
+  top_states,
   city,
   state,
   search_cities,
