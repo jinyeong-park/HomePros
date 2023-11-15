@@ -3,7 +3,7 @@
   "rds_port": "3306",
   "rds_user": "homepro_admin",
   "rds_password": "homepro1234",
-  "rds_db": "HomePros",
+  "rds_db": "Homepros",
   "server_host": "localhost",
   "server_port": "8080"
 }
