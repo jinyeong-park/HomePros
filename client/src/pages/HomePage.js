@@ -6,22 +6,22 @@ import LazyTable from '../components/LazyTable';
 const config = require('../config.json');
 
 export default function HomePage() {
-  const [topCities, setTopCities] = useState({});
+  // const [topCities, setTopCities] = useState({});
   
-  const [topStates, setTopStates] = useState({});
+  // const [topStates, setTopStates] = useState({});
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    fetch(`http://${config.server_host}:${config.server_port}/top_cities`)
-      .then(res => res.json())
-      .then(resJson => setTopCities(resJson));
+  //   fetch(`http://${config.server_host}:${config.server_port}/top_cities`)
+  //     .then(res => res.json())
+  //     .then(resJson => setTopCities(resJson));
     
-    fetch(`http://${config.server_host}:${config.server_port}/top_states`)
-      .then(res => res.json())
-      .then(resJson => setTopStates(resJson));
+  //   fetch(`http://${config.server_host}:${config.server_port}/top_states`)
+  //     .then(res => res.json())
+  //     .then(resJson => setTopStates(resJson));
 
-  }, []);
+  // }, []);
 
   const cityColumns = [
     {
