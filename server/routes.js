@@ -82,77 +82,23 @@ const top_cities = async function (req, res) {
 const top_states = async function (req, res) {
   connection.query(
     `
-=======
- * Top cities Routes *
- ********************************/
-
-// Route 1: GET /top_cities
-const top_cities = async function(req, res) {
- 
-  // query pending updates
-  connection.query(`
-  WITH Crime2019 AS
-  (
-  SELECT city_id, (violent_crime + property_crime) AS total_crimes
-  FROM Crime
-  WHERE year = 2019
-  )
-  
-  , HomeSales2022 AS
-  (
-  SELECT city_id, AVG(median_sale_price) AS avg_sales_price
-  FROM HomeSales
-  WHERE year = 2022
-  GROUP BY city_id
-  )
-  
-  , Rent2022 AS
-  (
-  SELECT city_id, AVG(rental_price) AS avg_rental_price
-  FROM Rent
-  WHERE year = 2022
-  GROUP BY city_id
-  )
-  
-  SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, t.state_local_tax_burden AS tax_burden
-  FROM City c
-  JOIN Crime2019 cri
-  ON c.city_id = cri.city_id
-  JOIN HomeSales2022 h
-  ON c.city_id = h.city_id
-  JOIN Rent2022 r
-  ON c.city_id = r.city_id
-  JOIN Tax t
-  ON c.state = t.state
-  WHERE c.population > 10000
-  AND cri.total_crimes < 1000
-  AND h.avg_sales_price <= 700000
-  AND r.avg_rental_price <= 2000
-  AND t.state_local_tax_burden < 0.1
-  ORDER BY h.avg_sales_price
-  LIMIT 10
-  `, (err, data) => {
-    if (err || data.length === 0) {
-      console.log(err);
-      res.json({});
-    } else {
-      res.json(data);
-    }
-  });
-}
-
-
-/********************************
- * Top_states Routes *
- ********************************/
-
-// Route 2: GET /top_states
-// Show recommendations of a list of states to live in based on editorial suggestions (based on pre-set filters)
-const top_states = async function(req, res) {
- 
-  // query pending updates
-  connection.query(`
-
+    WITH Crime2019 AS
+    (
+    SELECT city_id, (violent_crime + property_crime) AS total_crimes
+    FROM Crime
+    WHERE year = 2019
+    )
+    
+    SELECT c.state, t.state_local_tax_burden, SUM(cri.total_crimes) AS total_crimes,
+    (0.5 * ((SUM(cri.total_crimes) - AVG(SUM(cri.total_crimes)) OVER()) / STDDEV( SUM(cri.total_crimes)) OVER())) + (0.5 * ((SUM(t.state_local_tax_burden) - AVG(SUM(t.state_local_tax_burden)) OVER()) / STDDEV( SUM(t.state_local_tax_burden)) OVER())) AS index_score
+    FROM City c
+    JOIN Crime2019 cri
+    ON c.city_id = cri.city_id
+    JOIN Tax t
+    ON c.state = t.state
+    GROUP BY c.state, t.state_local_tax_burden
+    ORDER BY index_score
+    LIMIT 5
     
   `,
     (err, data) => {
