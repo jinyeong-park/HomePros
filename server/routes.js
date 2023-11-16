@@ -260,7 +260,6 @@ const top_housingmarket = async function (req, res) {
 // // Route 7: GET /monthly_house_prices
 // //  Show housing prices and market trends by month from a specific city from all available data.
 const monthly_house_prices = async function (req, res) {
-  // TODO (TASK 5): implement a route that given a album_id, returns all information about the album
   const city = req.query.city;
   const state = req.query.state;
   console.log(state);
