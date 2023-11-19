@@ -25,47 +25,60 @@ const top_cities = async function (req, res) {
 
   // Calculate the offset
   const offset = (page - 1) * pageSize;
+  // Optimize query to put the where conditions before join
   connection.query(
     `WITH Crime2019 AS
-  (
-  SELECT city_id, (violent_crime + property_crime) AS total_crimes
-  FROM Crime
-  WHERE year = 2019
-  )
-  
-  , HomeSales2022 AS
-  (
-  SELECT city_id, AVG(median_sale_price) AS avg_sales_price
-  FROM HomeSales
-  WHERE year = 2022
-  GROUP BY city_id
-  )
-  
-  , Rent2022 AS
-  (
-  SELECT city_id, AVG(rental_price) AS avg_rental_price
-  FROM Rent
-  WHERE year = 2022
-  GROUP BY city_id
-  )
-  
-  SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, t.state_local_tax_burden AS tax_burden
-  FROM City c
-  JOIN Crime2019 cri
-  ON c.city_id = cri.city_id
-  JOIN HomeSales2022 h
-  ON c.city_id = h.city_id
-  JOIN Rent2022 r
-  ON c.city_id = r.city_id
-  JOIN Tax t
-  ON c.state = t.state
-  WHERE c.population > 10000
-  AND cri.total_crimes < 1000
-  AND h.avg_sales_price <= 700000
-  AND r.avg_rental_price <= 2000
-  AND t.state_local_tax_burden < 0.1
-  ORDER BY h.avg_sales_price
-  LIMIT ${pageSize} OFFSET ${offset}`,
+    (
+    SELECT city_id, (violent_crime + property_crime) AS total_crimes
+    FROM Crime
+    WHERE year = 2019
+    AND violent_crime >= 0 AND property_crime >= 0 AND violent_crime + property_crime < 1000
+    )
+
+    , HomeSales2022 AS
+    (
+    SELECT city_id, AVG(median_sale_price) AS avg_sales_price
+    FROM HomeSales
+    WHERE year = 2022
+    GROUP BY city_id
+    HAVING AVG(median_sale_price) BETWEEN 1 AND 700000
+    )
+
+    , Rent2022 AS
+    (
+    SELECT city_id, AVG(rental_price) AS avg_rental_price
+    FROM Rent
+    WHERE year = 2022
+    GROUP BY city_id
+    HAVING AVG(rental_price) BETWEEN 1 AND 2000
+    )
+
+    , Tax AS
+    (
+    SELECT state, state_local_tax_burden AS tax_burden
+    FROM Tax
+    WHERE state_local_tax_burden BETWEEN 0 AND 0.1
+    )
+
+    , City_Pop AS
+    (
+    SELECT city_id, city, county, state, population
+    FROM City
+    WHERE population > 10000
+     )
+
+    SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, r.avg_rental_price, t.tax_burden
+    FROM Tax t
+    JOIN City_Pop c
+    ON c.state = t.state
+    JOIN Crime2019 cri
+    ON c.city_id = cri.city_id
+    JOIN HomeSales2022 h
+    ON c.city_id = h.city_id
+    JOIN Rent2022 r
+    ON c.city_id = r.city_id
+    ORDER BY h.avg_sales_price
+    LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -80,6 +93,13 @@ const top_cities = async function (req, res) {
 // // Route 2: GET /top_states
 // //  retrieves states information for the top five states to live with overall good safety and tax burden, rank from total crimes and tax burden from lowest to highest based on fixed selection criteria.
 const top_states = async function (req, res) {
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 5;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
   connection.query(
     `
     WITH Crime2019 AS
@@ -87,6 +107,7 @@ const top_states = async function (req, res) {
     SELECT city_id, (violent_crime + property_crime) AS total_crimes
     FROM Crime
     WHERE year = 2019
+    AND violent_crime >= 0 AND property_crime >= 0
     )
     
     SELECT c.state, t.state_local_tax_burden, SUM(cri.total_crimes) AS total_crimes,
@@ -98,9 +119,7 @@ const top_states = async function (req, res) {
     ON c.state = t.state
     GROUP BY c.state, t.state_local_tax_burden
     ORDER BY index_score
-    LIMIT 5
-    
-  `,
+    LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -115,7 +134,7 @@ const top_states = async function (req, res) {
 // // Route 3: GET /expensive_cities
 // //  returns 10 most expensive cities to live in by housing price, show cities rank from highest price to lowest price. Based on latest available year data
 const expensive_cities = async function (req, res) {
-  // TODO (TASK 5): implement a route that given a album_id, returns all information about the album
+
   // const state_id = req.params.state_id;
   connection.query(
     `
@@ -306,49 +325,68 @@ const search_cities = async function (req, res) {
   const state_local_tax_burden_high =
     req.query.state_local_tax_burden_high ?? 1.0;
 
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+  
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+  // Optimize query to put the where conditions before join
+
   connection.query(
-    `
-    WITH Crime2019 AS
+    `WITH Crime2019 AS
     (
     SELECT city_id, (violent_crime + property_crime) AS total_crimes
     FROM Crime
     WHERE year = 2019
+    AND violent_crime >= 0 AND property_crime >= 0 
+    AND (violent_crime + property_crime) BETWEEN ${total_crimes_low} AND ${total_crimes_high}
     )
-    
+
     , HomeSales2022 AS
     (
     SELECT city_id, AVG(median_sale_price) AS avg_sales_price
     FROM HomeSales
     WHERE year = 2022
     GROUP BY city_id
+    HAVING AVG(median_sale_price) BETWEEN ${avg_sales_price_low} AND ${avg_sales_price_high}
     )
-    
+
     , Rent2022 AS
     (
     SELECT city_id, AVG(rental_price) AS avg_rental_price
     FROM Rent
     WHERE year = 2022
     GROUP BY city_id
+    HAVING AVG(rental_price) BETWEEN ${avg_rental_price_low} AND ${avg_rental_price_high}
     )
-    
-    SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, r.avg_rental_price, t.state_local_tax_burden AS tax_burden
-    FROM City c
+
+    , Tax AS
+    (
+    SELECT state, state_local_tax_burden AS tax_burden
+    FROM Tax
+    WHERE state_local_tax_burden BETWEEN ${state_local_tax_burden_low} AND ${state_local_tax_burden_high}
+    )
+
+    , City_Pop AS
+    (
+    SELECT city_id, city, county, state, population
+    FROM City
+    WHERE population BETWEEN ${population_low} AND ${population_high}
+     )
+
+    SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, r.avg_rental_price, t.tax_burden
+    FROM Tax t
+    JOIN City_Pop c
+    ON c.state = t.state
     JOIN Crime2019 cri
     ON c.city_id = cri.city_id
     JOIN HomeSales2022 h
     ON c.city_id = h.city_id
     JOIN Rent2022 r
     ON c.city_id = r.city_id
-    JOIN Tax t
-    ON c.state = t.state
-    WHERE c.population BETWEEN ${population_low} AND ${population_high}
-    AND cri.total_crimes BETWEEN ${total_crimes_low} AND ${total_crimes_high}
-    AND h.avg_sales_price BETWEEN ${avg_sales_price_low} AND ${avg_sales_price_high}
-    AND r.avg_rental_price BETWEEN ${avg_rental_price_low} AND ${avg_rental_price_high}
-    AND t.state_local_tax_burden BETWEEN ${state_local_tax_burden_low} AND ${state_local_tax_burden_high}
     ORDER BY h.avg_sales_price
-    LIMIT 10
-  `,
+    LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
