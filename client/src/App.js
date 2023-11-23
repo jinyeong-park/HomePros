@@ -14,8 +14,15 @@ import "./App.css";
 // in this case, we only change the color scheme
 export const theme = createTheme({
   palette: {
-    primary: indigo,
-    secondary: amber,
+    primary: {
+      main: '#1a1a1a', // Black
+    },
+    secondary: {
+      main: '#f5f5f5', // Light Grey
+    },
+    background: {
+      default: '#ffffff', // White
+    },
   },
 });
 

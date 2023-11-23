@@ -36,6 +36,8 @@ export default function NavBar() {
           <NavText href='/' text='HomePros' isMain />
           <NavText href='/cities' text='Cities' />
           <NavText href='/states' text='States' />
+          <NavText href='/compare' text='Compare' />
+          <NavText href='/advancedsearch' text='Advanced Search' />
         </Toolbar>
       </Container>
     </AppBar>
