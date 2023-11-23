@@ -30,20 +30,18 @@ const fetchSuggestions = throttle(
 function App() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  // const [cityInputValue, setCityInputValue] = useState("");
+
   const [cityOptions, setCityOptions] = useState([]);
   const [stateOptions, setStateOptions] = useState([]);
 
   const handleCityInputChange = (event, newInputValue, reason) => {
     if (reason === "input") {
-      // setCityInputValue(newInputValue);
       setCity(newInputValue);
       fetchSuggestions(newInputValue, "city", setCityOptions);
     }
     if (reason === "clear") {
       setCity(""); // Reset city
       setState(""); // Reset state
-      // setCityInputValue("");
     }
   };
   // This function will be triggered when a suggestion is selected
@@ -76,7 +74,7 @@ function App() {
   const handleSubmit = async () => {
     // Check if city is filled, then state must also be filled
     if (!state) {
-      alert("State is required"); // Replace with a more user-friendly message or UI element
+      alert("State is required");
       return;
     }
 
@@ -119,9 +117,6 @@ function App() {
         <Autocomplete
           freeSolo
           inputValue={city}
-          // onInputChange={(event, newInputValue) => {
-          //   fetchSuggestions(newInputValue, "city", setCityOptions);
-          // }}
           onInputChange={handleCityInputChange}
           getOptionLabel={(option) =>
             option.city ? `${option.city}, ${option.state}` : ""

@@ -5,7 +5,7 @@ import { createTheme } from "@mui/material/styles";
 
 import NavBar from "./components/NavBar";
 import HomePage from "./pages/HomePage";
-import "./App.css";
+
 // import AlbumsPage from './pages/AlbumsPage';
 // import SongsPage from './pages/SongsPage';
 // import AlbumInfoPage from './pages/AlbumInfoPage'
@@ -15,13 +15,13 @@ import "./App.css";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#1a1a1a', // Black
+      main: "#1a1a1a", // Black
     },
     secondary: {
-      main: '#f5f5f5', // Light Grey
+      main: "#f5f5f5", // Light Grey
     },
     background: {
-      default: '#ffffff', // White
+      default: "#ffffff", // White
     },
   },
 });
