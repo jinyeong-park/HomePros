@@ -21,6 +21,7 @@ app.get("/city", routes.city);
 app.get("/top_housingmarket", routes.top_housingmarket);
 app.get("/monthly_house_prices", routes.monthly_house_prices);
 app.get("/search_cities", routes.search_cities);
+app.get("/search", routes.search);
 
 app.listen(config.server_port, () => {
   console.log(

@@ -179,7 +179,7 @@ const safest_cities = async function (req, res) {
 const city = async function (req, res) {
   const city = req.query.city;
   const state = req.query.state;
-  console.log(state);
+
   if (!city || !state) {
     return res.status(400).send("City and state are required");
   }
@@ -360,6 +360,43 @@ const search_cities = async function (req, res) {
   );
 };
 
+// Route 9: GET /search?city=VALUE&state=VALUE
+// Description: Landing page, search autocomplete helper
+const search = async function (req, res) {
+  const searchType = req.query.searchType;
+  const searchTerm = req.query.searchTerm;
+  // // Add a wildcard to the search term for a LIKE query
+  // if (city != "") {
+  //   const query =
+  //     "SELECT distinct city, state FROM City WHERE city LIKE `${city}%` LIMIT 10";
+  // } else {
+  //   const query = "SELECT state FROM Tax WHERE City LIKE `${state}%` LIMIT 10";
+  // }
+
+  // const searchTerm = req.query.term;
+  // const searchType = req.query.type; // 'city' or 'state'
+
+  let query;
+  if (searchType === "city") {
+    // Fetch distinct city and state pairs
+    query = "SELECT DISTINCT city, state FROM City WHERE city LIKE ? LIMIT 10";
+  } else if (searchType === "state") {
+    // Fetch distinct state names
+    query = "SELECT DISTINCT state FROM Tax WHERE state LIKE ? LIMIT 10";
+  } else {
+    res.status(400).send("Invalid search type");
+    return;
+  }
+  connection.query(query, [`${searchTerm}%`], (err, results) => {
+    if (err) {
+      // Handle error appropriately
+      res.status(500).send("Error querying the database");
+      return;
+    }
+    res.json(results);
+  });
+};
+
 module.exports = {
   top_cities,
   top_states,
@@ -369,4 +406,5 @@ module.exports = {
   top_housingmarket,
   monthly_house_prices,
   search_cities,
+  search,
 };
