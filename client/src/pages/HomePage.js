@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container, Divider, Link } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import CityPage from './CityPage';
 
 import LazyTable from '../components/LazyTable';
 const config = require('../config.json');
@@ -79,14 +80,19 @@ export default function HomePage() {
       
       <h2>Top cities and states:&nbsp;
       </h2>
+      {/* <Divider />
+      <div>City Page</div>
+      <LazyTable route={`http://${config.server_host}:${config.server_port}/monthly_house_prices?city=Pheonix&state=Arizona`} columns={cityColumns} />
+      <Divider /> */}
+      <CityPage />
       <Divider />
-      <h2>Top Cities</h2>
+      {/* <h2>Top Cities</h2>
       <LazyTable route={`http://${config.server_host}:${config.server_port}/top_cities`} columns={cityColumns} />
-      <Divider />
-      <h2>Top States</h2>
+      <Divider /> */}
+      {/* <h2>Top States</h2>
       <LazyTable route={`http://${config.server_host}:${config.server_port}/top_states`} columns={stateColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]} />
-      <Divider />
-      {/* TODO (TASK 17): add a paragraph (<p>text</p>) that displays the value of your author state variable from TASK 13 */}
+      <Divider /> */}
     </Container>
   );
 };
+
