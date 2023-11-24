@@ -13,59 +13,43 @@ const connection = mysql.createConnection({
 connection.connect((err) => err && console.log(err));
 
 /********************************
- * Basic City/State Info Routes *
+ * City Rankings Routes *
  ********************************/
 
+// City ranking ways include ranking by index score, home sales price, crime rate, rental price, tax burden, and alphabetically
+
 // Route 1: GET /top_cities
-// Show housing, crime, tax and other info about the city
+// Returns top cities ranking by our calculated index score, based on multiple areas with housing price, rent price, crime,
+// population, and tax combined.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
 const top_cities = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the top cities in the input state
+  const state = req.query.state ?? "";
+  // If no city input, then default to include all cities. If there is input, then show the input city
+  const city = req.query.city ?? "";
+
   // Read the page and page_size query parameters with default values
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.page_size) || 10;
 
   // Calculate the offset
   const offset = (page - 1) * pageSize;
+
   connection.query(
-    `WITH Crime2019 AS
-  (
-  SELECT city_id, (violent_crime + property_crime) AS total_crimes
-  FROM Crime
-  WHERE year = 2019
-  )
-  
-  , HomeSales2022 AS
-  (
-  SELECT city_id, AVG(median_sale_price) AS avg_sales_price
-  FROM HomeSales
-  WHERE year = 2022
-  GROUP BY city_id
-  )
-  
-  , Rent2022 AS
-  (
-  SELECT city_id, AVG(rental_price) AS avg_rental_price
-  FROM Rent
-  WHERE year = 2022
-  GROUP BY city_id
-  )
-  
-  SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, t.state_local_tax_burden AS tax_burden
-  FROM City c
-  JOIN Crime2019 cri
-  ON c.city_id = cri.city_id
-  JOIN HomeSales2022 h
-  ON c.city_id = h.city_id
-  JOIN Rent2022 r
-  ON c.city_id = r.city_id
-  JOIN Tax t
-  ON c.state = t.state
-  WHERE c.population > 10000
-  AND cri.total_crimes < 1000
-  AND h.avg_sales_price <= 700000
-  AND r.avg_rental_price <= 2000
-  AND t.state_local_tax_burden < 0.1
-  ORDER BY h.avg_sales_price
-  LIMIT ${pageSize} OFFSET ${offset}`,
+    `WITH CityState AS
+    (
+    SELECT city_id, city, county, state
+    FROM City
+    WHERE state LIKE '%${state}%'
+    AND city LIKE '%${city}%'
+    )
+    
+    SELECT c.city, c.county, c.state, i.index_score
+    FROM CityState c
+    JOIN CityIndexScore i
+    ON c.city_id = i.city_id
+    ORDER BY index_score
+    LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -77,30 +61,330 @@ const top_cities = async function (req, res) {
   );
 };
 
-// // Route 2: GET /top_states
-// //  retrieves states information for the top five states to live with overall good safety and tax burden, rank from total crimes and tax burden from lowest to highest based on fixed selection criteria.
-const top_states = async function (req, res) {
+// Route 2: GET /salesrank_cities
+// Returns cities ranked by 2022 average home sales price, from cheapest to most expensive.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+const salesrank_cities = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the top cities in the input state
+  const state = req.query.state ?? "";
+  // If no city input, then default to include all cities. If there is input, then show the input city
+  const city = req.query.city ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
   connection.query(
-    `
-    WITH Crime2019 AS
+    `WITH HomeSales2022 AS
+    (
+    SELECT city_id, avg_sales_price
+    FROM HomeSummary2022
+    WHERE avg_sales_price >= 0
+    )
+    
+    , CityState AS
+    (
+    SELECT city_id, city, county, state
+    FROM City
+    WHERE state LIKE '%${state}%'
+    AND city LIKE '%${city}%'
+    )
+    
+    SELECT c.city, c.county, c.state, h.avg_sales_price
+    FROM CityState c
+    JOIN HomeSales2022 h
+    ON c.city_id = h.city_id
+    ORDER BY h.avg_sales_price
+    LIMIT ${pageSize} OFFSET ${offset}`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+// Route 3: GET /safest_cities
+// Returns safest cities to live in from lowest crime rate to highest crime rate.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+const safest_cities = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the top cities in the input state
+  const state = req.query.state ?? "";
+  // If no city input, then default to include all cities. If there is input, then show the input city
+  const city = req.query.city ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
+  connection.query(
+    `WITH Crime2019 AS
+    (
+    SELECT city_id, (violent_crime + property_crime) AS total_crimes
+    FROM Crime
+    WHERE year = 2019 AND violent_crime >= 0 AND property_crime >= 0
+    )
+    
+    , CityState AS
+    (
+    SELECT city_id, city, county, state, population
+    FROM City
+    WHERE state LIKE '%${state}%'
+    AND city LIKE '%${city}%'
+    AND population >= 1
+    )
+    
+    SELECT c.city, c.county, c.state, cri.total_crimes / c.population * 100000 AS crime_rate
+    FROM CityState c
+    JOIN Crime2019 cri
+    ON c.city_id = cri.city_id
+    ORDER BY crime_rate
+    LIMIT ${pageSize} OFFSET ${offset}`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+// Route 4: GET /rentrank_cities
+// Returns cities ranked by 2022 average rental price, from cheapest to most expensive.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+const rentrank_cities = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the top cities in the input state
+  const state = req.query.state ?? "";
+  // If no city input, then default to include all cities. If there is input, then show the input city
+  const city = req.query.city ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
+  connection.query(
+    `WITH Rent2022 AS
+    (
+    SELECT city_id, avg_rental_price
+    FROM RentSummary2022
+    WHERE avg_rental_price >= 0
+    )
+
+    , CityState AS
+    (
+    SELECT city_id, city, county, state
+    FROM City
+    WHERE state LIKE '%${state}%'
+    AND city LIKE '%${city}%'
+    )
+
+    SELECT c.city, c.county, c.state, r.avg_rental_price
+    FROM CityState c
+    JOIN Rent2022 r
+    ON c.city_id = r.city_id
+    ORDER BY r.avg_rental_price
+    LIMIT ${pageSize} OFFSET ${offset}`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+// Route 5: GET /taxrank_cities
+// Returns cities ranked by state local tax burden, from lowest tax to highest.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+const taxrank_cities = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the top cities in the input state
+  const state = req.query.state ?? "";
+  // If no city input, then default to include all cities. If there is input, then show the input city
+  const city = req.query.city ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
+  connection.query(
+    `WITH TaxBurden AS
+    (
+    SELECT state, state_local_tax_burden AS tax_burden
+    FROM Tax
+    WHERE state_local_tax_burden >= 0
+    )
+
+    , CityState AS
+    (
+    SELECT city_id, city, county, state
+    FROM City
+    WHERE state LIKE '%${state}%'
+    AND city LIKE '%${city}%'
+    )
+
+    SELECT c.city, c.county, c.state, t.tax_burden
+    FROM TaxBurden t
+    JOIN CityState c
+    ON t.state = c.state
+    ORDER BY t.tax_burden
+    LIMIT ${pageSize} OFFSET ${offset}`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+// Route 6: GET /namerank_cities
+// Returns cities ranked by name alphabetically, from A to Z
+// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+const namerank_cities = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the top cities in the input state
+  const state = req.query.state ?? "";
+  // If no city input, then default to include all cities. If there is input, then show the input city
+  const city = req.query.city ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
+  connection.query(
+    `SELECT city, county, state
+    FROM City
+    WHERE state LIKE '%${state}%'
+    AND city LIKE '%${city}%'
+    ORDER BY city, county, state    
+    LIMIT ${pageSize} OFFSET ${offset}`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+// Route 7: GET /homesold_cities
+// Returns information on the most popular housing city market by how many houses were sold in the last year, from highest to lowest
+// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+const homesold_cities = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the top cities in the input state
+  const state = req.query.state ?? "";
+  // If no city input, then default to include all cities. If there is input, then show the input city
+  const city = req.query.city ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
+  connection.query(
+    `WITH HomeSalesCount AS
+    (
+    SELECT city_id, homes_sold
+    FROM HomeSummary2022
+    WHERE homes_sold >= 0
+    )
+
+    , CityState AS
+    (
+    SELECT city_id, city, county, state
+    FROM City
+    WHERE state LIKE '%${state}%'
+    AND city LIKE '%${city}%'
+    )
+    
+    SELECT c.city, c.county, c.state, h.homes_sold
+    FROM CityState c
+    JOIN HomeSalesCount h
+    ON c.city_id = h.city_id
+    ORDER BY h.homes_sold DESC
+    LIMIT ${pageSize} OFFSET ${offset}`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+/********************************
+ * State Rankings Routes *
+ ********************************/
+
+// State ranking ways include ranking by index score, total crimes, tax burden, and alphabetically
+
+// Route 8: GET /top_states
+// Returns top states ranking by our calculated index score, based on crime and tax burden combined.
+// Note: No state filter with index score calculation
+const top_states = async function (req, res) {
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
+  connection.query(
+    `WITH Crime2019 AS
     (
     SELECT city_id, (violent_crime + property_crime) AS total_crimes
     FROM Crime
     WHERE year = 2019
+    AND violent_crime >= 0 AND property_crime >= 0
     )
     
-    SELECT c.state, t.state_local_tax_burden, SUM(cri.total_crimes) AS total_crimes,
-    (0.5 * ((SUM(cri.total_crimes) - AVG(SUM(cri.total_crimes)) OVER()) / STDDEV( SUM(cri.total_crimes)) OVER())) + (0.5 * ((SUM(t.state_local_tax_burden) - AVG(SUM(t.state_local_tax_burden)) OVER()) / STDDEV( SUM(t.state_local_tax_burden)) OVER())) AS index_score
-    FROM City c
+    , TaxBurden AS
+    (
+    SELECT state, state_local_tax_burden AS tax_burden
+    FROM Tax
+    WHERE state_local_tax_burden >= 0
+    )
+    
+    , CityState AS
+    (SELECT city_id, state
+    FROM City
+    )
+    
+    SELECT c.state, t.tax_burden, SUM(cri.total_crimes) AS total_crimes,
+           (0.5 * ((SUM(cri.total_crimes) - AVG(SUM(cri.total_crimes)) OVER ()) / STDDEV(SUM(cri.total_crimes)) OVER ())) +
+           (0.5 * ((SUM(t.tax_burden) - AVG(SUM(t.tax_burden)) OVER ()) /
+                   STDDEV(SUM(t.tax_burden)) OVER ())) AS index_score
+    FROM TaxBurden t
+    JOIN CityState c
+    ON t.state = c.state
     JOIN Crime2019 cri
     ON c.city_id = cri.city_id
-    JOIN Tax t
-    ON c.state = t.state
-    GROUP BY c.state, t.state_local_tax_burden
+    GROUP BY t.state, t.tax_burden
     ORDER BY index_score
-    LIMIT 5
-    
-  `,
+    LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -112,28 +396,25 @@ const top_states = async function (req, res) {
   );
 };
 
-// // Route 3: GET /expensive_cities
-// //  returns 10 most expensive cities to live in by housing price, show cities rank from highest price to lowest price. Based on latest available year data
-const expensive_cities = async function (req, res) {
-  // TODO (TASK 5): implement a route that given a album_id, returns all information about the album
-  // const state_id = req.params.state_id;
-  connection.query(
-    `
-    WITH HomeSales2022 AS
-(
-SELECT city_id, AVG(median_sale_price) AS avg_sales_price
-FROM HomeSales
-WHERE year = 2022
-GROUP BY city_id
-)
+// Route 9: GET /taxrank_states
+// Returns top states ranking by state local state burden, from lowest to highest
+// Default to show rankings across all states, and can input state to limit only ranking in one state.
+const taxrank_states = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the input state
+  const state = req.query.state ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
 
-SELECT c.city, c.county, c.state, h.avg_sales_price
-FROM City c
-JOIN HomeSales2022 h
-ON c.city_id = h.city_id
-ORDER BY h.avg_sales_price DESC
-LIMIT 10  
-  `,
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
+  connection.query(
+    `SELECT state, state_local_tax_burden AS tax_burden
+    FROM Tax
+    WHERE state LIKE '%${state}%'
+    ORDER BY state_local_tax_burden
+    LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -145,25 +426,41 @@ LIMIT 10
   );
 };
 
-// // Route 4: GET /safest_cities
-// // returns safest cities to live in from lowest crime numbers to highest crime numbers with population greater than 200000. Based on latest available year data
-const safest_cities = async function (req, res) {
+// Route 10: GET /safest_states
+// Returns top states ranking by total crimes, from lowest to highest
+// Default to show rankings across all states, and can input state to limit only ranking in one state.
+const safest_states = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the input state
+  const state = req.query.state ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
   connection.query(
-    `
-    WITH Crime2019 AS
+    `WITH Crime2019 AS
     (
     SELECT city_id, (violent_crime + property_crime) AS total_crimes
     FROM Crime
-    WHERE year = 2019 AND violent_crime IS NOT NULL AND property_crime IS NOT NULL
+    WHERE year = 2019
+    AND violent_crime >= 0 AND property_crime >= 0
     )
-    
-    SELECT c.city, c.county, c.state, c.population, cri.total_crimes
-    FROM City c
+        
+    , CityState AS
+    (SELECT city_id, state
+    FROM City
+    WHERE state LIKE '%${state}%'
+    )
+        
+    SELECT c.state, SUM(cri.total_crimes) AS total_crimes
+    FROM CityState c
     JOIN Crime2019 cri
     ON c.city_id = cri.city_id
-    WHERE c.population >= 200000
-    ORDER BY total_crimes      
-  `,
+    GROUP BY c.state
+    ORDER BY total_crimes
+    LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -174,12 +471,118 @@ const safest_cities = async function (req, res) {
     }
   );
 };
-// Route 5: GET /city?city=VALUE&state=VALUE
-// returns most recent city information for a specific city, state inputted by a user.
+
+// Route 11: GET /namerank_states
+// Returns states ranked by name alphabetically, from A to Z
+// Default to show rankings across all states, and can input state to limit only ranking in one state.
+const namerank_states = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the top cities in the input state
+  const state = req.query.state ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
+  connection.query(
+    `SELECT state
+    FROM Tax
+    WHERE state LIKE '%${state}%'
+    ORDER BY state
+    LIMIT ${pageSize} OFFSET ${offset}`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+// Route 12: GET /homesold_states
+// Returns information on the most popular housing state market by how many houses were sold in the last year, from highest to lowest
+// Default to show rankings across all states, and can input state to limit only ranking in one state.
+const homesold_states = async function (req, res) {
+  // If no state input, then default to include all states. If there is input, then show the top cities in the input state
+  const state = req.query.state ?? "";
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+
+  connection.query(
+    `WITH HomeSalesCount AS
+    (
+    SELECT city_id, homes_sold
+    FROM HomeSummary2022
+    WHERE homes_sold >= 0
+    )
+    , CityState AS
+    (
+    SELECT city_id, state
+    FROM City
+    WHERE state LIKE '%${state}%'
+    )
+    
+    SELECT c.state, SUM(h.homes_sold) AS state_homes_sold
+    FROM CityState c
+    JOIN HomeSalesCount h
+    ON c.city_id = h.city_id
+    GROUP BY c.state
+    ORDER BY state_homes_sold DESC
+    LIMIT ${pageSize} OFFSET ${offset}`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+/********************************
+ * City Info Routes *
+ ********************************/
+
+// City specific info include city basics, city monthly home sales price trend, monthly rental price trend, and yearly crime trend
+
+// Route 13: GET /city?city=VALUE&state=VALUE
+// Returns basic city information for a specific city, state inputted by a user.
 const city = async function (req, res) {
   const city = req.query.city;
   const state = req.query.state;
 
+  if (!city || !state) {
+    return res.status(400).send("City and state are required");
+  }
+  connection.query(
+    `SELECT city_id, city, county, state, population
+    FROM City
+    WHERE city = '${city}' AND state = '${state}'`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+// Route 14: GET /monthly_house_prices?city=VALUE&state=VALUE
+// Returns housing prices trends by month from a specific city from all available data.
+const monthly_house_prices = async function (req, res) {
+  const city = req.query.city;
+  const state = req.query.state;
+  console.log(state);
   if (!city || !state) {
     return res.status(400).send("City and state are required");
   }
@@ -211,11 +614,7 @@ const city = async function (req, res) {
     ON c.city_id = cri.city_id
     LEFT JOIN HomeSales2022Dec h
     ON c.city_id = h.city_id
-    LEFT JOIN Rent2022Dec r
-    ON c.city_id = r.city_id
-    LEFT JOIN Tax t
-    ON c.state = t.state
-    WHERE c.city = '${city}' AND c.state = '${state}'`,
+    ORDER BY h.year, h.month`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -227,40 +626,9 @@ const city = async function (req, res) {
   );
 };
 
-// // Route 6: GET /top_housingmarket
-// // returns information on the most popular housing market by how many houses were sold in the last year, from highest to lowest based on fixed selection criteria
-const top_housingmarket = async function (req, res) {
-  connection.query(
-    `
-    WITH HomeSalesCount AS
-    (
-    SELECT city_id, SUM(homes_sold) AS home_sold
-    FROM HomeSales
-    WHERE year = 2022
-    GROUP BY city_id
-    )
-    
-    SELECT c.city, c.county, c.state, h.home_sold
-    FROM City c
-    JOIN HomeSalesCount h
-    ON c.city_id = h.city_id
-    ORDER BY h.home_sold DESC         
-  `,
-    (err, data) => {
-      if (err || data.length === 0) {
-        console.log(err);
-        res.json({});
-      } else {
-        res.json(data);
-      }
-    }
-  );
-};
-
-// // Route 7: GET /monthly_house_prices
-// //  Show housing prices and market trends by month from a specific city from all available data.
-const monthly_house_prices = async function (req, res) {
-  // TODO (TASK 5): implement a route that given a album_id, returns all information about the album
+// Route 15: GET /monthly_rent_prices?city=VALUE&state=VALUE
+// Returns rent prices trends by month from a specific city from all available data.
+const monthly_rent_prices = async function (req, res) {
   const city = req.query.city;
   const state = req.query.state;
   console.log(state);
@@ -268,15 +636,18 @@ const monthly_house_prices = async function (req, res) {
     return res.status(400).send("City and state are required");
   }
   connection.query(
-    `
-    SELECT c.city, c.county, c.state, h.month, h.year, h.median_sale_price, h.median_list_price, h.median_ppsf, h.median_list_ppsf, h.property_type, h.homes_sold, h.pending_sales, h.new_listings, h.inventory, h.price_drops, h.off_market_in_two_weeks
-    FROM City c
-    JOIN HomeSales h
-    ON c.city_id = h.city_id
-    WHERE c.city = '${city}' AND c.state = '${state}'
-    ORDER BY h.year, h.month
-             
-  `,
+    `WITH CityName AS
+    (
+    SELECT city_id, city, county, state
+    FROM City
+    WHERE city = '${city}' AND state = '${state}'
+    )
+    
+    SELECT c.city, c.county, c.state, r.month, r.year, r.rental_price
+    FROM CityName c
+    JOIN Rent r
+    ON c.city_id = r.city_id
+    ORDER BY r.year, r.month`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -288,11 +659,77 @@ const monthly_house_prices = async function (req, res) {
   );
 };
 
-// Route 8: GET /search_cities?
-// sDescription: returns top 10 recommended cities to live in based on user selected criteria in search query
+// Route 16: GET /yearly_crime?city=VALUE&state=VALUE
+// Returns total crime numbers by month from a specific city from all available data.
+const yearly_crime = async function (req, res) {
+  const city = req.query.city;
+  const state = req.query.state;
+  console.log(state);
+  if (!city || !state) {
+    return res.status(400).send("City and state are required");
+  }
+  connection.query(
+    `WITH CityName AS
+    (
+    SELECT city_id, city, county, state
+    FROM City
+    WHERE city = '${city}' AND state = '${state}'
+    )
+    
+    SELECT c.city, c.county, c.state, cri.year, (cri.violent_crime + cri.property_crime) AS total_crimes
+    FROM CityName c
+    JOIN Crime cri
+    ON c.city_id = cri.city_id
+    ORDER BY cri.year`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+/********************************
+ * State Info Routes *
+ ********************************/
+
+// State specific info of state names and taxes. All city ranking related state info can be found in City Rankings Routes 1-7.
+
+// Route 17: GET /state?state=VALUE
+// Returns basic tax information for a specific state inputted by a user.
+const state = async function (req, res) {
+  const state = req.query.state;
+  console.log(state);
+  if (!state) {
+    return res.status(400).send("State is required");
+  }
+  connection.query(
+    `SELECT state, property_tax_rate, income_tax_rate, corporate_tax_rate, state_local_tax_burden, sales_tax_rate
+    FROM Tax
+    WHERE state = '${state}'`,
+    (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    }
+  );
+};
+
+/********************************
+ * Advanced City Search Routes *
+ ********************************/
+
+// Route 18: GET /search_cities?
+// Returns top recommended cities to live in based on user selected criteria in search query
 const search_cities = async function (req, res) {
-  // const city = req.query.city ?? "";
-  // const state = req.query.state ?? "";
+  const city = req.query.city ?? "";
+  const state = req.query.state ?? "";
   const population_low = req.query.population_low ?? 0;
   const population_high = req.query.population_high ?? 10000000;
   const total_crimes_low = req.query.total_crimes_low ?? 0;
@@ -301,54 +738,69 @@ const search_cities = async function (req, res) {
   const avg_sales_price_high = req.query.avg_sales_price_high ?? 10000000.0;
   const avg_rental_price_low = req.query.avg_rental_price_low ?? 0.0;
   const avg_rental_price_high = req.query.avg_rental_price_high ?? 100000.0;
-  const state_local_tax_burden_low =
-    req.query.state_local_tax_burden_low ?? 0.0;
-  const state_local_tax_burden_high =
-    req.query.state_local_tax_burden_high ?? 1.0;
+  const tax_burden_low = req.query.tax_burden_low ?? 0.0;
+  const tax_burden_high = req.query.tax_burden_high ?? 1.0;
+
+  // Read the page and page_size query parameters with default values
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.page_size) || 10;
+
+  // Calculate the offset
+  const offset = (page - 1) * pageSize;
+  // Optimize query to put the where conditions before join
 
   connection.query(
-    `
-    WITH Crime2019 AS
+    `WITH Crime2019 AS
     (
     SELECT city_id, (violent_crime + property_crime) AS total_crimes
     FROM Crime
     WHERE year = 2019
+    AND violent_crime >= 0 AND property_crime >= 0
+    AND (violent_crime + property_crime) BETWEEN ${total_crimes_low} AND ${total_crimes_high}
     )
     
     , HomeSales2022 AS
     (
-    SELECT city_id, AVG(median_sale_price) AS avg_sales_price
-    FROM HomeSales
-    WHERE year = 2022
-    GROUP BY city_id
+    SELECT city_id, avg_sales_price
+    FROM HomeSummary2022
+    WHERE avg_sales_price BETWEEN ${avg_sales_price_low} AND ${avg_sales_price_high}
     )
     
     , Rent2022 AS
     (
-    SELECT city_id, AVG(rental_price) AS avg_rental_price
-    FROM Rent
-    WHERE year = 2022
-    GROUP BY city_id
+    SELECT city_id, avg_rental_price
+    FROM RentSummary2022
+    WHERE avg_rental_price BETWEEN ${avg_rental_price_low} AND ${avg_rental_price_high}
     )
     
-    SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, r.avg_rental_price, t.state_local_tax_burden AS tax_burden
-    FROM City c
+    , TaxBurden AS
+    (
+    SELECT state, state_local_tax_burden AS tax_burden
+    FROM Tax
+    WHERE state_local_tax_burden BETWEEN ${tax_burden_low} AND ${tax_burden_high}
+    )
+    
+    , CityPop AS
+    (
+    SELECT city_id, city, county, state, population
+    FROM City
+    WHERE population BETWEEN ${population_low} AND ${population_high}
+    AND state LIKE '%${state}%'
+    AND city LIKE '%${city}%'
+    )
+    
+    SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, r.avg_rental_price, t.tax_burden
+    FROM TaxBurden t
+    JOIN CityPop c
+    ON t.state = c.state
     JOIN Crime2019 cri
     ON c.city_id = cri.city_id
     JOIN HomeSales2022 h
     ON c.city_id = h.city_id
     JOIN Rent2022 r
     ON c.city_id = r.city_id
-    JOIN Tax t
-    ON c.state = t.state
-    WHERE c.population BETWEEN ${population_low} AND ${population_high}
-    AND cri.total_crimes BETWEEN ${total_crimes_low} AND ${total_crimes_high}
-    AND h.avg_sales_price BETWEEN ${avg_sales_price_low} AND ${avg_sales_price_high}
-    AND r.avg_rental_price BETWEEN ${avg_rental_price_low} AND ${avg_rental_price_high}
-    AND t.state_local_tax_burden BETWEEN ${state_local_tax_burden_low} AND ${state_local_tax_burden_high}
-    ORDER BY h.avg_sales_price
-    LIMIT 10
-  `,
+    ORDER BY avg_sales_price
+    LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -399,12 +851,22 @@ const search = async function (req, res) {
 
 module.exports = {
   top_cities,
-  top_states,
-  expensive_cities,
+  salesrank_cities,
   safest_cities,
+  rentrank_cities,
+  taxrank_cities,
+  namerank_cities,
+  homesold_cities,
+  top_states,
+  taxrank_states,
+  safest_states,
+  namerank_states,
+  homesold_states,
   city,
-  top_housingmarket,
   monthly_house_prices,
+  monthly_rent_prices,
+  yearly_crime,
+  state,
   search_cities,
   search,
 };
