@@ -37,60 +37,18 @@ const top_cities = async function (req, res) {
   const offset = (page - 1) * pageSize;
   
   connection.query(
-    `WITH Crime2019 AS
+    `WITH CityState AS
     (
-    SELECT city_id, (violent_crime + property_crime) AS total_crimes
-    FROM Crime
-    WHERE year = 2019
-    AND violent_crime >= 0 AND property_crime >= 0
-    )
-    
-    , HomeSales2022 AS
-    (
-    SELECT city_id, avg_sales_price
-    FROM HomeSummary2022
-    WHERE avg_sales_price >= 0
-    )
-    
-    , Rent2022 AS
-    (
-    SELECT city_id, avg_rental_price
-    FROM RentSummary2022
-    WHERE avg_rental_price >= 0
-    )
-    
-    , TaxBurden AS
-    (
-    SELECT state, state_local_tax_burden AS tax_burden
-    FROM Tax
-    WHERE state_local_tax_burden >= 0
-    )
-    
-    , CityPop AS
-    (
-    SELECT city_id, city, county, state, population
+    SELECT city_id, city, county, state
     FROM City
-    WHERE population >= 0
-    AND state LIKE '%${state}%'
+    WHERE state LIKE '%${state}%'
     AND city LIKE '%${city}%'
     )
     
-    SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, r.avg_rental_price, t.tax_burden,
-    ((0.2 * ((cri.total_crimes - AVG(cri.total_crimes) OVER()) / STDDEV(cri.total_crimes) OVER()))+
-    (0.3 * ((h.avg_sales_price - AVG(h.avg_sales_price) OVER()) / STDDEV(h.avg_sales_price) OVER())) +
-    (0.3 * ((r.avg_rental_price - AVG(r.avg_rental_price) OVER()) / STDDEV( r.avg_rental_price) OVER())) +
-    (0.15 * ((t.tax_burden - AVG(t.tax_burden) OVER()) / STDDEV(t.tax_burden) OVER())) +
-    (0.05 * ((c.population - AVG(c.population) OVER()) / STDDEV(c.population) OVER())))
-    AS index_score
-    FROM TaxBurden t
-    JOIN CityPop c
-    ON t.state = c.state
-    JOIN Crime2019 cri
-    ON c.city_id = cri.city_id
-    JOIN HomeSales2022 h
-    ON c.city_id = h.city_id
-    JOIN Rent2022 r
-    ON c.city_id = r.city_id
+    SELECT c.city, c.county, c.state, i.index_score
+    FROM CityState c
+    JOIN CityIndexScore i
+    ON c.city_id = i.city_id
     ORDER BY index_score
     LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
@@ -398,10 +356,8 @@ const homesold_cities = async function (req, res) {
 
 // Route 8: GET /top_states
 // Returns top states ranking by our calculated index score, based on crime and tax burden combined.
-// Default to show rankings across all states, and can input state to limit only ranking in one state.
+// Note: No state filter with index score calculation
 const top_states = async function (req, res) {
-  // If no state input, then default to include all states. If there is input, then show the input state
-  const state = req.query.state ?? '';
   // Read the page and page_size query parameters with default values
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.page_size) || 10;
@@ -428,7 +384,6 @@ const top_states = async function (req, res) {
     , CityState AS
     (SELECT city_id, state
     FROM City
-    WHERE state LIKE '%${state}%'
     )
     
     SELECT c.state, t.tax_burden, SUM(cri.total_crimes) AS total_crimes,
