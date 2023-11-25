@@ -9,9 +9,9 @@ const config = require('../config.json');
 export default function StateIndex() {
   const [stateData, setStateData] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(15);
   const [pageNumber, setPageNumber] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [hasMorePages, setHasMorePages] = useState(true);
   const containerRef = useRef(null);
 
@@ -19,10 +19,11 @@ export default function StateIndex() {
     setSelectedValue(value);
     // Reset page size and number when a new option is selected
     setStateData([])
+    setLoading(true)
     setHasMorePages(true);
-    setPageSize(10);
+    setPageSize(15);
     setPageNumber(1);
-    fetchData(value, 10, 1);
+    fetchData(value, 15, 1);
   };
 
   const fetchData = (option, size, number) => {
@@ -68,25 +69,29 @@ export default function StateIndex() {
   };
 
   useEffect(() => {
-    if (containerRef.current) {
-      const handleScroll = () => {
-        const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
-        if (scrollHeight - scrollTop === clientHeight && !loading && hasMorePages) {
-          // Load more data when the user scrolls to the bottom
-          setPageNumber((prevPageNumber) => prevPageNumber + 1);
-        }
-      };
+    console.log(containerRef.current);
+   if (containerRef.current) {
+    const handleScroll = () => {
+      const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
+      console.log(scrollHeight, scrollTop, scrollHeight-scrollTop,  clientHeight)
+      if (Math.round(scrollHeight - scrollTop-1) === clientHeight && !loading && hasMorePages) {
+        // Load more data when the user scrolls to the bottom
+        setPageNumber((prevPageNumber) => prevPageNumber + 1);
+      }
+    };
 
-      containerRef.current.addEventListener('scroll', handleScroll);
+    containerRef.current.addEventListener('scroll', handleScroll);
 
-      return () => {
+    return () => {
+      if (containerRef.current) {
         containerRef.current.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [loading]);
+      }
+    };
+  }
+  }, [loading, hasMorePages]);
 
   useEffect(() => {
-    // Fetch data when the page number changes
+    console.log(containerRef.current);// Fetch data when the page number changes
     fetchData(selectedValue, pageSize, pageNumber);
   }, [pageNumber]);
 
@@ -96,7 +101,7 @@ export default function StateIndex() {
     <Container maxWidth="xl" disableGutters>
       <Typography variant="h2">States</Typography>
       <DropDownSelector options={dropDownOptions} onSelect={handleSelect} defaultValue={dropDownOptions[0]} />
-      <div ref={containerRef} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', maxHeight: '1200px', overflowY: 'auto' }}>
+      <div ref={containerRef} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', maxHeight: '1200px', overflowY: 'scroll' }}>
       {stateData.map((state, index) => (
         <LocationCard key={index} title={state.state} content={`None`}/>
       ))}
