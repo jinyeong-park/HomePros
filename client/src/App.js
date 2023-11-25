@@ -36,7 +36,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/states" element={<StateIndex />} />
-          {/* <Route path="/cities" element={<CityIndex />} /> */}
+          <Route path="/cities" element={<CityIndex />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
