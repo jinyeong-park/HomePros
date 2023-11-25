@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-const LocationCard = ({title, content}) => {
+const LocationCard = ({num, title, content}) => {
     
     const cardStyle = {
       width: 400, // Set the desired width
@@ -45,10 +45,13 @@ const LocationCard = ({title, content}) => {
               textAlign: 'center',
             }}
           > 
+            <Typography variant="h4" component="div">
+              {num}
+            </Typography>
             <Typography variant="h3" component="div">
               {title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" component="div">
               {content}
             </Typography>
           </div>

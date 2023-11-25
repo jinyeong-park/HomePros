@@ -74,7 +74,7 @@ export default function StateIndex() {
     const handleScroll = () => {
       const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
       console.log(scrollHeight, scrollTop, scrollHeight-scrollTop,  clientHeight)
-      if (Math.round(scrollHeight - scrollTop-1) === clientHeight && !loading && hasMorePages) {
+      if (scrollTop + clientHeight >= scrollHeight && !loading && hasMorePages) {
         // Load more data when the user scrolls to the bottom
         setPageNumber((prevPageNumber) => prevPageNumber + 1);
       }
@@ -103,7 +103,7 @@ export default function StateIndex() {
       <DropDownSelector options={dropDownOptions} onSelect={handleSelect} defaultValue={dropDownOptions[0]} />
       <div ref={containerRef} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', maxHeight: '1200px', overflowY: 'scroll' }}>
       {stateData.map((state, index) => (
-        <LocationCard key={index} title={state.state} content={`None`}/>
+        <LocationCard key={index} num={index+1} title={state.state} content={`None`}/>
       ))}
       {loading && <p>Loading...</p>}
       </div>
