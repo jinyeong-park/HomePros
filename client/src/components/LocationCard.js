@@ -7,7 +7,7 @@ const LocationCard = ({title, content}) => {
     
     const cardStyle = {
       width: 400, // Set the desired width
-      height: 200,
+      height: 225,
       borderRadius: 16,
       margin: '10px',
       overflow: 'hidden',
