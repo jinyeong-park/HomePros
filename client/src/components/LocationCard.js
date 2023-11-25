@@ -24,7 +24,7 @@ const LocationCard = ({title, content}) => {
     return (
       <Card style={cardStyle}>
         <CardContent style={{ padding: 0, position: 'relative' }}>
-          <img src={`https://source.unsplash.com/random/1920x1080/?${title},USA'`} alt={`${title}`} style={imageStyle} />
+          <img src={`https://source.unsplash.com/random/1280x720/?${title},USA'`} alt={`${title}`} style={imageStyle} />
           <div
             style={{
               position: 'absolute',
