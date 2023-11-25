@@ -68,22 +68,24 @@ export default function StateIndex() {
   };
 
   useEffect(() => {
-    if (containerRef.current) {
-      const handleScroll = () => {
-        const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
-        if (scrollHeight - scrollTop === clientHeight && !loading && hasMorePages) {
-          // Load more data when the user scrolls to the bottom
-          setPageNumber((prevPageNumber) => prevPageNumber + 1);
-        }
-      };
+   if (containerRef.current) {
+    const handleScroll = () => {
+      const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
+      if (scrollHeight - scrollTop === clientHeight && !loading && hasMorePages) {
+        // Load more data when the user scrolls to the bottom
+        setPageNumber((prevPageNumber) => prevPageNumber + 1);
+      }
+    };
 
-      containerRef.current.addEventListener('scroll', handleScroll);
+    containerRef.current.addEventListener('scroll', handleScroll);
 
-      return () => {
+    return () => {
+      if (containerRef.current) {
         containerRef.current.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [loading]);
+      }
+    };
+  }
+  }, [loading, hasMorePages]);
 
   useEffect(() => {
     // Fetch data when the page number changes
