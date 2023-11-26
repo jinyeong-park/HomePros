@@ -28,7 +28,7 @@ const LineChart = ({ city, state }) => {
           const resJson = await response.json();
 
           if (resJson.length > 0) {
-            // call CreateAvgData fn
+            // call helper function - CreateAvgData
             const reorganizedData = CreateAvgData(resJson, category);
             console.log('reorganizedData0', reorganizedData);
             
@@ -85,40 +85,28 @@ const LineChart = ({ city, state }) => {
       if (endpoint) {
         const response = await fetch(endpoint);
         const resJson = await response.json();
-        console.log('resJson.length', resJson.length)
+        
+        
         if (resJson.length > 0) {
 
           let reorganizedData;
         
-
-            if (category === 'Avg Home Price')  {
+            if (category === 'Avg Home Price' || category === 'Avg Rent Price')  {
               reorganizedData = CreateAvgData(resJson, category);
-              console.log('Avg Home Price - reorganizedData1', reorganizedData)
+              // console.log('Avg Home Price - reorganizedData1', reorganizedData)
               setAveragedData({
                 labels: reorganizedData.map((d) => d.year),
                 datasets: [
                   {
                     label: category,
-                    data: reorganizedData.map((d) => d.avg_median_sale_price),
-                  },
-                ],
-              });
-            } else if (category === 'Avg Rent Price') {
-             
-              reorganizedData = CreateAvgData(resJson, category);
-              console.log('category is Avg Rent Price - reorganizedData1', reorganizedData)
-                setAveragedData({
-                  labels: reorganizedData.map((d) => d.year),
-                  datasets: [
-                    {
-                      label: category,
-                      data:  reorganizedData.map((d) => d.avg_rental_price),
+                    data: reorganizedData.map((d) =>
+                          category === 'Avg Home Price'
+                          ? d.avg_median_sale_price
+                          : d.avg_rental_price),
                     },
                   ],
                 });
-
               } else if (category === 'Total Crime') {
-                console.log('category is Total Crime, resJson', resJson)
                   setAveragedData({
                     labels: resJson.map((d) => d.year),
                     datasets: [
@@ -142,15 +130,11 @@ const LineChart = ({ city, state }) => {
     }
   };
 
-  
-
-
 
   const handleChange = (event) => {
     const newCategory = event.target.value;
     setCategory(newCategory);
     setLoading(true);
-   
   };
 
   return (
