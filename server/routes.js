@@ -41,8 +41,8 @@ const top_cities = async function (req, res) {
     (
     SELECT city_id, city, county, state
     FROM City
-    WHERE state LIKE '%${state}%'
-    AND city LIKE '%${city}%'
+    WHERE state LIKE '${state}%'
+    AND city LIKE '${city}%'
     )
     
     SELECT c.city, c.county, c.state, i.index_score
@@ -91,8 +91,8 @@ const salesrank_cities = async function (req, res) {
     (
     SELECT city_id, city, county, state
     FROM City
-    WHERE state LIKE '%${state}%'
-    AND city LIKE '%${city}%'
+    WHERE state LIKE '${state}%'
+    AND city LIKE '${city}%'
     )
     
     SELECT c.city, c.county, c.state, h.avg_sales_price
@@ -141,8 +141,8 @@ const safest_cities = async function (req, res) {
     (
     SELECT city_id, city, county, state, population
     FROM City
-    WHERE state LIKE '%${state}%'
-    AND city LIKE '%${city}%'
+    WHERE state LIKE '${state}%'
+    AND city LIKE '${city}%'
     AND population >= 1
     )
     
@@ -192,8 +192,8 @@ const rentrank_cities = async function (req, res) {
     (
     SELECT city_id, city, county, state
     FROM City
-    WHERE state LIKE '%${state}%'
-    AND city LIKE '%${city}%'
+    WHERE state LIKE '${state}%'
+    AND city LIKE '${city}%'
     )
 
     SELECT c.city, c.county, c.state, r.avg_rental_price
@@ -242,8 +242,8 @@ const taxrank_cities = async function (req, res) {
     (
     SELECT city_id, city, county, state
     FROM City
-    WHERE state LIKE '%${state}%'
-    AND city LIKE '%${city}%'
+    WHERE state LIKE '${state}%'
+    AND city LIKE '${city}%'
     )
 
     SELECT c.city, c.county, c.state, t.tax_burden
@@ -283,8 +283,8 @@ const namerank_cities = async function (req, res) {
   connection.query(
     `SELECT city, county, state
     FROM City
-    WHERE state LIKE '%${state}%'
-    AND city LIKE '%${city}%'
+    WHERE state LIKE '${state}%'
+    AND city LIKE '${city}%'
     ORDER BY city, county, state    
     LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
@@ -326,8 +326,8 @@ const homesold_cities = async function (req, res) {
     (
     SELECT city_id, city, county, state
     FROM City
-    WHERE state LIKE '%${state}%'
-    AND city LIKE '%${city}%'
+    WHERE state LIKE '${state}%'
+    AND city LIKE '${city}%'
     )
     
     SELECT c.city, c.county, c.state, h.homes_sold
@@ -426,7 +426,7 @@ const taxrank_states = async function (req, res) {
   connection.query(
     `SELECT state, state_local_tax_burden AS tax_burden
     FROM Tax
-    WHERE state LIKE '%${state}%'
+    WHERE state LIKE '${state}%'
     ORDER BY state_local_tax_burden
     LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
@@ -466,7 +466,7 @@ const safest_states = async function (req, res) {
     , CityState AS
     (SELECT city_id, state
     FROM City
-    WHERE state LIKE '%${state}%'
+    WHERE state LIKE '${state}%'
     )
         
     SELECT c.state, SUM(cri.total_crimes) AS total_crimes
@@ -505,7 +505,7 @@ const namerank_states = async function (req, res) {
   connection.query(
     `SELECT state
     FROM Tax
-    WHERE state LIKE '%${state}%'
+    WHERE state LIKE '${state}%'
     ORDER BY state
     LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
@@ -544,7 +544,7 @@ const homesold_states = async function (req, res) {
     (
     SELECT city_id, state
     FROM City
-    WHERE state LIKE '%${state}%'
+    WHERE state LIKE '${state}%'
     )
     
     SELECT c.state, SUM(h.homes_sold) AS state_homes_sold
@@ -808,8 +808,8 @@ const state = req.query.state ?? '';
     SELECT city_id, city, county, state, population
     FROM City
     WHERE population BETWEEN ${population_low} AND ${population_high}
-    AND state LIKE '%${state}%'
-    AND city LIKE '%${city}%'
+    AND state LIKE '${state}%'
+    AND city LIKE '${city}%'
     )
     
     SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, r.avg_rental_price, t.tax_burden
@@ -827,7 +827,7 @@ const state = req.query.state ?? '';
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
-        res.json([]);
+        res.json({});
       } else {
         res.json(data);
       }
