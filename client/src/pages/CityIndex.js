@@ -8,7 +8,7 @@ const config = require('../config.json');
 
 export default function StateIndex() {
   const [stateData, setStateData] = useState([]);
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState('Alphabetical');
   const [pageSize, setPageSize] = useState(15);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -76,6 +76,12 @@ export default function StateIndex() {
   };
 
   useEffect(() => {
+    // Trigger handleSelect with the defaultValue when the page first loads
+    handleSelect(dropDownOptions[0]);
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+
+  useEffect(() => {
     console.log(containerRef.current);
    if (containerRef.current) {
     const handleScroll = () => {
@@ -98,8 +104,10 @@ export default function StateIndex() {
   }, [loading, hasMorePages]);
 
   useEffect(() => {
-    console.log(containerRef.current);// Fetch data when the page number changes
-    fetchData(selectedValue, pageSize, pageNumber);
+    // Fetch data when the page number changes
+    if (pageNumber != 1){    
+      fetchData(selectedValue, pageSize, pageNumber);
+    }
   }, [pageNumber]);
 
   const dropDownOptions = ['Alphabetical', 'Score', 'Tax Burden', 'Crime', 'Avg Sale Price', 'Avg Rent'];
