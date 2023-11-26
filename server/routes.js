@@ -573,7 +573,9 @@ const homesold_states = async function (req, res) {
 // City specific info include city basics, city monthly home sales price trend, monthly rental price trend, and yearly crime trend
 
 // Route 13: GET /city?city=VALUE&state=VALUE
-// Returns basic city information for a specific city, state inputted by a user.
+// Returns basic city information for a specific city, state inputted by a user. If the city has location info, 
+// also return latitude and longitude. If no location information, then return null latitude and longitude.
+
 const city = async function (req, res) {
   const city = req.query.city;
   const state = req.query.state;
@@ -582,9 +584,16 @@ const city = async function (req, res) {
     return res.status(400).send("City and state are required");
   }
   connection.query(
-    `SELECT city_id, city, county, state, population
+    `WITH CityState AS
+    (SELECT city_id, city, county, state, population
     FROM City
-    WHERE city = '${city}' AND state = '${state}'`,
+    WHERE city = '${city}' AND state = '${state}'
+    )
+    
+    SELECT c.city_id, c.city, c.county, c.state, c.population, l.latitude, l.longitude
+    FROM CityState c
+    LEFT JOIN Location l
+    ON c.city_id = l.city_id`,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
@@ -750,6 +759,10 @@ const state = req.query.state ?? '';
     req.query.tax_burden_low ?? 0.0;
   const tax_burden_high =
     req.query.tax_burden_high ?? 1.0;
+  const order = req.query.order ?? 'avg_sales_price';
+  if (!['avg_sales_price', 'avg_rental_price', 'population', 'total_crimes', 'tax_burden'].includes(order)) {
+    return res.status(400).send("Please sort from: avg_sales_price, avg_rental_price, population, total_crimes or tax_burden");
+  }
 
   // Read the page and page_size query parameters with default values
   const page = parseInt(req.query.page) || 1;
@@ -809,7 +822,7 @@ const state = req.query.state ?? '';
     ON c.city_id = h.city_id
     JOIN Rent2022 r
     ON c.city_id = r.city_id
-    ORDER BY avg_sales_price
+    ORDER BY ${order}
     LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
       if (err || data.length === 0) {
