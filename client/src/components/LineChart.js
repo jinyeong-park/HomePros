@@ -12,7 +12,6 @@ const config = require('../config.json');
 
 const LineChart = ({ city, state }) => {
   const [category, setCategory] = React.useState('Avg Home Price');
-  // const [initialData, SetInitialData] = useState([]);
   const [averagedData, setAveragedData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,14 +70,15 @@ const LineChart = ({ city, state }) => {
     let endpoint;
 
     switch (category) {
-      case 'Avg Home Price':
-        endpoint = `http://${config.server_host}:${config.server_port}/monthly_house_prices?city=${city}&state=${state}`;
-        break;
       case 'Avg Rent Price':
         endpoint = `http://${config.server_host}:${config.server_port}/monthly_rent_prices?city=${city}&state=${state}`;
         break;
+      case 'Total Crime':
+          endpoint = `http://${config.server_host}:${config.server_port}/yearly_crime?city=${city}&state=${state}`;
+          break;
+      // default : Avg Home Price
       default:
-        endpoint = '';
+        endpoint = `http://${config.server_host}:${config.server_port}/monthly_house_prices?city=${city}&state=${state}`;
     }
     console.log('endpoint', endpoint)
     try {
@@ -87,13 +87,13 @@ const LineChart = ({ city, state }) => {
         const resJson = await response.json();
         console.log('resJson.length', resJson.length)
         if (resJson.length > 0) {
-          const reorganizedData = CreateAvgData(resJson, category);
-          console.log('reorganizedData1', reorganizedData)
 
-          if (reorganizedData) {
-            console.log('reorganizedData2', reorganizedData)
+          let reorganizedData;
+        
 
             if (category === 'Avg Home Price')  {
+              reorganizedData = CreateAvgData(resJson, category);
+              console.log('Avg Home Price - reorganizedData1', reorganizedData)
               setAveragedData({
                 labels: reorganizedData.map((d) => d.year),
                 datasets: [
@@ -104,7 +104,9 @@ const LineChart = ({ city, state }) => {
                 ],
               });
             } else if (category === 'Avg Rent Price') {
-              console.log('category is Avg Rent Price')
+             
+              reorganizedData = CreateAvgData(resJson, category);
+              console.log('category is Avg Rent Price - reorganizedData1', reorganizedData)
                 setAveragedData({
                   labels: reorganizedData.map((d) => d.year),
                   datasets: [
@@ -115,11 +117,19 @@ const LineChart = ({ city, state }) => {
                   ],
                 });
 
-            }
-          } else {
-            console.log('CreateAvgData returned undefined or unexpected value.');
-            setAveragedData([]); // Set an empty array if there is an issue with the data
-          }
+              } else if (category === 'Total Crime') {
+                console.log('category is Total Crime, resJson', resJson)
+                  setAveragedData({
+                    labels: resJson.map((d) => d.year),
+                    datasets: [
+                      {
+                        label: category,
+                        data:  resJson.map((d) => d.total_crimes),
+                      },
+                    ],
+                  });
+              }
+         
         } else {
           console.log('No data available');
           setAveragedData([]); // Set an empty array if there is no data
@@ -140,9 +150,6 @@ const LineChart = ({ city, state }) => {
     const newCategory = event.target.value;
     setCategory(newCategory);
     setLoading(true);
-    
-    // fetchData(city, state, newCategory)
-
    
   };
 
