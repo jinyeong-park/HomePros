@@ -110,7 +110,7 @@ export default function StateIndex() {
       <DropDownSelector options={dropDownOptions} onSelect={handleSelect} defaultValue={dropDownOptions[0]} />
       <div ref={containerRef} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', maxHeight: '1200px', overflowY: 'scroll' }}>
       {stateData.map((state, index) => (
-        <LocationCard key={index} num={index+1} title={state.state} content={`None`}/>
+        <LocationCard key={index} num={index+1} imgSource={state.state} title={state.state} content={`None`}/>
       ))}
       {loading && <p>Loading...</p>}
       </div>
