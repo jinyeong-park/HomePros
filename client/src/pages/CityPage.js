@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import LineChart from '../components/LineChart'
+import Map from '../components/Map'
 
 const data = [
     {
@@ -47,10 +48,12 @@ export function CityPage(UserData) {
     <>
       <h2 style={{textAlign: 'center'}}>San Francisco, California</h2>
       <div className="container" style={{display:'flex', justifyContent:'space-between'}}>
-        <div style={{width: 700}}>
+        <div style={{width: 650}}>
             <LineChart chartData={userData}/>
         </div>
-        <div>google map</div>
+        <div style={{width: 600, paddingTop:'9px', marginLeft:'20px'}}><Map latitude='40.6943' longitude='-74.699'/></div>
+
+      
       </div>
     </>
   )
