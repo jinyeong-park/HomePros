@@ -145,7 +145,7 @@ export default function StateIndex() {
         </div>
         <div ref={containerRef} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', maxHeight: '1200px', overflowY: 'scroll' }}>
         {stateData.map((city, index) => (
-          <LocationCard key={index} num={index+1} title={city.city} content={<>County: {city.county} <br /> State: {city.state}</>}/>
+          <LocationCard key={index} num={index+1} title={city.city} imgSource={`${city.city},${city.state}`} content={<>County: {city.county} <br /> State: {city.state}</>}/>
         ))}
         {loading && <p><br></br>Loading...</p>}
         </div>
