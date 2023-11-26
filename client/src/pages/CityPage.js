@@ -46,17 +46,32 @@ export function CityPage(UserData) {
 
   return (
     <>
-      <h2 style={{textAlign: 'center'}}>San Francisco, California</h2>
-      <div className="container" style={{display:'flex', justifyContent:'space-between'}}>
-        <div style={{width: 650}}>
-            <LineChart chartData={userData}/>
+      <h2 style={{ textAlign: 'center' }}>San Francisco, California</h2>
+      <div className="container" style={{ display:'flex', justifyContent:'space-between' }}>
+        <div style={{ width: '600px', marginBottom: '20px' }}>
+          <LineChart chartData={userData} />
         </div>
-        <div style={{width: 600, paddingTop:'9px', marginLeft:'20px'}}><Map latitude='40.6943' longitude='-74.699'/></div>
-
-      
+        <div style={{ width: '600px', paddingTop:'9px', marginLeft:'20px'}}>
+          <Map latitude='40.6943' longitude='-74.699' />
+        </div>
       </div>
     </>
-  )
+  );
+
 }
+// return (
+//   <>
+//     <h2 className="text-center">San Francisco, California</h2>
+//     <div className="container flex justify-between flex-wrap sm:flex-no-wrap">
+//       <div className="w-full sm:w-3/4 lg:w-2/3 mb-4 sm:mb-0">
+//         <LineChart chartData={userData} />
+//       </div>
+//       <div className="w-full sm:w-1/2 lg:w-1/3 sm:pl-4">
+//         <Map latitude='40.6943' longitude='-74.699' />
+//       </div>
+//     </div>
+//   </>
+// );
+// }
 
 export default CityPage
