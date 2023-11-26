@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
@@ -33,6 +34,9 @@ function App() {
 
   const [cityOptions, setCityOptions] = useState([]);
   const [stateOptions, setStateOptions] = useState([]);
+  // go to stateinfo page
+  const navigate = useNavigate();
+  const [currentState, setCurrentState] = useState("");
 
   const handleCityInputChange = (event, newInputValue, reason) => {
     if (reason === "input") {
@@ -88,11 +92,15 @@ function App() {
       let response;
       if (city !== null) {
         response = await axios.get(`${backend}/city`, { params: dataToSend });
+        // TODO: For cityinfo page
+        // navigate(`/city/${city}`);
       } else {
         response = await axios.get(`${backend}/state`, { params: dataToSend });
+        // Redirect to the StateInfoPage with the current state
+        navigate(`/state/${state}`);
       }
       // Handle response
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error("Error submitting data:", error);
       // Handle error
