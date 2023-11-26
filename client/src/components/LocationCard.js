@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-const LocationCard = ({num, title, content}) => {
+const LocationCard = ({num, title, imgSource, content}) => {
     
     const cardStyle = {
       width: 400, // Set the desired width
@@ -24,7 +24,7 @@ const LocationCard = ({num, title, content}) => {
     return (
       <Card style={cardStyle}>
         <CardContent style={{ padding: 0, position: 'relative' }}>
-          <img src={`https://source.unsplash.com/random/1280x720/?${title},USA'`} alt={`${title}`} style={imageStyle} />
+          <img src={`https://source.unsplash.com/random/1280x720/?${imgSource},USA'`} alt={`${title}`} style={imageStyle} />
           <div
             style={{
               position: 'absolute',
