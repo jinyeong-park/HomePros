@@ -56,4 +56,5 @@ const CreateAvgData = (resJson, category) => {
     
 }
 
+
 export default CreateAvgData

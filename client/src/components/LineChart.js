@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import {Chart as ChartJS} from 'chart.js/auto'
@@ -16,6 +17,7 @@ const LineChart = ({ city, state }) => {
   const [loading, setLoading] = useState(true);
 
 
+
    // 1. when a page loading for the first time, run only once.
    useEffect(() => {
     const fetchDataAndSetAveragedData = async () => {
@@ -23,24 +25,55 @@ const LineChart = ({ city, state }) => {
         let endpoint = `http://${config.server_host}:${config.server_port}/monthly_house_prices?city=${city}&state=${state}`;
         
         if (endpoint) {
-          console.log("endpoint", endpoint);
+         
           const response = await fetch(endpoint);
           const resJson = await response.json();
 
           if (resJson.length > 0) {
             // call helper function - CreateAvgData
             const reorganizedData = CreateAvgData(resJson, category);
-            console.log('reorganizedData0', reorganizedData);
+            console.log('reorganizedData1', reorganizedData);
             
-
-            const processedData = 
-            {
-              labels: reorganizedData.map((d)=> d.year),
-              datasets: [{
-                  label: category,
-                  data: reorganizedData.map((d)=> d.avg_median_sale_price)
-              }]
-            }
+            const processedData = ({
+              labels: reorganizedData.map((d) => d.year),
+              datasets: [
+                {
+                    label: category,
+                    data: reorganizedData.map((d) =>  d.avg_median_sale_price),
+                    borderColor: '#386641',
+                    pointRadius: 0,
+                    borderWidth: 2
+                  },
+                  {
+                    label: "Condo/Co-op",
+                    data: resJson.map((d) => d.property_type==="Condo/Co-op" && d.median_sale_price),
+                    pointRadius: 0,
+                    borderColor: '#d90429',
+                    borderWidth: 2,
+                  },
+                  {
+                    label: "Multi-Family (2-4 Unit)",
+                    data: resJson.map((d) => d.property_type==="Multi-Family (2-4 Unit)" && d.median_sale_price),
+                    pointRadius: 0,
+                    borderWidth: 2,
+                    borderColor: '#006494'
+                  },
+                  {
+                    label: "Single Family Residential",
+                    data: resJson.map((d) => d.property_type==="Single Family Residential" && d.median_sale_price),
+                    pointRadius: 0,
+                    borderWidth: 2,
+                    borderColor:  '#ffc300'
+                  },
+                  {
+                    label: "Townhouse",
+                    data: resJson.map((d) => d.property_type==="Townhouse" && d.median_sale_price),
+                    pointRadius: 0,
+                    borderWidth: 2,
+                    borderColor: '#00a6fb'
+                  },
+                ],
+              });
             setAveragedData(processedData);
 
             // console.log('averagedData', averagedData);
@@ -80,7 +113,7 @@ const LineChart = ({ city, state }) => {
       default:
         endpoint = `http://${config.server_host}:${config.server_port}/monthly_house_prices?city=${city}&state=${state}`;
     }
-    console.log('endpoint', endpoint)
+  
     try {
       if (endpoint) {
         const response = await fetch(endpoint);
@@ -91,27 +124,70 @@ const LineChart = ({ city, state }) => {
 
           let reorganizedData;
         
-            if (category === 'Avg Home Price' || category === 'Avg Rent Price')  {
+            if (category === 'Avg Home Price')  {
               reorganizedData = CreateAvgData(resJson, category);
               // console.log('Avg Home Price - reorganizedData1', reorganizedData)
               setAveragedData({
                 labels: reorganizedData.map((d) => d.year),
                 datasets: [
                   {
-                    label: category,
-                    data: reorganizedData.map((d) =>
-                          category === 'Avg Home Price'
-                          ? d.avg_median_sale_price
-                          : d.avg_rental_price),
+                      label: category,
+                      data: reorganizedData.map((d) =>  d.avg_median_sale_price),
+                      borderColor: '#386641',
+                      pointRadius: 0,
+                      borderWidth: 2
+                    },
+                    {
+                      label: "Condo/Co-op",
+                      data: resJson.map((d) => d.property_type==="Condo/Co-op" && d.median_sale_price),
+                      pointRadius: 0,
+                      borderColor: '#d90429',
+                      borderWidth: 2,
+                    },
+                    {
+                      label: "Multi-Family (2-4 Unit)",
+                      data: resJson.map((d) => d.property_type==="Multi-Family (2-4 Unit)" && d.median_sale_price),
+                      pointRadius: 0,
+                      borderWidth: 2,
+                      borderColor: '#006494'
+                    },
+                    {
+                      label: "Single Family Residential",
+                      data: resJson.map((d) => d.property_type==="Single Family Residential" && d.median_sale_price),
+                      pointRadius: 0,
+                      borderWidth: 2,
+                      borderColor:  '#ffc300'
+                    },
+                    {
+                      label: "Townhouse",
+                      data: resJson.map((d) => d.property_type==="Townhouse" && d.median_sale_price),
+                      pointRadius: 0,
+                      borderWidth: 2,
+                      borderColor: '#00a6fb'
                     },
                   ],
                 });
+              } else if ( category === 'Avg Rent Price')  {
+                  reorganizedData = CreateAvgData(resJson, category);
+                  // console.log('Avg Home Price - reorganizedData1', reorganizedData)
+                  setAveragedData({
+                    labels: reorganizedData.map((d) => d.year),
+                    datasets: [
+                      {
+                        label: category,
+                        pointRadius: 0,
+                        data: reorganizedData.map((d) =>d.avg_rental_price),
+                        },
+                      ],
+                    });
               } else if (category === 'Total Crime') {
                   setAveragedData({
                     labels: resJson.map((d) => d.year),
                     datasets: [
                       {
                         label: category,
+                        pointRadius: 0,
+                        tension: 0.1,
                         data:  resJson.map((d) => d.total_crimes),
                       },
                     ],
@@ -163,3 +239,5 @@ const LineChart = ({ city, state }) => {
 };
 
 export default LineChart;
+
+

@@ -8,7 +8,7 @@ const Map = ({ latitude, longitude }) => {
     <>
       <iframe
         title="Map"
-        width="500"
+        width="800"
         height="350"
         src={`https://www.openstreetmap.org/export/embed.html?bbox=${long - 2}%2C${lati - 2}%2C${long + 2}%2C${lati + 2}&layer=mapnik&marker=${lati}%2C${long}`}
         style={{ border: "1px solid black" }}
