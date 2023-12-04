@@ -14,7 +14,7 @@ export function CityPage({city, state}) {
           <LineChart city={city} state={state} />
         </div>
         <div className="map-container" style={{ minWidth: '500px', textAlign:'center'}}>
-          <Map latitude='40.6943' longitude='-74.699' />
+          <Map city={city} state={state} />
         </div>
       </div>
     </>

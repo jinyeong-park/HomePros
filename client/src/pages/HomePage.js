@@ -78,8 +78,8 @@ export default function HomePage() {
   return (
     <Container>
       
-      <h2>Top cities and states:&nbsp;
-      </h2>
+      {/* <h2>Top cities and states:&nbsp;
+      </h2> */}
       {/* <Divider />
       <div>City Page</div>
       <LazyTable route={`http://${config.server_host}:${config.server_port}/monthly_house_prices?city=Pheonix&state=Arizona`} columns={cityColumns} />

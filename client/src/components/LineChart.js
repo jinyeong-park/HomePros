@@ -213,6 +213,8 @@ const LineChart = ({ city, state }) => {
     setLoading(true);
   };
 
+ 
+
   return (
     <>
       <Box display="flex" justifyContent="space-between">
