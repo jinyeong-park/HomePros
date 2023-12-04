@@ -136,7 +136,7 @@ export default function StateIndex() {
         <Typography variant="h2">Cities</Typography>
         <DropDownSelector options={dropDownOptions} onSelect={handleSelect} defaultValue={dropDownOptions[0]} />
         <div>
-        <Button onClick={handleOpenModal}>Open Advanced Search</Button>
+        <Button onClick={handleOpenModal} variant='text'>Advanced Search</Button>
         <AdvancedSearchModal
           open={isModalOpen}
           onClose={handleCloseModal}
