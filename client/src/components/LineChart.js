@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import {Chart as ChartJS} from 'chart.js/auto'
@@ -74,7 +73,8 @@ const LineChart = ({ city, state }) => {
                   },
                 ],
               });
-            setAveragedData(processedData);
+           
+            setAveragedData((prevData) => ({ ...prevData, ...processedData }));
 
             // console.log('averagedData', averagedData);
           } else {
@@ -127,7 +127,8 @@ const LineChart = ({ city, state }) => {
             if (category === 'Avg Home Price')  {
               reorganizedData = CreateAvgData(resJson, category);
               // console.log('Avg Home Price - reorganizedData1', reorganizedData)
-              setAveragedData({
+              setAveragedData((prevData) => ({
+                ...prevData,
                 labels: reorganizedData.map((d) => d.year),
                 datasets: [
                   {
@@ -166,11 +167,12 @@ const LineChart = ({ city, state }) => {
                       borderColor: '#00a6fb'
                     },
                   ],
-                });
+                }));
               } else if ( category === 'Avg Rent Price')  {
                   reorganizedData = CreateAvgData(resJson, category);
                   // console.log('Avg Home Price - reorganizedData1', reorganizedData)
-                  setAveragedData({
+                  setAveragedData((prevData) => ({
+                    ...prevData,
                     labels: reorganizedData.map((d) => d.year),
                     datasets: [
                       {
@@ -179,9 +181,10 @@ const LineChart = ({ city, state }) => {
                         data: reorganizedData.map((d) =>d.avg_rental_price),
                         },
                       ],
-                    });
+                    }));
               } else if (category === 'Total Crime') {
-                  setAveragedData({
+                setAveragedData((prevData) => ({
+                  ...prevData,
                     labels: resJson.map((d) => d.year),
                     datasets: [
                       {
@@ -191,7 +194,7 @@ const LineChart = ({ city, state }) => {
                         data:  resJson.map((d) => d.total_crimes),
                       },
                     ],
-                  });
+                  }));
               }
          
         } else {
@@ -233,13 +236,14 @@ const LineChart = ({ city, state }) => {
       </Box>
       {loading ? (
         <p>Loading...</p>
-      ) : (
+      ) : averagedData ? (
         <Line data={averagedData && averagedData.labels ? averagedData : {}} />
+      ) : (
+        <p>No data available</p>
       )}
     </>
   );
 };
 
 export default LineChart;
-
 
