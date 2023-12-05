@@ -75,35 +75,25 @@ function App() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
     // Check if city is filled, then state must also be filled
     if (!state) {
       alert("State is required");
       return;
     }
 
-    // Data object to send to the backend
-    const dataToSend = {
-      city: city || null,
-      state: state, // Send null if state is not filled
-    };
-
-    try {
-      let response;
-      if (city !== null) {
-        response = await axios.get(`${backend}/city`, { params: dataToSend });
-        // TODO: For cityinfo page
-        // navigate(`/city/${city}`);
-      } else {
-        response = await axios.get(`${backend}/state`, { params: dataToSend });
-        // Redirect to the StateInfoPage with the current state
-        navigate(`/state/${state}`);
-      }
-      // Handle response
-      // console.log(response.data);
-    } catch (error) {
-      console.error("Error submitting data:", error);
-      // Handle error
+    // Check if both city and state have been submitted
+    if (city && state) {
+      // Navigate to the CityInfoPage with both city and state names
+      navigate(
+        `/city/${encodeURIComponent(city.toLowerCase())}/${encodeURIComponent(
+          state.toLowerCase()
+        )}`
+      );
+    } else if (state) {
+      // Navigate to the StateInfoPage with the state name
+      navigate(`/state/${encodeURIComponent(state.toLowerCase())}`);
     }
   };
 
