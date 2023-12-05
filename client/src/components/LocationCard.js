@@ -10,7 +10,7 @@ const LocationCard = ({num, title, imgSource, content, url}) => {
       width: 400, // Set the desired width
       height: 225,
       borderRadius: 16,
-      margin: '10px',
+      margin: '20px',
       overflow: 'hidden',
       position: 'relative',
       cursor: 'pointer',

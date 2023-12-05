@@ -153,7 +153,9 @@ export default function StateIndex() {
     console.log("after",stateData);
     return (
       <Container maxWidth="xl" disableGutters>
-        <Typography variant="h2">Cities</Typography>
+        <br></br>
+        <Typography variant="h3">Cities</Typography>
+        <br></br>
         <DropDownSelector options={dropDownOptions} onSelect={handleSelect} defaultValue={dropDownOptions[0]} />
         <div>
         <Button onClick={handleOpenModal} variant='text'>Advanced Search</Button>
