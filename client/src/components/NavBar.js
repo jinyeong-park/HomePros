@@ -45,7 +45,7 @@ export default function NavBar() {
             <img
               src="/navbarLogo.png"
               alt="HomePros Logo"
-              style={{ height: "50px" }}
+              style={{ height: "40px" , marginTop:"6px"}}
             />
           </NavLink>
           <NavText href="/cities" text="Cities" />
