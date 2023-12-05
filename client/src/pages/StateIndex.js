@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Container, Box, Typography } from '@mui/material';
 import LocationCard from '../components/LocationCard';
 import DropDownSelector from '../components/DropDownSelector';
-import { NavLink } from 'react-router-dom';
 
 const config = require('../config.json');
 
@@ -110,7 +109,7 @@ export default function StateIndex() {
       <DropDownSelector options={dropDownOptions} onSelect={handleSelect} defaultValue={dropDownOptions[0]} />
       <div ref={containerRef} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', maxHeight: '1200px', overflowY: 'scroll' }}>
       {stateData.map((state, index) => (
-        <LocationCard key={index} num={index+1} imgSource={state.state} title={state.state} content={`None`}/>
+        <LocationCard key={index} num={index+1} imgSource={state.state} title={state.state} content={`None`} url={`/state/${state.state}`}/>
       ))}
       {loading && <p>Loading...</p>}
       </div>
