@@ -5,6 +5,7 @@ import { createTheme } from "@mui/material/styles";
 
 import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
+import CityPage from "./pages/CityPage";
 // import AlbumsPage from './pages/AlbumsPage';
 // import SongsPage from './pages/SongsPage';
 // import AlbumInfoPage from './pages/AlbumInfoPage'
@@ -37,6 +38,7 @@ export default function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/city/:city/:state" element={<CityPage />} />
           {/* <Route path="/albums" element={<AlbumsPage />} />
           <Route path="/albums/:album_id" element={<AlbumInfoPage />} />
           <Route path="/songs" element={<SongsPage />} /> */}
