@@ -38,6 +38,7 @@ app.get("/state", routes.state);
 
 // advanced city search routes
 app.get("/search_cities", routes.search_cities);
+app.get("/search", routes.search);
 
 app.listen(config.server_port, () => {
   console.log(

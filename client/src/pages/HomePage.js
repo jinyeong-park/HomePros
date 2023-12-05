@@ -1,92 +1,173 @@
-import { useEffect, useState } from 'react';
-import { Container, Divider, Link } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import axios from "axios";
+import throttle from "lodash/throttle";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+const config = require("../config.json");
 
-import LazyTable from '../components/LazyTable';
-const config = require('../config.json');
+const backend = `http://${config.server_host}:${config.server_port}`;
+const fetchSuggestions = throttle(
+  async (searchTerm, searchType, setOptions) => {
+    if (searchTerm.length > 0) {
+      // Adjust based on when you want to start fetching suggestions
+      try {
+        const response = await axios.get(`${backend}/search`, {
+          params: { searchTerm: searchTerm, searchType: searchType },
+        });
+        setOptions(response.data);
+      } catch (error) {
+        console.error("Failed to fetch suggestions:", error);
+      }
+    }
+  },
+  200
+);
 
-export default function HomePage() {
-  // const [topCities, setTopCities] = useState({});
-  
-  // const [topStates, setTopStates] = useState({});
+function App() {
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
 
+  const [cityOptions, setCityOptions] = useState([]);
+  const [stateOptions, setStateOptions] = useState([]);
+  // go to stateinfo page
+  const navigate = useNavigate();
+  const [currentState, setCurrentState] = useState("");
 
-  // useEffect(() => {
+  const handleCityInputChange = (event, newInputValue, reason) => {
+    if (reason === "input") {
+      setCity(newInputValue);
+      fetchSuggestions(newInputValue, "city", setCityOptions);
+    }
+    if (reason === "clear") {
+      setCity(""); // Reset city
+      setState(""); // Reset state
+    }
+  };
+  // This function will be triggered when a suggestion is selected
+  const handleCitySelect = (event, value, reason) => {
+    if (reason === "selectOption" && value) {
+      console.log(value);
+      setCity(value.city);
+      setState(value.state);
+      // setCityInputValue(value.city);
+    }
+  };
 
-  //   fetch(`http://${config.server_host}:${config.server_port}/top_cities`)
-  //     .then(res => res.json())
-  //     .then(resJson => setTopCities(resJson));
-    
-  //   fetch(`http://${config.server_host}:${config.server_port}/top_states`)
-  //     .then(res => res.json())
-  //     .then(resJson => setTopStates(resJson));
+  const handleStateInputChange = (event, newInputValue, reason) => {
+    if (reason === "input") {
+      setState(newInputValue);
+      fetchSuggestions(newInputValue, "state", setStateOptions);
+    }
+    if (reason === "clear") {
+      setState(""); // Reset state
+    }
+  };
 
-  // }, []);
+  // This function will be triggered when a suggestion is selected
+  const handleStateSelect = (event, value, reason) => {
+    if (reason === "selectOption" && value) {
+      setState(value.state);
+    }
+  };
 
-  const cityColumns = [
-    {
-      field: 'city',
-      headerName: 'City',
-    },
-    {
-      field: 'county',
-      headerName: 'County'
-    },
-    {
-      field: 'state',
-      headerName: 'State'
-    },
-    {
-      field: 'population',
-      headerName: 'Population'
-    },
-    {
-      field: 'total_crimes',
-      headerName: 'Total Crime'
-    },
-    {
-      field: 'avg_sales_price',
-      headerName: 'Average Home Sale Price',
-    },
-    {
-      field: 'tax_burden',
-      headerName: 'Tax Burden'
-    },
-  ];
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    // Check if city is filled, then state must also be filled
+    if (!state) {
+      alert("State is required");
+      return;
+    }
 
-  const stateColumns = [
-    {
-      field: 'state',
-      headerName: 'State',
-      // renderCell: (row) => <NavLink to={`/albums/${row.album_id}`}>{row.title}</NavLink> // A NavLink component is used to create a link to the album page
-    },
-    {
-      field: 'state_local_tax_burden',
-      headerName: 'Tax Burden'
-    },
-    {
-      field: 'total_crimes',
-      headerName: 'Total Crime'
-    },
-    {
-      field: 'index_score',
-      headerName: 'Index'
-    },
-  ];
+    // Check if both city and state have been submitted
+    if (city && state) {
+      // Navigate to the CityInfoPage with both city and state names
+      navigate(
+        `/city/${encodeURIComponent(city.toLowerCase())}/${encodeURIComponent(
+          state.toLowerCase()
+        )}`
+      );
+    } else if (state) {
+      // Navigate to the StateInfoPage with the state name
+      navigate(`/state/${encodeURIComponent(state.toLowerCase())}`);
+    }
+  };
 
   return (
-    <Container>
-      
-      <h2>Top cities and states:&nbsp;
-      </h2>
-      <Divider />
-      <h2>Top Cities</h2>
-      <LazyTable route={`http://${config.server_host}:${config.server_port}/top_cities`} columns={cityColumns} />
-      <Divider />
-      <h2>Top States</h2>
-      <LazyTable route={`http://${config.server_host}:${config.server_port}/top_states`} columns={stateColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]} />
-      <Divider />
-      {/* TODO (TASK 17): add a paragraph (<p>text</p>) that displays the value of your author state variable from TASK 13 */}
+    <Container
+      maxWidth="lg"
+      sx={{
+        mt: 4,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="h4" sx={{ mt: 4, mb: 2, textAlign: "center" }}>
+        Find your dream city
+      </Typography>
+
+      <Box sx={{ width: "100%", maxWidth: "500px", my: 2 }}>
+        <Autocomplete
+          freeSolo
+          inputValue={city}
+          onInputChange={handleCityInputChange}
+          getOptionLabel={(option) =>
+            option.city ? `${option.city}, ${option.state}` : ""
+          }
+          onChange={handleCitySelect}
+          options={cityOptions}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="City"
+              variant="outlined"
+              fullWidth
+              sx={{ mb: 2 }}
+              value={city}
+            />
+          )}
+        />
+        <Autocomplete
+          freeSolo
+          inputValue={state}
+          onInputChange={handleStateInputChange}
+          getOptionLabel={(option) => option.state || ""}
+          onChange={handleStateSelect}
+          options={stateOptions}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="State"
+              variant="outlined"
+              fullWidth
+              sx={{ mb: 2 }}
+              value={state}
+            />
+          )}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            width: "80%",
+            height: "56px",
+            mt: 3,
+            mb: 2,
+            display: "block",
+            mx: "auto",
+          }}
+          onClick={handleSubmit}
+        >
+          Search
+        </Button>
+      </Box>
     </Container>
   );
-};
+}
+
+export default App;
