@@ -68,11 +68,6 @@ export default function StateIndex() {
   };
   
   useEffect(() => {
-    // Trigger handleSelect with the defaultValue when the page first loads
-    handleSelect(dropDownOptions[0]);
-  }, []); // Empty dependency array ensures this runs only once on mount
-
-  useEffect(() => {
     // console.log(containerRef.current);
    if (containerRef.current) {
     const handleScroll = () => {
@@ -95,10 +90,9 @@ export default function StateIndex() {
   }, [loading, hasMorePages]);
 
   useEffect(() => {
-    console.log(pageNumber);// Fetch data when the page number changes
-    if (pageNumber != 1){    
-      fetchData(selectedValue, pageSize, pageNumber);
-    }
+    console.log(pageNumber);// Fetch data when the page number changes 
+    fetchData(selectedValue, pageSize, pageNumber);
+    
     }, [pageNumber]);
 
   const dropDownOptions = ['Alphabetical', 'Score', 'Tax Burden', 'Crime'];
