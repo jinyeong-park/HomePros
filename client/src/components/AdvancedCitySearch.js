@@ -31,11 +31,11 @@ const AdvancedSearchModal = ({ open, onClose, onApplyFilters }) => {
       const handleApplyFilters = () => {
         // Pass the selected filters to the parent component
         onApplyFilters({
-          avgHomePriceRange,
-          rentRange,
-          taxBurdenRange,
-          totalCrimeRange,
-          populationRange,
+          avg_sales_price: avgHomePriceRange,
+          avg_rental_price: rentRange,
+          tax_burden: taxBurdenRange,
+          total_crimes: totalCrimeRange,
+          population: populationRange,
         });
         // Close the modal
         onClose();
