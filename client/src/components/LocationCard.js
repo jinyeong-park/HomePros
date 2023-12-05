@@ -2,9 +2,10 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom'; // Import useHistory from React Router
 
-const LocationCard = ({num, title, content}) => {
-    
+const LocationCard = ({num, title, imgSource, content, url}) => {
+    const navigate = useNavigate();
     const cardStyle = {
       width: 400, // Set the desired width
       height: 225,
@@ -12,6 +13,7 @@ const LocationCard = ({num, title, content}) => {
       margin: '10px',
       overflow: 'hidden',
       position: 'relative',
+      cursor: 'pointer',
     };
 
     const imageStyle = {
@@ -20,11 +22,15 @@ const LocationCard = ({num, title, content}) => {
       objectFit: 'cover',
       borderRadius: 'inherit',
     }
+
+    const handleClick = () => {
+      navigate(url);
+    }
   
     return (
-      <Card style={cardStyle}>
+      <Card style={cardStyle} onClick={handleClick}>
         <CardContent style={{ padding: 0, position: 'relative' }}>
-          <img src={`https://source.unsplash.com/random/1280x720/?${title},USA'`} alt={`${title}`} style={imageStyle} />
+          <img src={`https://source.unsplash.com/random/1280x720/?${imgSource},USA'`} alt={`${title}`} style={imageStyle} />
           <div
             style={{
               position: 'absolute',

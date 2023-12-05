@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Container, Box, Typography } from '@mui/material';
 import LocationCard from '../components/LocationCard';
 import DropDownSelector from '../components/DropDownSelector';
-import { NavLink } from 'react-router-dom';
 
 const config = require('../config.json');
 
@@ -69,11 +68,6 @@ export default function StateIndex() {
   };
   
   useEffect(() => {
-    // Trigger handleSelect with the defaultValue when the page first loads
-    handleSelect(dropDownOptions[0]);
-  }, []); // Empty dependency array ensures this runs only once on mount
-
-  useEffect(() => {
     // console.log(containerRef.current);
    if (containerRef.current) {
     const handleScroll = () => {
@@ -96,10 +90,9 @@ export default function StateIndex() {
   }, [loading, hasMorePages]);
 
   useEffect(() => {
-    console.log(pageNumber);// Fetch data when the page number changes
-    if (pageNumber != 1){    
-      fetchData(selectedValue, pageSize, pageNumber);
-    }
+    console.log(pageNumber);// Fetch data when the page number changes 
+    fetchData(selectedValue, pageSize, pageNumber);
+    
     }, [pageNumber]);
 
   const dropDownOptions = ['Alphabetical', 'Score', 'Tax Burden', 'Crime'];
@@ -110,7 +103,7 @@ export default function StateIndex() {
       <DropDownSelector options={dropDownOptions} onSelect={handleSelect} defaultValue={dropDownOptions[0]} />
       <div ref={containerRef} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', maxHeight: '1200px', overflowY: 'scroll' }}>
       {stateData.map((state, index) => (
-        <LocationCard key={index} num={index+1} title={state.state} content={`None`}/>
+        <LocationCard key={index} num={index+1} imgSource={state.state} title={state.state} content={``} url={`/state/${state.state}`}/>
       ))}
       {loading && <p>Loading...</p>}
       </div>
