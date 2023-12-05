@@ -86,9 +86,14 @@ function App() {
     // Check if both city and state have been submitted
     if (city && state) {
       // Navigate to the CityInfoPage with both city and state names
+      // navigate(
+      //   `/city/${encodeURIComponent(city.toLowerCase())}/${encodeURIComponent(
+      //     state.toLowerCase()
+      //   )}`
+      // );
       navigate(
-        `/city/${encodeURIComponent(city.toLowerCase())}/${encodeURIComponent(
-          state.toLowerCase()
+        `/city/${encodeURIComponent(city)}/${encodeURIComponent(
+          state
         )}`
       );
     } else if (state) {

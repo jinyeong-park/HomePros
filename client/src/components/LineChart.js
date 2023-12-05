@@ -11,6 +11,7 @@ const config = require('../config.json');
 
 
 const LineChart = ({ city, state }) => {
+  // console.log('LineChart- city',  city, state)
   const [category, setCategory] = React.useState('Avg Home Price');
   const [averagedData, setAveragedData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,52 +22,55 @@ const LineChart = ({ city, state }) => {
    useEffect(() => {
     const fetchDataAndSetAveragedData = async () => {
       try {
-        let endpoint = `http://${config.server_host}:${config.server_port}/monthly_house_prices?city=${city}&state=${state}`;
+        let endpoint = `http://${config.server_host}:${config.server_port}/monthly_house_prices?city=${encodeURIComponent(city)}&state=${state}`;
+        console.log('endpoint', endpoint)
         
         if (endpoint) {
          
           const response = await fetch(endpoint);
+          console.log('response', response)
           const resJson = await response.json();
+          console.log('resJson', resJson)
 
           if (resJson.length > 0) {
             // call helper function - CreateAvgData
             const reorganizedData = CreateAvgData(resJson, category);
-            console.log('reorganizedData1', reorganizedData);
+            // console.log('reorganizedData1', reorganizedData);
             
             const processedData = ({
-              labels: reorganizedData.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
+              labels: reorganizedData?.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
               datasets: [
                 {
                     label: category,
-                    data: reorganizedData.map((d) =>  d.avg_median_sale_price),
+                    data: reorganizedData?.map((d) =>  d.avg_median_sale_price),
                     borderColor: '#386641',
                     pointRadius: 0,
                     borderWidth: 2
                   },
                   {
                     label: "Condo/Co-op",
-                    data: resJson.map((d) => d.property_type==="Condo/Co-op" && d.median_sale_price),
+                    data: resJson?.map((d) => d.property_type==="Condo/Co-op" && d.median_sale_price),
                     pointRadius: 0,
                     borderColor: '#d90429',
                     borderWidth: 2,
                   },
                   {
                     label: "Multi-Family (2-4 Unit)",
-                    data: resJson.map((d) => d.property_type==="Multi-Family (2-4 Unit)" && d.median_sale_price),
+                    data: resJson?.map((d) => d.property_type==="Multi-Family (2-4 Unit)" && d.median_sale_price),
                     pointRadius: 0,
                     borderWidth: 2,
                     borderColor: '#006494'
                   },
                   {
                     label: "Single Family Residential",
-                    data: resJson.map((d) => d.property_type==="Single Family Residential" && d.median_sale_price),
+                    data: resJson?.map((d) => d.property_type==="Single Family Residential" && d.median_sale_price),
                     pointRadius: 0,
                     borderWidth: 2,
                     borderColor:  '#ffc300'
                   },
                   {
                     label: "Townhouse",
-                    data: resJson.map((d) => d.property_type==="Townhouse" && d.median_sale_price),
+                    data: resJson?.map((d) => d.property_type==="Townhouse" && d.median_sale_price),
                     pointRadius: 0,
                     borderWidth: 2,
                     borderColor: '#00a6fb'
@@ -78,7 +82,7 @@ const LineChart = ({ city, state }) => {
 
             // console.log('averagedData', averagedData);
           } else {
-            console.log('No data available');
+            console.log('No data available-first useeffect');
           }
         }
       } catch (error) {
@@ -129,39 +133,39 @@ const LineChart = ({ city, state }) => {
               // console.log('Avg Home Price - reorganizedData1', reorganizedData)
               setAveragedData((prevData) => ({
                 ...prevData,
-                labels: reorganizedData.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
+                labels: reorganizedData?.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
                 datasets: [
                   {
                       label: category,
-                      data: reorganizedData.map((d) =>  d.avg_median_sale_price),
+                      data: reorganizedData?.map((d) =>  d.avg_median_sale_price),
                       borderColor: '#386641',
                       pointRadius: 0,
                       borderWidth: 2
                     },
                     {
                       label: "Condo/Co-op",
-                      data: resJson.map((d) => d.property_type==="Condo/Co-op" && d.median_sale_price),
+                      data: resJson?.map((d) => d.property_type==="Condo/Co-op" && d.median_sale_price),
                       pointRadius: 0,
                       borderColor: '#d90429',
                       borderWidth: 2,
                     },
                     {
                       label: "Multi-Family (2-4 Unit)",
-                      data: resJson.map((d) => d.property_type==="Multi-Family (2-4 Unit)" && d.median_sale_price),
+                      data: resJson?.map((d) => d.property_type==="Multi-Family (2-4 Unit)" && d.median_sale_price),
                       pointRadius: 0,
                       borderWidth: 2,
                       borderColor: '#006494'
                     },
                     {
                       label: "Single Family Residential",
-                      data: resJson.map((d) => d.property_type==="Single Family Residential" && d.median_sale_price),
+                      data: resJson?.map((d) => d.property_type==="Single Family Residential" && d.median_sale_price),
                       pointRadius: 0,
                       borderWidth: 2,
                       borderColor:  '#ffc300'
                     },
                     {
                       label: "Townhouse",
-                      data: resJson.map((d) => d.property_type==="Townhouse" && d.median_sale_price),
+                      data: resJson?.map((d) => d.property_type==="Townhouse" && d.median_sale_price),
                       pointRadius: 0,
                       borderWidth: 2,
                       borderColor: '#00a6fb'
@@ -173,25 +177,25 @@ const LineChart = ({ city, state }) => {
                   // console.log('Avg Home Price - reorganizedData1', reorganizedData)
                   setAveragedData((prevData) => ({
                     ...prevData,
-                    labels: reorganizedData.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
+                    labels: reorganizedData?.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
                     datasets: [
                       {
                         label: category,
                         pointRadius: 0,
-                        data: reorganizedData.map((d) =>d.avg_rental_price),
+                        data: reorganizedData?.map((d) =>d.avg_rental_price),
                         },
                       ],
                     }));
               } else if (category === 'Total Crime') {
                 setAveragedData((prevData) => ({
                   ...prevData,
-                    labels: resJson.map((d) => d.year),
+                    labels: resJson?.map((d) => d.year),
                     datasets: [
                       {
                         label: category,
                         pointRadius: 0,
                         tension: 0.1,
-                        data:  resJson.map((d) => d.total_crimes),
+                        data:  resJson?.map((d) => d.total_crimes),
                       },
                     ],
                   }));

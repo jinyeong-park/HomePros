@@ -1,10 +1,13 @@
-import React, {useState} from 'react'
+import React from 'react'
 import LineChart from '../components/LineChart'
 import Map from '../components/Map'
+import { useParams } from 'react-router-dom'
 
 
 
-export function CityPage({city, state}) {
+export function CityPage() {
+  const {city, state} = useParams();
+
 
   return (
     <>
