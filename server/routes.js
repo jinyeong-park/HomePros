@@ -741,7 +741,7 @@ const search_cities = async function (req, res) {
       "avg_rental_price",
       "population",
       "total_crimes",
-      "tax_burden", 
+      "tax_burden",
       "city",
     ].includes(order)
   ) {
@@ -842,10 +842,10 @@ const search = async function (req, res) {
   let query;
   if (searchType === "city") {
     // Fetch distinct city and state pairs
-    query = "SELECT DISTINCT city, state FROM City WHERE city LIKE ? LIMIT 10";
+    query = "SELECT DISTINCT city, state FROM City WHERE city LIKE ?";
   } else if (searchType === "state") {
     // Fetch distinct state names
-    query = "SELECT DISTINCT state FROM Tax WHERE state LIKE ? LIMIT 10";
+    query = "SELECT DISTINCT state FROM Tax WHERE state LIKE ?";
   } else {
     res.status(400).send("Invalid search type");
     return;
