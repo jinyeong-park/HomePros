@@ -9,6 +9,7 @@ import StateInfoPage from "./pages/StateInfoPage";
 
 import CityIndex from "./pages/CityIndex";
 import StateIndex from "./pages/StateIndex";
+import CityPage from "./pages/CityPage";
 // createTheme enables you to customize the look and feel of your app past the default
 // in this case, we only change the color scheme
 export const theme = createTheme({
@@ -40,6 +41,7 @@ export default function App() {
           <Route path="/states" element={<StateIndex />} />
           <Route path="/cities" element={<CityIndex />} />
           <Route path="/state/:state" element={<StateInfoPage />} />
+          <Route path="/city/:city/:state" element={<CityPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
