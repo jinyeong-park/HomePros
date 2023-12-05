@@ -21,7 +21,7 @@ connection.connect((err) => err && console.log(err));
 // Route 1: GET /top_cities
 // Returns top cities ranking by our calculated index score, based on multiple areas with housing price, rent price, crime,
 // population, and tax combined.
-// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in input state/city.
 const top_cities = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the top cities in the input state
   const state = req.query.state ?? "";
@@ -63,7 +63,7 @@ const top_cities = async function (req, res) {
 
 // Route 2: GET /salesrank_cities
 // Returns cities ranked by 2022 average home sales price, from cheapest to most expensive.
-// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in input state/city.
 const salesrank_cities = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the top cities in the input state
   const state = req.query.state ?? "";
@@ -111,7 +111,7 @@ const salesrank_cities = async function (req, res) {
 
 // Route 3: GET /safest_cities
 // Returns safest cities to live in from lowest crime rate to highest crime rate.
-// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in input state/city.
 const safest_cities = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the top cities in the input state
   const state = req.query.state ?? "";
@@ -160,7 +160,7 @@ const safest_cities = async function (req, res) {
 
 // Route 4: GET /rentrank_cities
 // Returns cities ranked by 2022 average rental price, from cheapest to most expensive.
-// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in input state/city.
 const rentrank_cities = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the top cities in the input state
   const state = req.query.state ?? "";
@@ -208,7 +208,7 @@ const rentrank_cities = async function (req, res) {
 
 // Route 5: GET /taxrank_cities
 // Returns cities ranked by state local tax burden, from lowest tax to highest.
-// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in input state/city.
 const taxrank_cities = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the top cities in the input state
   const state = req.query.state ?? "";
@@ -256,7 +256,7 @@ const taxrank_cities = async function (req, res) {
 
 // Route 6: GET /namerank_cities
 // Returns cities ranked by name alphabetically, from A to Z
-// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in input state/city.
 const namerank_cities = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the top cities in the input state
   const state = req.query.state ?? "";
@@ -289,7 +289,7 @@ const namerank_cities = async function (req, res) {
 
 // Route 7: GET /homesold_cities
 // Returns information on the most popular housing city market by how many houses were sold in the last year, from highest to lowest
-// Default to show city rankings across all states, and can input state/city to limit only ranking in one state/city.
+// Default to show city rankings across all states, and can input state/city to limit only ranking in input state/city.
 const homesold_cities = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the top cities in the input state
   const state = req.query.state ?? "";
@@ -398,7 +398,7 @@ const top_states = async function (req, res) {
 
 // Route 9: GET /taxrank_states
 // Returns top states ranking by state local state burden, from lowest to highest
-// Default to show rankings across all states, and can input state to limit only ranking in one state.
+// Default to show rankings across all states, and can input state to limit only ranking in input state.
 const taxrank_states = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the input state
   const state = req.query.state ?? "";
@@ -428,7 +428,7 @@ const taxrank_states = async function (req, res) {
 
 // Route 10: GET /safest_states
 // Returns top states ranking by total crimes, from lowest to highest
-// Default to show rankings across all states, and can input state to limit only ranking in one state.
+// Default to show rankings across all states, and can input state to limit only ranking in input state.
 const safest_states = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the input state
   const state = req.query.state ?? "";
@@ -474,7 +474,7 @@ const safest_states = async function (req, res) {
 
 // Route 11: GET /namerank_states
 // Returns states ranked by name alphabetically, from A to Z
-// Default to show rankings across all states, and can input state to limit only ranking in one state.
+// Default to show rankings across all states, and can input state to limit only ranking in input state.
 const namerank_states = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the top cities in the input state
   const state = req.query.state ?? "";
@@ -504,7 +504,7 @@ const namerank_states = async function (req, res) {
 
 // Route 12: GET /homesold_states
 // Returns information on the most popular housing state market by how many houses were sold in the last year, from highest to lowest
-// Default to show rankings across all states, and can input state to limit only ranking in one state.
+// Default to show rankings across all states, and can input state to limit only ranking in input state.
 const homesold_states = async function (req, res) {
   // If no state input, then default to include all states. If there is input, then show the top cities in the input state
   const state = req.query.state ?? "";
@@ -741,13 +741,14 @@ const search_cities = async function (req, res) {
       "avg_rental_price",
       "population",
       "total_crimes",
-      "tax_burden",
+      "tax_burden", 
+      "city",
     ].includes(order)
   ) {
     return res
       .status(400)
       .send(
-        "Please sort from: avg_sales_price, avg_rental_price, population, total_crimes or tax_burden"
+        "Please sort from: avg_sales_price, avg_rental_price, population, total_crimes, tax_burden or city"
       );
   }
 
