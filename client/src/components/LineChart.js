@@ -34,7 +34,7 @@ const LineChart = ({ city, state }) => {
             console.log('reorganizedData1', reorganizedData);
             
             const processedData = ({
-              labels: reorganizedData.map((d) => d.year),
+              labels: reorganizedData.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
               datasets: [
                 {
                     label: category,
@@ -129,7 +129,7 @@ const LineChart = ({ city, state }) => {
               // console.log('Avg Home Price - reorganizedData1', reorganizedData)
               setAveragedData((prevData) => ({
                 ...prevData,
-                labels: reorganizedData.map((d) => d.year),
+                labels: reorganizedData.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
                 datasets: [
                   {
                       label: category,
@@ -173,7 +173,7 @@ const LineChart = ({ city, state }) => {
                   // console.log('Avg Home Price - reorganizedData1', reorganizedData)
                   setAveragedData((prevData) => ({
                     ...prevData,
-                    labels: reorganizedData.map((d) => d.year),
+                    labels: reorganizedData.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
                     datasets: [
                       {
                         label: category,
