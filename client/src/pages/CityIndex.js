@@ -5,6 +5,7 @@ import DropDownSelector from '../components/DropDownSelector';
 import AdvancedSearchModal from '../components/AdvancedCitySearch';
 import { NavLink } from 'react-router-dom';
 
+
 const config = require('../config.json');
     
 export default function StateIndex() {
@@ -14,6 +15,7 @@ export default function StateIndex() {
     const [pageNumber, setPageNumber] = useState(1);
     const [loading, setLoading] = useState(true);
     const [hasMorePages, setHasMorePages] = useState(true);
+    const [appliedFilters, setAppliedFilters] = useState({});
 
     // modal manager
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,6 +34,24 @@ export default function StateIndex() {
     const handleApplyFilters = (filters) => {
       // Handle the applied filters
       console.log('Applied filters:', filters);
+      // setAppliedFilters(filters);
+      setAppliedFilters((prevFilters) => {
+         setStateData([])
+        console.log("app filter", stateData);
+        setLoading(true)
+        setHasMorePages(true);
+        setPageSize(15);
+        setPageNumber(1);
+        
+        return filters;
+      });  
+        /* setStateData([])
+        console.log("app filter", stateData);
+        setLoading(true)
+        setHasMorePages(true);
+        setPageSize(15);
+        setPageNumber(1); */
+      fetchData(selectedValue, pageSize, pageNumber, filters)
     };
     
     const handleSelect = (value) => {
@@ -42,31 +62,39 @@ export default function StateIndex() {
       setHasMorePages(true);
       setPageSize(15);
       setPageNumber(1);
-      fetchData(value, 15, 1);
+      fetchData(value, pageSize, pageNumber, appliedFilters);
     };
 
-    const fetchData = (option, size, number) => {
+    const fetchData = (option, size, number, filters) => {
       setLoading(true);
+      
+      let filterString = '';
+      if (filters){
+        Object.keys(filters).forEach((key) => {
+          filterString += `&${key}_low=${filters[key][0]}&${key}_high=${filters[key][1]}`;
+        });
+      }
+      // console.log(filterString);
       // Update the API endpoint based on the selected option, page size, and page number
       let endpoint;
       switch (option) {
           case 'Alphabetical':
-              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=city&page_size=${size}&page_number=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=city&page_size=${size}&page=${number}${filterString}`;
               break;
           case 'Tax Burden':
-              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=tax_burden&page_size=${size}&page_number=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=tax_burden&page_size=${size}&page=${number}${filterString}`;
               break;
           case 'Crime':
-              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=total_crimes&page_size=${size}&page_number=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=total_crimes&page_size=${size}&page=${number}${filterString}`;
               break;
           case 'Avg Sale Price':
-              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=avg_sales_price&page_size=${size}&page_number=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=avg_sales_price&page_size=${size}&page=${number}${filterString}`;
               break;
           case 'Avg Rent':
-              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=avg_rental_price&page_size=${size}&page_number=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=avg_rental_price&page_size=${size}&page=${number}${filterString}`;
               break;
           case 'Population':
-            endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=population&page_size=${size}&page_number=${number}`;
+            endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=population&page_size=${size}&page=${number}${filterString}`;
             break;
         default:
           endpoint = '';
@@ -76,7 +104,6 @@ export default function StateIndex() {
         fetch(endpoint)
           .then((res) => res.json())
           .then((resJson) => {
-
           if (resJson.length > 0){
               setStateData((prevData) => [...prevData, ...resJson]);
               setLoading(false);
@@ -94,17 +121,10 @@ export default function StateIndex() {
     };
 
     useEffect(() => {
-      // Trigger handleSelect with the defaultValue when the page first loads
-      handleSelect(dropDownOptions[0]);
-    }, []); // Empty dependency array ensures this runs only once on mount
-
-
-    useEffect(() => {
-      console.log(containerRef.current);
     if (containerRef.current) {
       const handleScroll = () => {
         const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
-        console.log(scrollHeight, scrollTop, scrollHeight-scrollTop,  clientHeight)
+ 
         if (scrollTop + clientHeight >= scrollHeight && !loading && hasMorePages) {
           // Load more data when the user scrolls to the bottom
           setPageNumber((prevPageNumber) => prevPageNumber + 1);
@@ -112,8 +132,9 @@ export default function StateIndex() {
       };
 
       containerRef.current.addEventListener('scroll', handleScroll);
-
+      
       return () => {
+        
         if (containerRef.current) {
           containerRef.current.removeEventListener('scroll', handleScroll);
         }
@@ -123,13 +144,13 @@ export default function StateIndex() {
 
     useEffect(() => {
       // Fetch data when the page number changes
-      if (pageNumber != 1){    
-        fetchData(selectedValue, pageSize, pageNumber);
-      }
+      console.log("before", stateData);
+      fetchData(selectedValue, pageSize, pageNumber, appliedFilters);
+      
     }, [pageNumber]);
 
     const dropDownOptions = ['Alphabetical', 'Tax Burden', 'Crime', 'Avg Sale Price', 'Avg Rent', 'Population'];
-
+    console.log("after",stateData);
     return (
       <Container maxWidth="xl" disableGutters>
         <Typography variant="h2">Cities</Typography>
