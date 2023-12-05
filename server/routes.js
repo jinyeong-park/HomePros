@@ -596,34 +596,19 @@ const monthly_house_prices = async function (req, res) {
     return res.status(400).send("City and state are required");
   }
   connection.query(
-    `WITH Crime2019Detail AS
+    `WITH CityName AS
     (
-    SELECT *
-    FROM Crime
-    WHERE year = 2019
+    SELECT city_id, city, county, state
+    FROM City
+    WHERE city = '${city}' AND state = '${state}'
     )
-
-    , HomeSales2022Dec AS
-    (
-    SELECT *
-    FROM HomeSales
-    WHERE year = 2022 AND month = 12
-    )
-
-    , Rent2022Dec AS
-    (
-    SELECT *
-    FROM Rent
-    WHERE year = 2022 AND month = 12
-    )
-
-    SELECT c.city, c.county, c.state, c.population, cri.violent_crime, cri.murder, cri.rape, cri.robbery, cri.aggravated_assault, cri.property_crime, cri.burglary, cri.motor_vehicle_theft, cri.arson, h.median_sale_price, h.median_list_price, h.median_ppsf, h.median_list_ppsf, h.property_type, h.homes_sold, h.pending_sales, h.new_listings, h.inventory, h.price_drops, h.off_market_in_two_weeks, r.rental_price, t.property_tax_rate, t.income_tax_rate, t.corporate_tax_rate, t.sales_tax_rate, t.state_local_tax_burden
-    FROM City c
-    LEFT JOIN Crime2019Detail cri
-    ON c.city_id = cri.city_id
-    LEFT JOIN HomeSales2022Dec h
+    
+    SELECT c.city, c.county, c.state, h.month, h.year, h.median_sale_price, h.median_list_price, h.property_type
+    FROM CityName c
+    JOIN HomeSales h
     ON c.city_id = h.city_id
-    ORDER BY h.year, h.month`,
+    ORDER BY h.year, h.month
+    `,
     (err, data) => {
       if (err || data.length === 0) {
         console.log(err);
