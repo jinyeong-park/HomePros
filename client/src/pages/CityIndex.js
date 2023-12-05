@@ -51,24 +51,23 @@ export default function StateIndex() {
       let endpoint;
       switch (option) {
           case 'Alphabetical':
-              endpoint = `http://${config.server_host}:${config.server_port}/namerank_cities?page_size=${size}&page=${number}`;
-              break;
-          case 'Score':
-              endpoint = `http://${config.server_host}:${config.server_port}/top_cities?page_size=${size}&page=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=city&page_size=${size}&page_number=${number}`;
               break;
           case 'Tax Burden':
-              endpoint = `http://${config.server_host}:${config.server_port}/taxrank_cities?page_size=${size}&page=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=tax_burden&page_size=${size}&page_number=${number}`;
               break;
           case 'Crime':
-              endpoint = `http://${config.server_host}:${config.server_port}/safest_cities?page_size=${size}&page=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=total_crimes&page_size=${size}&page_number=${number}`;
               break;
           case 'Avg Sale Price':
-              endpoint = `http://${config.server_host}:${config.server_port}/salesrank_cities?page_size=${size}&page=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=avg_sales_price&page_size=${size}&page_number=${number}`;
               break;
           case 'Avg Rent':
-              endpoint = `http://${config.server_host}:${config.server_port}/rentrank_cities?page_size=${size}&page=${number}`;
+              endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=avg_rental_price&page_size=${size}&page_number=${number}`;
               break;
-      
+          case 'Population':
+            endpoint = `http://${config.server_host}:${config.server_port}/search_cities?order=population&page_size=${size}&page_number=${number}`;
+            break;
         default:
           endpoint = '';
       }
@@ -129,7 +128,7 @@ export default function StateIndex() {
       }
     }, [pageNumber]);
 
-    const dropDownOptions = ['Alphabetical', 'Score', 'Tax Burden', 'Crime', 'Avg Sale Price', 'Avg Rent'];
+    const dropDownOptions = ['Alphabetical', 'Tax Burden', 'Crime', 'Avg Sale Price', 'Avg Rent', 'Population'];
 
     return (
       <Container maxWidth="xl" disableGutters>
@@ -145,7 +144,7 @@ export default function StateIndex() {
         </div>
         <div ref={containerRef} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', maxHeight: '1200px', overflowY: 'scroll' }}>
         {stateData.map((city, index) => (
-          <LocationCard key={index} num={index+1} title={city.city} imgSource={`${city.city},${city.state}`} content={<>County: {city.county} <br /> State: {city.state}</>}/>
+          <LocationCard key={index} num={index+1} title={city.city} imgSource={`${city.city},${city.state}`} content={<>County: {city.county} <br /> State: {city.state}</>} url={`/city/${city.city}/${city.state}`}/>
         ))}
         {loading && <p><br></br>Loading...</p>}
         </div>
