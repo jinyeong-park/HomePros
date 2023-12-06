@@ -1,0 +1,302 @@
+,city_x,state_x,population_x,county_x,latitude_x,longitude_x,city_y,state_y,county_y,latitude_y,longitude_y,population_y,sim
+0,Adak,Alaska,190,Aleutians West,51.8815,-176.6295,Adak,Alaska,Aleutians West,55.999722,-161.207778,,True
+459,Akiachak,Alaska,469,Bethel,60.921,-161.4021,Akiachak,Alaska,Bethel,60.891854,-161.39233,,True
+460,Akiachak,Alaska,469,Bethel,60.921,-161.4021,Akiak,Alaska,Bethel,60.890632,-161.199325,,True
+591,Akiachak,Alaska,469,Bethel,60.921,-161.4021,Napakiak,Alaska,Bethel,60.663758,-161.738144,,True
+608,Akiachak,Alaska,469,Bethel,60.921,-161.4021,Nunapitchuk,Alaska,Bethel,60.896944,-162.459444,,True
+688,Akiak,Alaska,293,Bethel,60.9061,-161.2122,Akiachak,Alaska,Bethel,60.891854,-161.39233,,True
+689,Akiak,Alaska,293,Bethel,60.9061,-161.2122,Akiak,Alaska,Bethel,60.890632,-161.199325,,True
+700,Akiak,Alaska,293,Bethel,60.9061,-161.2122,Aniak,Alaska,Bethel,61.691648,-157.758502,,True
+793,Akiak,Alaska,293,Bethel,60.9061,-161.2122,Kipnuk,Alaska,Bethel,59.923204,-164.101013,,True
+820,Akiak,Alaska,293,Bethel,60.9061,-161.2122,Napakiak,Alaska,Bethel,60.663758,-161.738144,,True
+919,Akutan,Alaska,700,Aleutians East,54.1594,-165.7328,Akutan,Alaska,Aleutians East,54.143012,-165.785368,,True
+932,Akutan,Alaska,700,Aleutians East,54.1594,-165.7328,Atka,Alaska,Aleutians West,52.199167,-174.213333,,True
+1149,Alakanuk,Alaska,1065,Kusilvak,62.6902,-164.6305,Alakanuk,Alaska,Kusilvak,62.746967,-164.60228,,True
+1380,Alatna,Alaska,41,Yukon-Koyukuk,66.5638,-152.8385,Allakaket,Alaska,Yukon Koyukuk,66.543197,-152.712155,,True
+1446,Alatna,Alaska,41,Yukon-Koyukuk,66.5638,-152.8385,Galena,Alaska,Yukon Koyukuk,64.760784,-156.797701,,True
+1573,Alatna,Alaska,41,Yukon-Koyukuk,66.5638,-152.8385,Takotna,Alaska,Yukon Koyukuk,62.948889,-155.566389,,True
+1837,Aleknagik,Alaska,125,Dillingham,59.2946,-158.6896,Aleknagik,Alaska,Dillingham,59.269688,-158.619882,,True
+2296,Allakaket,Alaska,213,Yukon-Koyukuk,66.5506,-152.627,Allakaket,Alaska,Yukon Koyukuk,66.543197,-152.712155,,True
+2526,Ambler,Alaska,273,Northwest Arctic,67.0897,-157.8725,Ambler,Alaska,Northwest Arctic,67.46951,-156.455652,,True
+2756,Anaktuvuk Pass,Alaska,261,North Slope,68.15,-151.7162,Anaktuvuk Pass,Alaska,North Slope,68.11878,-151.679005,,True
+2986,Anchor Point,Alaska,2288,Kenai Peninsula,59.7703,-151.7052,Anchor Point,Alaska,Kenai Peninsula,59.788818,-151.732933,,True
+3216,Anchorage,Alaska,292545,Anchorage,61.1508,-149.1091,Anchorage,Alaska,Anchorage,61.211571,-149.876077,,True
+3446,Anderson,Alaska,191,Denali,64.3074,-149.1562,Anderson,Alaska,Denali,64.300693,-149.1718,,True
+3894,Aniak,Alaska,564,Bethel,61.5817,-159.5451,Akiachak,Alaska,Bethel,60.891854,-161.39233,,True
+3895,Aniak,Alaska,564,Bethel,61.5817,-159.5451,Akiak,Alaska,Bethel,60.890632,-161.199325,,True
+3906,Aniak,Alaska,564,Bethel,61.5817,-159.5451,Aniak,Alaska,Bethel,61.691648,-157.758502,,True
+4004,Aniak,Alaska,564,Bethel,61.5817,-159.5451,Kongiganak,Alaska,Bethel,60.9888,-149.4116,,True
+4026,Aniak,Alaska,564,Bethel,61.5817,-159.5451,Napakiak,Alaska,Bethel,60.663758,-161.738144,,True
+4136,Anvik,Alaska,93,Yukon-Koyukuk,62.6541,-160.214,Anvik,Alaska,Yukon Koyukuk,62.830913,-160.130441,,True
+4366,Arctic Village,Alaska,225,Yukon-Koyukuk,68.1421,-145.4956,Arctic Village,Alaska,Yukon Koyukuk,68.077395,-145.423115,,True
+4548,Arctic Village,Alaska,225,Yukon-Koyukuk,68.1421,-145.4956,Stevens Village,Alaska,Yukon Koyukuk,65.995894,-149.118286,,True
+4583,Atka,Alaska,38,Aleutians West,52.2301,-174.2133,Akutan,Alaska,Aleutians East,54.143012,-165.785368,,True
+4596,Atka,Alaska,38,Aleutians West,52.2301,-174.2133,Atka,Alaska,Aleutians West,52.199167,-174.213333,,True
+5020,Atmautluak,Alaska,147,Bethel,60.8622,-162.2858,Tuluksak,Alaska,Bethel,61.108848,-160.938924,,True
+5021,Atmautluak,Alaska,147,Bethel,60.8622,-162.2858,Tuntutuliak,Alaska,Bethel,60.8438,-161.6372,,True
+5022,Atmautluak,Alaska,147,Bethel,60.8622,-162.2858,Tununak,Alaska,Bethel,60.539322,-165.097464,,True
+5055,Atqasuk,Alaska,181,North Slope,70.481,-157.3835,Atqasuk,Alaska,North Slope,71.290556,-156.788611,,True
+5270,Attu Station,Alaska,19,Aleutians West,52.8955,173.123,Akutan,Alaska,Aleutians East,54.143012,-165.785368,,True
+5974,Beaver,Alaska,93,Yukon-Koyukuk,66.383,-147.3219,Beaver,Alaska,Yukon Koyukuk,66.33883,-147.279803,,True
+6433,Bethel,Alaska,6273,Bethel,60.7928,-161.7917,Bethel,Alaska,Bethel,60.832389,-161.824053,,True
+6528,Bethel,Alaska,6273,Bethel,60.7928,-161.7917,Kwethluk,Alaska,Bethel,60.771814,-161.38849,,True
+6663,Bettles,Alaska,2,Yukon-Koyukuk,66.9088,-151.5362,Bettles Field,Alaska,Yukon Koyukuk,67.100495,-151.062414,,True
+7122,Big Lake,Alaska,2888,Matanuska-Susitna,61.526,-149.9721,Big Lake,Alaska,Matanuska Susitna,61.5842,-149.4401,,True
+7581,Brevig Mission,Alaska,673,Nome,65.3413,-166.4953,Brevig Mission,Alaska,Nome,65.334187,-166.478578,,True
+7811,Buckland,Alaska,677,Northwest Arctic,65.9784,-161.1341,Buckland,Alaska,Northwest Arctic,65.981052,-161.131676,,True
+8442,Butte,Alaska,3857,Matanuska-Susitna,61.5539,-149.0035,Sutton,Alaska,Matanuska Susitna,61.796667,-148.462778,,True
+8499,Cantwell,Alaska,136,Denali,63.379,-148.8158,Cantwell,Alaska,Denali,63.395458,-148.89735,,True
+8729,Central,Alaska,51,Yukon-Koyukuk,65.5213,-144.6409,Central,Alaska,Yukon Koyukuk,65.468058,-144.74886,,True
+8959,Chalkyitsik,Alaska,110,Yukon-Koyukuk,66.6469,-143.7821,Chalkyitsik,Alaska,Yukon Koyukuk,66.719,-143.638121,,True
+9418,Chefornak,Alaska,375,Bethel,60.155,-164.255,Chefornak,Alaska,Bethel,60.153746,-164.210294,,True
+10106,Chevak,Alaska,777,Kusilvak,61.5295,-165.5941,Chevak,Alaska,Kusilvak,61.583982,-164.776457,,True
+10565,Chicken,Alaska,12,Southeast Fairbanks,64.0878,-141.8285,Chicken,Alaska,Southeast Fairbanks,64.075,-141.933333,,True
+10795,Chignik,Alaska,44,Lake and Peninsula,56.3003,-158.4132,Chignik,Alaska,Lake And Peninsula,56.301639,-158.415696,,True
+10796,Chignik,Alaska,44,Lake and Peninsula,56.3003,-158.4132,Chignik Lagoon,Alaska,Lake And Peninsula,56.251277,-158.673528,,True
+10797,Chignik,Alaska,44,Lake and Peninsula,56.3003,-158.4132,Chignik Lake,Alaska,Lake And Peninsula,56.255556,-158.7625,,True
+11024,Chignik Lagoon,Alaska,31,Lake and Peninsula,56.3041,-158.5004,Chignik,Alaska,Lake And Peninsula,56.301639,-158.415696,,True
+11025,Chignik Lagoon,Alaska,31,Lake and Peninsula,56.3041,-158.5004,Chignik Lagoon,Alaska,Lake And Peninsula,56.251277,-158.673528,,True
+11026,Chignik Lagoon,Alaska,31,Lake and Peninsula,56.3041,-158.5004,Chignik Lake,Alaska,Lake And Peninsula,56.255556,-158.7625,,True
+11253,Chignik Lake,Alaska,40,Lake and Peninsula,56.2631,-158.8049,Chignik,Alaska,Lake And Peninsula,56.301639,-158.415696,,True
+11254,Chignik Lake,Alaska,40,Lake and Peninsula,56.2631,-158.8049,Chignik Lagoon,Alaska,Lake And Peninsula,56.251277,-158.673528,,True
+11255,Chignik Lake,Alaska,40,Lake and Peninsula,56.2631,-158.8049,Chignik Lake,Alaska,Lake And Peninsula,56.255556,-158.7625,,True
+12482,Chuathbaluk,Alaska,93,Bethel,61.5746,-159.2489,Kwethluk,Alaska,Bethel,60.771814,-161.38849,,True
+12632,Circle,Alaska,29,Yukon-Koyukuk,65.7936,-144.1813,Circle,Alaska,Yukon Koyukuk,65.824542,-144.08262,,True
+12862,Clam Gulch,Alaska,230,Kenai Peninsula,60.2,-151.3939,Clam Gulch,Alaska,Kenai Peninsula,60.201603,-151.422628,,True
+13092,Clark's Point,Alaska,42,Dillingham,58.8329,-158.5276,Clarks Point,Alaska,Dillingham,58.84921,-158.451241,,True
+13593,Cohoe,Alaska,1557,Kenai Peninsula,60.2681,-151.2843,Homer,Alaska,Kenai Peninsula,59.665495,-151.462644,,True
+13596,Cohoe,Alaska,1557,Kenai Peninsula,60.2681,-151.2843,Hope,Alaska,Kenai Peninsula,60.92,-149.641667,,True
+13782,Cold Bay,Alaska,103,Aleutians East,55.2122,-162.7475,Cold Bay,Alaska,Aleutians East,55.610952,-161.942941,,True
+14470,Cooper Landing,Alaska,217,Kenai Peninsula,60.4945,-149.841,Cooper Landing,Alaska,Kenai Peninsula,60.476692,-149.823514,,True
+14623,Cooper Landing,Alaska,217,Kenai Peninsula,60.4945,-149.841,Sterling,Alaska,Kenai Peninsula,60.520373,-150.849792,,True
+15619,Crooked Creek,Alaska,65,Bethel,61.8439,-158.1082,Crooked Creek,Alaska,Bethel,61.818072,-158.002483,,True
+15810,Crown Point,Alaska,63,Kenai Peninsula,60.4267,-149.353,Anchor Point,Alaska,Kenai Peninsula,59.788818,-151.732933,,True
+16078,Deering,Alaska,163,Northwest Arctic,66.0722,-162.7435,Deering,Alaska,Northwest Arctic,66.062265,-162.711951,,True
+16308,Delta Junction,Alaska,1259,Southeast Fairbanks,64.0603,-145.7058,Delta Junction,Alaska,Southeast Fairbanks,64.005426,-145.613611,,True
+16537,Deltana,Alaska,2022,Southeast Fairbanks,63.8723,-145.2158,Delta Junction,Alaska,Southeast Fairbanks,64.005426,-145.613611,,True
+16767,Denali Park,Alaska,855,Denali,63.5909,-148.7107,Denali National Park,Alaska,Denali,63.516075,-149.539532,,True
+17226,Dillingham,Alaska,2133,Dillingham,59.055,-158.5378,Dillingham,Alaska,Dillingham,59.059279,-158.973533,,True
+17546,Diomede,Alaska,80,Nome,65.7536,-168.9219,Nome,Alaska,Nome,64.505775,-165.310667,,True
+18374,Eagle,Alaska,107,Southeast Fairbanks,64.7813,-141.1979,Eagle,Alaska,Southeast Fairbanks,64.783333,-141.2,,True
+18603,Eagle Village,Alaska,33,Southeast Fairbanks,64.7434,-141.1138,Eagle,Alaska,Southeast Fairbanks,64.783333,-141.2,,True
+19292,Eek,Alaska,624,Bethel,60.2164,-162.0331,Eek,Alaska,Bethel,60.215058,-162.032341,,True
+19522,Egegik,Alaska,47,Lake and Peninsula,58.2181,-157.4036,Egegik,Alaska,Lake And Peninsula,58.206174,-157.342202,,True
+19752,Eielson AFB,Alaska,3240,Fairbanks North Star,64.6741,-147.0605,Eielson Afb,Alaska,Fairbanks North Star,64.67352,-147.08051,,True
+19982,Ekwok,Alaska,53,Dillingham,59.3462,-157.4861,Ekwok,Alaska,Dillingham,59.362792,-157.478211,,True
+20442,Elim,Alaska,279,Nome,64.6186,-162.2763,Elim,Alaska,Nome,64.621662,-162.260371,,True
+20673,Emmonak,Alaska,1005,Kusilvak,62.7762,-164.5157,Emmonak,Alaska,Kusilvak,62.827404,-164.131298,,True
+20791,Emmonak,Alaska,1005,Kusilvak,62.7762,-164.5157,Scammon Bay,Alaska,Kusilvak,61.845019,-165.581945,,True
+20903,Ester,Alaska,2719,Fairbanks North Star,64.8646,-148.0916,Ester,Alaska,Fairbanks North Star,64.846667,-148.016667,,True
+21311,Evansville,Alaska,17,Yukon-Koyukuk,66.9206,-151.4201,Anvik,Alaska,Yukon Koyukuk,62.830913,-160.130441,,True
+21494,Evansville,Alaska,17,Yukon-Koyukuk,66.9206,-151.4201,Stevens Village,Alaska,Yukon Koyukuk,65.995894,-149.118286,,True
+21820,Fairbanks,Alaska,64160,Fairbanks North Star,64.8353,-147.6533,Fairbanks,Alaska,Fairbanks North Star,64.840238,-147.710431,,True
+22050,False Pass,Alaska,106,Aleutians East,54.8416,-163.348,False Pass,Alaska,Aleutians East,54.841028,-163.436845,,True
+23277,Flat,Alaska,0,Yukon-Koyukuk,62.4415,-158.0405,Nulato,Alaska,Yukon Koyukuk,64.778024,-157.991353,,True
+23425,Fort Greely,Alaska,150,Southeast Fairbanks,63.9678,-145.7149,Fort Greely,Alaska,Southeast Fairbanks,64.036667,-145.733333,,True
+23657,Fort Yukon,Alaska,520,Yukon-Koyukuk,66.5806,-145.2415,Fort Yukon,Alaska,Yukon Koyukuk,66.520744,-145.306439,,True
+25262,Galena,Alaska,519,Yukon-Koyukuk,64.7381,-156.8635,Galena,Alaska,Yukon Koyukuk,64.760784,-156.797701,,True
+25267,Galena,Alaska,519,Yukon-Koyukuk,64.7381,-156.8635,Grayling,Alaska,Yukon Koyukuk,63.372013,-159.404907,,True
+25492,Gambell,Alaska,419,Nome,63.7538,-171.6881,Gambell,Alaska,Nome,63.776555,-171.701685,,True
+27098,Goodnews Bay,Alaska,73,Bethel,59.1271,-161.5753,Goodnews Bay,Alaska,Bethel,59.085008,-161.587146,,True
+27231,Goodnews Bay,Alaska,73,Bethel,59.1271,-161.5753,Toksook Bay,Alaska,Bethel,60.537,-165.097,,True
+27323,Grayling,Alaska,236,Yukon-Koyukuk,62.8998,-160.1078,Galena,Alaska,Yukon Koyukuk,64.760784,-156.797701,,True
+27328,Grayling,Alaska,236,Yukon-Koyukuk,62.8998,-160.1078,Grayling,Alaska,Yukon Koyukuk,63.372013,-159.404907,,True
+28017,Haines,Alaska,1571,Haines,59.2416,-135.4549,Haines,Alaska,Haines,59.251886,-135.542032,,True
+28934,Healy,Alaska,911,Denali,63.9454,-149.0151,Healy,Alaska,Denali,63.917123,-149.011128,,True
+29137,Healy Lake,Alaska,23,Southeast Fairbanks,64.0281,-144.6331,Eagle,Alaska,Southeast Fairbanks,64.783333,-141.2,,True
+29851,Holy Cross,Alaska,290,Yukon-Koyukuk,62.1868,-159.8198,Holy Cross,Alaska,Yukon Koyukuk,62.192584,-159.825092,,True
+30081,Homer,Alaska,5531,Kenai Peninsula,59.653,-151.5255,Homer,Alaska,Kenai Peninsula,59.665495,-151.462644,,True
+30084,Homer,Alaska,5531,Kenai Peninsula,59.653,-151.5255,Hope,Alaska,Kenai Peninsula,60.92,-149.641667,,True
+30541,Hooper Bay,Alaska,961,Kusilvak,61.5262,-166.1146,Hooper Bay,Alaska,Kusilvak,61.537157,-165.891045,,True
+30768,Hope,Alaska,105,Kenai Peninsula,60.8924,-149.6352,Homer,Alaska,Kenai Peninsula,59.665495,-151.462644,,True
+30771,Hope,Alaska,105,Kenai Peninsula,60.8924,-149.6352,Hope,Alaska,Kenai Peninsula,60.92,-149.641667,,True
+31001,Houston,Alaska,1739,Matanuska-Susitna,61.6159,-149.8003,Houston,Alaska,Matanuska Susitna,61.633611,-149.841111,,True
+31113,Houston,Alaska,1739,Matanuska-Susitna,61.6159,-149.8003,Sutton,Alaska,Matanuska Susitna,61.796667,-148.462778,,True
+31231,Hughes,Alaska,41,Yukon-Koyukuk,66.0452,-154.2376,Hughes,Alaska,Yukon Koyukuk,66.038246,-154.26443,,True
+31461,Huslia,Alaska,230,Yukon-Koyukuk,65.7001,-156.3386,Huslia,Alaska,Yukon Koyukuk,65.689918,-156.291976,,True
+32380,Iliamna,Alaska,35,Lake and Peninsula,59.7957,-154.8698,Iliamna,Alaska,Lake And Peninsula,59.564836,-155.462556,,True
+32672,Ivanof Bay,Alaska,0,Lake and Peninsula,55.9183,-159.4933,Pedro Bay,Alaska,Lake And Peninsula,59.92238,-153.821856,,True
+32840,Juneau,Alaska,32240,Juneau,58.4546,-134.1739,Juneau,Alaska,Juneau,58.362767,-134.529429,,True
+33529,Kaktovik,Alaska,241,North Slope,70.1231,-143.6258,Kaktovik,Alaska,North Slope,70.042889,-143.631329,,True
+33989,Kaltag,Alaska,216,Yukon-Koyukuk,64.3223,-158.7436,Kaltag,Alaska,Yukon Koyukuk,64.330452,-158.724251,,True
+34219,Karluk,Alaska,21,Kodiak Island,57.5845,-154.3255,Karluk,Alaska,Kodiak Island,57.57,-154.458333,,True
+34675,Kasigluk,Alaska,448,Bethel,60.8785,-162.5272,Kalskag,Alaska,Bethel,61.541006,-160.3261,,True
+34678,Kasigluk,Alaska,448,Bethel,60.8785,-162.5272,Kasigluk,Alaska,Bethel,60.895556,-162.520556,,True
+34685,Kasigluk,Alaska,448,Bethel,60.8785,-162.5272,Kipnuk,Alaska,Bethel,59.923204,-164.101013,,True
+34908,Kasilof,Alaska,459,Kenai Peninsula,60.331,-151.2293,Kasilof,Alaska,Kenai Peninsula,60.316365,-151.28958,,True
+35138,Kenai,Alaska,7452,Kenai Peninsula,60.5619,-151.1985,Kenai,Alaska,Kenai Peninsula,60.614467,-151.254556,,True
+35597,Ketchikan,Alaska,8150,Ketchikan Gateway,55.3556,-131.6698,Ketchikan,Alaska,Ketchikan Gateway,55.372028,-131.683175,,True
+35827,Kiana,Alaska,372,Northwest Arctic,66.9727,-160.4343,Kiana,Alaska,Northwest Arctic,67.18026,-158.152204,,True
+35831,Kiana,Alaska,372,Northwest Arctic,66.9727,-160.4343,Kivalina,Alaska,Northwest Arctic,67.665859,-163.733617,,True
+36057,King Cove,Alaska,1238,Aleutians East,55.0858,-162.2978,King Cove,Alaska,Aleutians East,55.062848,-162.305561,,True
+36287,King Salmon,Alaska,399,Bristol Bay,58.753,-156.5061,King Salmon,Alaska,Bristol Bay,58.724264,-156.641603,,True
+36413,Kipnuk,Alaska,467,Bethel,59.9373,-164.0616,Akiak,Alaska,Bethel,60.890632,-161.199325,,True
+36510,Kipnuk,Alaska,467,Bethel,59.9373,-164.0616,Kasigluk,Alaska,Bethel,60.895556,-162.520556,,True
+36517,Kipnuk,Alaska,467,Bethel,59.9373,-164.0616,Kipnuk,Alaska,Bethel,59.923204,-164.101013,,True
+36743,Kivalina,Alaska,905,Northwest Arctic,67.733,-164.5212,Kiana,Alaska,Northwest Arctic,67.18026,-158.152204,,True
+36747,Kivalina,Alaska,905,Northwest Arctic,67.733,-164.5212,Kivalina,Alaska,Northwest Arctic,67.665859,-163.733617,,True
+37894,Kobuk,Alaska,156,Northwest Arctic,66.931,-156.8939,Kobuk,Alaska,Northwest Arctic,66.912253,-157.066864,,True
+37898,Kobuk,Alaska,156,Northwest Arctic,66.931,-156.8939,Kotzebue,Alaska,Northwest Arctic,66.846459,-162.126493,,True
+38124,Kodiak,Alaska,5682,Kodiak Island,57.7934,-152.4059,Kodiak,Alaska,Kodiak Island,57.781967,-152.500169,,True
+38353,Kodiak Station,Alaska,2183,Kodiak Island,57.745,-152.5442,Kodiak,Alaska,Kodiak Island,57.781967,-152.500169,,True
+38943,Kongiganak,Alaska,470,Bethel,59.9858,-162.8544,Aniak,Alaska,Bethel,61.691648,-157.758502,,True
+39041,Kongiganak,Alaska,470,Bethel,59.9858,-162.8544,Kongiganak,Alaska,Bethel,60.9888,-149.4116,,True
+39271,Kotlik,Alaska,1247,Kusilvak,63.0305,-163.553,Kotlik,Alaska,Kusilvak,63.029471,-163.554153,,True
+39497,Kotzebue,Alaska,3199,Northwest Arctic,66.8766,-162.5231,Kobuk,Alaska,Northwest Arctic,66.912253,-157.066864,,True
+39501,Kotzebue,Alaska,3199,Northwest Arctic,66.8766,-162.5231,Kotzebue,Alaska,Northwest Arctic,66.846459,-162.126493,,True
+39731,Koyuk,Alaska,276,Nome,64.9411,-161.1454,Koyuk,Alaska,Nome,64.931668,-161.149957,,True
+39961,Koyukuk,Alaska,57,Yukon-Koyukuk,64.9008,-157.6946,Koyukuk,Alaska,Yukon Koyukuk,64.883333,-157.7,,True
+40325,Kwethluk,Alaska,425,Bethel,60.7978,-161.4147,Bethel,Alaska,Bethel,60.832389,-161.824053,,True
+40420,Kwethluk,Alaska,425,Bethel,60.7978,-161.4147,Kwethluk,Alaska,Bethel,60.771814,-161.38849,,True
+40650,Kwigillingok,Alaska,470,Bethel,59.8767,-163.1715,Kwigillingok,Alaska,Bethel,59.881022,-162.984938,,True
+41109,Lake Minchumina,Alaska,15,Yukon-Koyukuk,63.7981,-152.3446,Lake Minchumina,Alaska,Yukon Koyukuk,63.903884,-152.430081,,True
+41339,Larsen Bay,Alaska,24,Kodiak Island,57.5404,-154.0056,Larsen Bay,Alaska,Kodiak Island,57.538333,-153.98,,True
+41798,Levelock,Alaska,34,Lake and Peninsula,59.0683,-156.9009,Levelock,Alaska,Lake And Peninsula,59.371395,-154.976815,,True
+42603,Lowell Point,Alaska,83,Kenai Peninsula,60.0629,-149.4898,Anchor Point,Alaska,Kenai Peninsula,59.788818,-151.732933,,True
+42919,Lower Kalskag,Alaska,304,Bethel,61.5163,-160.3556,Kalskag,Alaska,Bethel,61.541006,-160.3261,,True
+42944,Lower Kalskag,Alaska,304,Bethel,61.5163,-160.3556,Lower Kalskag,Alaska,Bethel,61.51377,-160.359966,,True
+43403,Manley Hot Springs,Alaska,35,Yukon-Koyukuk,65.0187,-150.6453,Manley Hot Springs,Alaska,Yukon Koyukuk,65.02058,-150.573267,,True
+43633,Manokotak,Alaska,705,Dillingham,58.893,-158.9109,Manokotak,Alaska,Dillingham,59.009559,-158.989699,,True
+43863,Marshall,Alaska,253,Kusilvak,61.8753,-162.0487,Marshall,Alaska,Kusilvak,61.837087,-161.7394,,True
+44322,McGrath,Alaska,226,Yukon-Koyukuk,62.9424,-155.563,Mc Grath,Alaska,Yukon Koyukuk,62.967153,-155.585153,,True
+44781,Mekoryuk,Alaska,327,Bethel,60.3704,-166.267,Mekoryuk,Alaska,Bethel,60.365679,-166.283583,,True
+45919,Mill Bay,Alaska,3719,Kodiak Island,57.8185,-152.3657,Larsen Bay,Alaska,Kodiak Island,57.538333,-153.98,,True
+46158,Minto,Alaska,151,Yukon-Koyukuk,65.1033,-149.5565,Minto,Alaska,Yukon Koyukuk,65.058399,-149.691186,,True
+46177,Minto,Alaska,151,Yukon-Koyukuk,65.1033,-149.5565,Nulato,Alaska,Yukon Koyukuk,64.778024,-157.991353,,True
+46617,Moose Pass,Alaska,267,Kenai Peninsula,60.4997,-149.4464,Moose Pass,Alaska,Kenai Peninsula,60.85852,-149.255911,,True
+47076,Mountain Village,Alaska,845,Kusilvak,62.0911,-163.7209,Mountain Village,Alaska,Kusilvak,62.158913,-163.883822,,True
+47764,Naknek,Alaska,394,Bristol Bay,58.7847,-156.8966,Naknek,Alaska,Bristol Bay,58.885699,-156.705405,,True
+47826,Naknek,Alaska,394,Bristol Bay,58.7847,-156.8966,South Naknek,Alaska,Bristol Bay,58.736221,-156.850289,,True
+48091,Napakiak,Alaska,557,Bethel,60.6923,-161.9822,Akiachak,Alaska,Bethel,60.891854,-161.39233,,True
+48092,Napakiak,Alaska,557,Bethel,60.6923,-161.9822,Akiak,Alaska,Bethel,60.890632,-161.199325,,True
+48103,Napakiak,Alaska,557,Bethel,60.6923,-161.9822,Aniak,Alaska,Bethel,61.691648,-157.758502,,True
+48223,Napakiak,Alaska,557,Bethel,60.6923,-161.9822,Napakiak,Alaska,Bethel,60.663758,-161.738144,,True
+48320,Napaskiak,Alaska,517,Bethel,60.7018,-161.7616,Akiachak,Alaska,Bethel,60.891854,-161.39233,,True
+48321,Napaskiak,Alaska,517,Bethel,60.7018,-161.7616,Akiak,Alaska,Bethel,60.890632,-161.199325,,True
+48332,Napaskiak,Alaska,517,Bethel,60.7018,-161.7616,Aniak,Alaska,Bethel,61.691648,-157.758502,,True
+48452,Napaskiak,Alaska,517,Bethel,60.7018,-161.7616,Napakiak,Alaska,Bethel,60.663758,-161.738144,,True
+49369,Nenana,Alaska,506,Yukon-Koyukuk,64.5384,-149.0856,Nenana,Alaska,Yukon Koyukuk,64.557656,-149.086744,,True
+49437,Nenana,Alaska,506,Yukon-Koyukuk,64.5384,-149.0856,Tanana,Alaska,Yukon Koyukuk,65.156483,-152.103747,,True
+49599,New Stuyahok,Alaska,572,Dillingham,59.4762,-157.271,New Stuyahok,Alaska,Dillingham,59.593533,-157.297205,,True
+50287,Nightmute,Alaska,145,Bethel,60.4874,-164.8195,Nightmute,Alaska,Bethel,60.479444,-164.723889,,True
+50343,Nightmute,Alaska,145,Bethel,60.4874,-164.8195,Sleetmute,Alaska,Bethel,61.634555,-157.118284,,True
+50517,Nikiski,Alaska,4232,Kenai Peninsula,60.7152,-151.2317,Nikiski,Alaska,Kenai Peninsula,60.690278,-151.288889,,True
+50746,Nikolaevsk,Alaska,198,Kenai Peninsula,59.8295,-151.5964,Nikiski,Alaska,Kenai Peninsula,60.690278,-151.288889,,True
+50976,Nikolai,Alaska,104,Yukon-Koyukuk,63.0095,-154.3763,Nikolai,Alaska,Yukon Koyukuk,63.001603,-154.381247,,True
+51206,Nikolski,Alaska,17,Aleutians West,53.0133,-168.7536,Nikolski,Alaska,Aleutians West,52.988337,-168.788427,,True
+51436,Ninilchik,Alaska,964,Kenai Peninsula,60.0745,-151.3843,Ninilchik,Alaska,Kenai Peninsula,60.010833,-151.639604,,True
+51666,Noatak,Alaska,488,Northwest Arctic,67.5986,-163.0309,Noatak,Alaska,Northwest Arctic,66.97553,-160.509453,,True
+51896,Nome,Alaska,3685,Nome,64.5213,-165.4053,Nome,Alaska,Nome,64.505775,-165.310667,,True
+52126,Nondalton,Alaska,50,Lake and Peninsula,59.9711,-154.8627,Nondalton,Alaska,Lake And Peninsula,60.030837,-154.731675,,True
+52356,Noorvik,Alaska,602,Northwest Arctic,66.8292,-161.0377,Noorvik,Alaska,Northwest Arctic,66.836353,-161.044132,,True
+52464,North Lakes,Alaska,9941,Matanuska-Susitna,61.6191,-149.311,Big Lake,Alaska,Matanuska Susitna,61.5842,-149.4401,,True
+52815,North Pole,Alaska,2825,Fairbanks North Star,64.7529,-147.3599,North Pole,Alaska,Fairbanks North Star,64.78049,-147.369353,,True
+53045,Northway,Alaska,304,Southeast Fairbanks,62.9709,-141.6173,Northway,Alaska,Southeast Fairbanks,62.964167,-141.908611,,True
+53275,Nuiqsut,Alaska,751,North Slope,70.2135,-150.9897,Nuiqsut,Alaska,North Slope,70.192737,-150.997119,,True
+53486,Nulato,Alaska,296,Yukon-Koyukuk,64.7052,-158.2382,Minto,Alaska,Yukon Koyukuk,65.058399,-149.691186,,True
+53505,Nulato,Alaska,296,Yukon-Koyukuk,64.7052,-158.2382,Nulato,Alaska,Yukon Koyukuk,64.778024,-157.991353,,True
+53735,Nunam Iqua,Alaska,142,Kusilvak,62.511,-164.8998,Nunam Iqua,Alaska,Kusilvak,62.509167,-164.453333,,True
+53816,Nunapitchuk,Alaska,999,Bethel,60.8772,-162.4615,Akiachak,Alaska,Bethel,60.891854,-161.39233,,True
+53948,Nunapitchuk,Alaska,999,Bethel,60.8772,-162.4615,Napakiak,Alaska,Bethel,60.663758,-161.738144,,True
+53965,Nunapitchuk,Alaska,999,Bethel,60.8772,-162.4615,Nunapitchuk,Alaska,Bethel,60.896944,-162.459444,,True
+54028,Nunapitchuk,Alaska,999,Bethel,60.8772,-162.4615,Tununak,Alaska,Bethel,60.539322,-165.097464,,True
+54195,Old Harbor,Alaska,174,Kodiak Island,57.2169,-153.3252,Old Harbor,Alaska,Kodiak Island,57.202778,-153.303889,,True
+54654,Ouzinkie,Alaska,108,Kodiak Island,57.9223,-152.4674,Ouzinkie,Alaska,Kodiak Island,57.925,-152.491667,,True
+54884,Palmer,Alaska,5978,Matanuska-Susitna,61.5971,-149.1148,Palmer,Alaska,Matanuska Susitna,61.613814,-149.065323,,True
+55343,Pedro Bay,Alaska,18,Lake and Peninsula,59.7862,-154.1321,Pedro Bay,Alaska,Lake And Peninsula,59.92238,-153.821856,,True
+55803,Perryville,Alaska,74,Lake and Peninsula,55.9315,-159.1559,Perryville,Alaska,Lake And Peninsula,55.945289,-159.259333,,True
+56492,Pilot Point,Alaska,86,Lake and Peninsula,57.5585,-157.6798,Pilot Point,Alaska,Lake And Peninsula,57.595193,-157.449272,,True
+56500,Pilot Point,Alaska,86,Lake and Peninsula,57.5585,-157.6798,Port Heiden,Alaska,Lake And Peninsula,56.964333,-158.566367,,True
+56722,Pilot Station,Alaska,467,Kusilvak,61.9422,-162.8828,Pilot Station,Alaska,Kusilvak,61.946159,-162.874716,,True
+57181,Platinum,Alaska,8,Bethel,58.978,-161.7185,Platinum,Alaska,Bethel,58.63364,-162.043201,,True
+57870,Point Hope,Alaska,925,North Slope,68.3445,-166.6738,Point Hope,Alaska,North Slope,68.312058,-166.72618,,True
+57871,Point Hope,Alaska,925,North Slope,68.3445,-166.6738,Point Lay,Alaska,North Slope,69.705626,-162.906148,,True
+58099,Point Lay,Alaska,229,North Slope,69.7443,-162.8678,Point Hope,Alaska,North Slope,68.312058,-166.72618,,True
+58100,Point Lay,Alaska,229,North Slope,69.7443,-162.8678,Point Lay,Alaska,North Slope,69.705626,-162.906148,,True
+59247,Port Alsworth,Alaska,116,Lake and Peninsula,60.1688,-154.3233,Port Alsworth,Alaska,Lake And Peninsula,60.636416,-154.433803,,True
+59935,Port Heiden,Alaska,65,Lake and Peninsula,56.9426,-158.6047,Port Heiden,Alaska,Lake And Peninsula,56.964333,-158.566367,,True
+60165,Port Lions,Alaska,128,Kodiak Island,57.8758,-152.8737,Port Lions,Alaska,Kodiak Island,57.866667,-152.883333,,True
+61082,Prudhoe Bay,Alaska,1500,North Slope,70.3148,-148.7167,Prudhoe Bay,Alaska,North Slope,70.070057,-148.559636,,True
+61312,Quinhagak,Alaska,989,Bethel,59.7511,-161.8992,Quinhagak,Alaska,Bethel,59.738057,-161.874938,,True
+61542,Rampart,Alaska,67,Yukon-Koyukuk,65.4087,-149.9915,Rampart,Alaska,Yukon Koyukuk,65.383627,-150.011201,,True
+61772,Red Devil,Alaska,4,Bethel,61.7735,-157.3461,Red Devil,Alaska,Bethel,61.735389,-157.195969,,True
+62460,Ruby,Alaska,200,Yukon-Koyukuk,64.7233,-155.5005,Ruby,Alaska,Yukon Koyukuk,64.720062,-155.503872,,True
+62690,Russian Mission,Alaska,118,Kusilvak,61.7825,-161.3567,Russian Mission,Alaska,Kusilvak,61.591302,-161.558413,,True
+62920,Saint George,Alaska,95,Aleutians West,56.5791,-169.6114,Saint George Island,Alaska,Aleutians West,56.60324,-169.547257,,True
+63150,Saint Mary's,Alaska,817,Kusilvak,62.0718,-163.2805,Saint Marys,Alaska,Kusilvak,62.054106,-163.205263,,True
+63156,Saint Mary's,Alaska,817,Kusilvak,62.0718,-163.2805,Scammon Bay,Alaska,Kusilvak,61.845019,-165.581945,,True
+63380,Saint Michael,Alaska,312,Nome,63.4664,-162.1324,Saint Michael,Alaska,Nome,63.47759,-162.109141,,True
+63610,Saint Paul,Alaska,351,Aleutians West,57.1815,-170.2743,Saint Paul Island,Alaska,Aleutians West,57.178697,-170.293408,,True
+64069,Salcha,Alaska,751,Fairbanks North Star,64.5274,-146.9042,Salcha,Alaska,Fairbanks North Star,64.50905,-146.952974,,True
+64299,Sand Point,Alaska,1164,Aleutians East,55.3227,-160.4834,Sand Point,Alaska,Aleutians East,55.319236,-160.491435,,True
+64529,Savoonga,Alaska,946,Nome,63.6797,-170.4831,Savoonga,Alaska,Nome,63.679737,-170.470908,,True
+64870,Scammon Bay,Alaska,459,Kusilvak,61.842,-165.5833,Emmonak,Alaska,Kusilvak,62.827404,-164.131298,,True
+64988,Scammon Bay,Alaska,459,Kusilvak,61.842,-165.5833,Scammon Bay,Alaska,Kusilvak,61.845019,-165.581945,,True
+65218,Selawik,Alaska,659,Northwest Arctic,66.5988,-159.9995,Selawik,Alaska,Northwest Arctic,65.713537,-158.534287,,True
+65448,Seldovia,Alaska,171,Kenai Peninsula,59.4396,-151.7111,Seldovia,Alaska,Kenai Peninsula,59.436667,-151.708333,,True
+65458,Seldovia,Alaska,171,Kenai Peninsula,59.4396,-151.7111,Soldotna,Alaska,Kenai Peninsula,60.481778,-151.13582,,True
+65677,Seldovia Village,Alaska,223,Kenai Peninsula,59.453,-151.5905,Seldovia,Alaska,Kenai Peninsula,59.436667,-151.708333,,True
+65907,Seward,Alaska,2614,Kenai Peninsula,60.1124,-149.3925,Seward,Alaska,Kenai Peninsula,60.132874,-149.39849,,True
+66137,Shageluk,Alaska,42,Yukon-Koyukuk,62.6684,-159.563,Shageluk,Alaska,Yukon Koyukuk,62.661092,-159.52816,,True
+66367,Shaktoolik,Alaska,330,Nome,64.3568,-161.1973,Shaktoolik,Alaska,Nome,64.375498,-161.174589,,True
+66597,Shishmaref,Alaska,560,Nome,66.2372,-166.1027,Shishmaref,Alaska,Nome,66.230562,-166.137276,,True
+66827,Shungnak,Alaska,204,Northwest Arctic,66.8805,-157.1499,Shungnak,Alaska,Northwest Arctic,66.958141,-157.613496,,True
+67286,Sitka,Alaska,8518,Sitka,57.2401,-135.3152,Sitka,Alaska,Sitka,57.051436,-135.316569,,True
+67746,Skwentna,Alaska,69,Matanuska-Susitna,61.9314,-151.2096,Skwentna,Alaska,Matanuska Susitna,61.958333,-151.181667,,True
+67755,Skwentna,Alaska,69,Matanuska-Susitna,61.9314,-151.2096,Talkeetna,Alaska,Matanuska Susitna,62.260516,-150.110097,,True
+68149,Sleetmute,Alaska,81,Bethel,61.6516,-157.1251,Nightmute,Alaska,Bethel,60.479444,-164.723889,,True
+68205,Sleetmute,Alaska,81,Bethel,61.6516,-157.1251,Sleetmute,Alaska,Bethel,61.634555,-157.118284,,True
+68425,Soldotna,Alaska,4370,Kenai Peninsula,60.4862,-151.0672,Seldovia,Alaska,Kenai Peninsula,59.436667,-151.708333,,True
+68435,Soldotna,Alaska,4370,Kenai Peninsula,60.4862,-151.0672,Soldotna,Alaska,Kenai Peninsula,60.481778,-151.13582,,True
+68494,South Lakes,Alaska,6421,Matanuska-Susitna,61.5874,-149.316,Big Lake,Alaska,Matanuska Susitna,61.5842,-149.4401,,True
+68832,South Naknek,Alaska,56,Bristol Bay,58.6637,-156.9908,Naknek,Alaska,Bristol Bay,58.885699,-156.705405,,True
+68894,South Naknek,Alaska,56,Bristol Bay,58.6637,-156.9908,South Naknek,Alaska,Bristol Bay,58.736221,-156.850289,,True
+69353,Stebbins,Alaska,646,Nome,63.4705,-162.2599,Stebbins,Alaska,Nome,63.478468,-162.227355,,True
+69659,Sterling,Alaska,6016,Kenai Peninsula,60.5405,-150.8089,Cooper Landing,Alaska,Kenai Peninsula,60.476692,-149.823514,,True
+69812,Sterling,Alaska,6016,Kenai Peninsula,60.5405,-150.8089,Sterling,Alaska,Kenai Peninsula,60.520373,-150.849792,,True
+69860,Stevens Village,Alaska,9,Yukon-Koyukuk,66.025,-149.0802,Arctic Village,Alaska,Yukon Koyukuk,68.077395,-145.423115,,True
+70042,Stevens Village,Alaska,9,Yukon-Koyukuk,66.025,-149.0802,Stevens Village,Alaska,Yukon Koyukuk,65.995894,-149.118286,,True
+70618,Susitna,Alaska,0,Matanuska-Susitna,61.4935,-150.595,Houston,Alaska,Matanuska Susitna,61.633611,-149.841111,,True
+70723,Susitna,Alaska,0,Matanuska-Susitna,61.4935,-150.595,Skwentna,Alaska,Matanuska Susitna,61.958333,-151.181667,,True
+70730,Susitna,Alaska,0,Matanuska-Susitna,61.4935,-150.595,Sutton,Alaska,Matanuska Susitna,61.796667,-148.462778,,True
+71188,Sutton-Alpine,Alaska,1228,Matanuska-Susitna,61.7428,-148.8548,Sutton,Alaska,Matanuska Susitna,61.796667,-148.462778,,True
+71418,Takotna,Alaska,58,Yukon-Koyukuk,62.9827,-156.0838,Takotna,Alaska,Yukon Koyukuk,62.948889,-155.566389,,True
+71421,Takotna,Alaska,58,Yukon-Koyukuk,62.9827,-156.0838,Tanana,Alaska,Yukon Koyukuk,65.156483,-152.103747,,True
+71639,Talkeetna,Alaska,947,Matanuska-Susitna,62.2994,-149.9601,Skwentna,Alaska,Matanuska Susitna,61.958333,-151.181667,,True
+71648,Talkeetna,Alaska,947,Matanuska-Susitna,62.2994,-149.9601,Talkeetna,Alaska,Matanuska Susitna,62.260516,-150.110097,,True
+71878,Tanacross,Alaska,107,Southeast Fairbanks,63.3523,-143.4318,Tanacross,Alaska,Southeast Fairbanks,63.385278,-143.346389,,True
+72269,Tanana,Alaska,190,Yukon-Koyukuk,65.1746,-152.0686,Nenana,Alaska,Yukon Koyukuk,64.557656,-149.086744,,True
+72334,Tanana,Alaska,190,Yukon-Koyukuk,65.1746,-152.0686,Takotna,Alaska,Yukon Koyukuk,62.948889,-155.566389,,True
+72337,Tanana,Alaska,190,Yukon-Koyukuk,65.1746,-152.0686,Tanana,Alaska,Yukon Koyukuk,65.156483,-152.103747,,True
+73026,Teller,Alaska,250,Nome,65.2531,-166.342,Teller,Alaska,Nome,65.240164,-166.3833,,True
+73945,Togiak,Alaska,866,Dillingham,59.0693,-160.4728,Togiak,Alaska,Dillingham,59.066667,-160.4,,True
+74175,Tok,Alaska,1315,Southeast Fairbanks,63.329,-143.0379,Tok,Alaska,Southeast Fairbanks,63.333333,-142.983333,,True
+74272,Toksook Bay,Alaska,874,Bethel,60.5333,-165.1557,Goodnews Bay,Alaska,Bethel,59.085008,-161.587146,,True
+74405,Toksook Bay,Alaska,874,Bethel,60.5333,-165.1557,Toksook Bay,Alaska,Bethel,60.537,-165.097,,True
+75093,Trapper Creek,Alaska,318,Matanuska-Susitna,62.3189,-150.3965,Trapper Creek,Alaska,Matanuska Susitna,61.441361,-150.284455,,True
+75323,Tuluksak,Alaska,278,Bethel,61.105,-160.9493,Tuluksak,Alaska,Bethel,61.108848,-160.938924,,True
+75324,Tuluksak,Alaska,278,Bethel,61.105,-160.9493,Tuntutuliak,Alaska,Bethel,60.8438,-161.6372,,True
+75325,Tuluksak,Alaska,278,Bethel,61.105,-160.9493,Tununak,Alaska,Bethel,60.539322,-165.097464,,True
+75552,Tuntutuliak,Alaska,1072,Bethel,60.3843,-162.6838,Tuluksak,Alaska,Bethel,61.108848,-160.938924,,True
+75553,Tuntutuliak,Alaska,1072,Bethel,60.3843,-162.6838,Tuntutuliak,Alaska,Bethel,60.8438,-161.6372,,True
+75554,Tuntutuliak,Alaska,1072,Bethel,60.3843,-162.6838,Tununak,Alaska,Bethel,60.539322,-165.097464,,True
+75720,Tununak,Alaska,309,Bethel,60.579,-165.2077,Nunapitchuk,Alaska,Bethel,60.896944,-162.459444,,True
+75781,Tununak,Alaska,309,Bethel,60.579,-165.2077,Tuluksak,Alaska,Bethel,61.108848,-160.938924,,True
+75782,Tununak,Alaska,309,Bethel,60.579,-165.2077,Tuntutuliak,Alaska,Bethel,60.8438,-161.6372,,True
+75783,Tununak,Alaska,309,Bethel,60.579,-165.2077,Tununak,Alaska,Bethel,60.539322,-165.097464,,True
+76242,Two Rivers,Alaska,419,Fairbanks North Star,64.8908,-147.0897,Two Rivers,Alaska,Fairbanks North Star,64.871944,-147.038056,,True
+76472,Tyonek,Alaska,331,Kenai Peninsula,61.0734,-151.333,Tyonek,Alaska,Kenai Peninsula,61.117929,-151.348495,,True
+76931,Unalakleet,Alaska,728,Nome,63.8924,-160.7861,Unalakleet,Alaska,Nome,63.883478,-160.788365,,True
+77161,Unalaska,Alaska,4339,Aleutians West,53.8984,-166.568,Unalaska,Alaska,Aleutians West,53.887114,-166.519855,,True
+77269,Upper Kalskag,Alaska,225,Bethel,61.5416,-160.3337,Kalskag,Alaska,Bethel,61.541006,-160.3261,,True
+77294,Upper Kalskag,Alaska,225,Bethel,61.5416,-160.3337,Lower Kalskag,Alaska,Bethel,61.51377,-160.359966,,True
+78079,Venetie,Alaska,109,Yukon-Koyukuk,67.0206,-146.3741,Venetie,Alaska,Yukon Koyukuk,67.010446,-146.413723,,True
+78309,Wainwright,Alaska,556,North Slope,70.638,-159.9713,Wainwright,Alaska,North Slope,70.620064,-160.012532,,True
+78539,Wales,Alaska,267,Nome,65.6119,-168.0773,Wales,Alaska,Nome,65.688212,-168.520521,,True
+78770,Wasilla,Alaska,9098,Matanuska-Susitna,61.577,-149.466,Wasilla,Alaska,Matanuska Susitna,61.5814,-149.4394,,True
+78773,Wasilla,Alaska,9098,Matanuska-Susitna,61.577,-149.466,Willow,Alaska,Matanuska Susitna,61.771511,-150.188891,,True
+79229,White Mountain,Alaska,192,Nome,64.6812,-163.4228,White Mountain,Alaska,Nome,64.702791,-163.42185,,True
+80144,Willow,Alaska,1965,Matanuska-Susitna,61.8157,-149.753,Wasilla,Alaska,Matanuska Susitna,61.5814,-149.4394,,True
+80147,Willow,Alaska,1965,Matanuska-Susitna,61.8157,-149.753,Willow,Alaska,Matanuska Susitna,61.771511,-150.188891,,True
+80727,Womens Bay,Alaska,978,Kodiak Island,57.696,-152.6276,Larsen Bay,Alaska,Kodiak Island,57.538333,-153.98,,True
+81294,Yakutat,Alaska,562,Yakutat,59.567,-139.5966,Yakutat,Alaska,Yakutat,59.620211,-139.778858,,True
