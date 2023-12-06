@@ -39,7 +39,7 @@ const LocationCard = ({num, title, imgSource, content, url, latitude, longitude,
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the background color or remove this line if not needed
+              backgroundColor: 'rgba(0, 0, 0, 0.4)', // Adjust the background color or remove this line if not needed
             }}
           />
           <div
@@ -52,13 +52,13 @@ const LocationCard = ({num, title, imgSource, content, url, latitude, longitude,
               textAlign: 'center',
             }}
           > 
-            <Typography variant="h4" component="div">
+            <Typography variant="h5" component="div" style={{fontStyle: "italic", fontWeight: "bold"}}>
               {num}
             </Typography>
-            <Typography variant="h4" component="div">
+            <Typography variant="h4" component="div" style={{fontWeight: "bold"}}>
               {title}
             </Typography>
-            <Typography variant="body2" component="div">
+            <Typography variant="h7" component="div">
               {content}
             </Typography>
             {disableWeather? ( <p></p> ) : (

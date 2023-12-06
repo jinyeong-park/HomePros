@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
@@ -112,9 +114,13 @@ function App() {
         alignItems: "center",
       }}
     >
-      <Typography variant="h4" sx={{ mt: 4, mb: 2, textAlign: "center" }}>
-        Find your dream city
-      </Typography>
+      <div style={{display:'flex', alignItems: 'center'}}>
+        <FontAwesomeIcon icon={faMagnifyingGlass} className="fa-xl" style={{color:"e23d8f", paddingRight:"10px", paddingTop:"12px"}}/>
+        <Typography variant="h4" sx={{ mt: 4, mb: 2, textAlign: "center" }}>
+          Find your dream city
+        </Typography>
+      </div>
+
 
       <Box sx={{ width: "100%", maxWidth: "500px", my: 2 }}>
         <Autocomplete
