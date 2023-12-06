@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom'; // Import useHistory from React Router
 import Weather from './Weather'
 
-const LocationCard = ({num, title, imgSource, content, url, latitude, longitude}) => {
+const LocationCard = ({num, title, imgSource, content, url, latitude, longitude, disableWeather=false}) => {
     const navigate = useNavigate();
     const cardStyle = {
       width: 400, // Set the desired width
@@ -61,7 +61,9 @@ const LocationCard = ({num, title, imgSource, content, url, latitude, longitude}
             <Typography variant="body2" component="div">
               {content}
             </Typography>
+            {disableWeather? ( <p></p> ) : (
             <Weather latitude={latitude} longitude={longitude} />
+            )}
           </div>
         </CardContent>
       </Card>

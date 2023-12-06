@@ -40,7 +40,7 @@ const Weather = ({latitude, longitude}) => {
      // Set up interval to fetch weather data every hour (3600000 milliseconds)
     const intervalId = setInterval(() => {
       fetchData1();
-    }, 3600000);
+    }, 1200000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
