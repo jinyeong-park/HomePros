@@ -100,7 +100,7 @@ export default function StateIndex() {
   return (
     <Container maxWidth="xl" disableGutters>
       <br></br>
-      <Typography variant="h3">States</Typography>
+      <Typography variant="h4">States</Typography>
         <br></br>
       <DropDownSelector options={dropDownOptions} onSelect={handleSelect} defaultValue={dropDownOptions[0]} />
       <div ref={containerRef} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', maxHeight: '1200px', overflowY: 'scroll' }}>

@@ -51,13 +51,13 @@ const LocationCard = ({num, title, imgSource, content, url}) => {
               textAlign: 'center',
             }}
           > 
-            <Typography variant="h4" component="div">
+            <Typography variant="h5" component="div">
               {num}
             </Typography>
-            <Typography variant="h3" component="div">
+            <Typography variant="h4" component="div">
               {title}
             </Typography>
-            <Typography variant="body2" component="div">
+            <Typography variant="h7" component="div">
               {content}
             </Typography>
           </div>

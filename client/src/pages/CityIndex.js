@@ -154,7 +154,7 @@ export default function StateIndex() {
     return (
       <Container maxWidth="xl" disableGutters>
         <br></br>
-        <Typography variant="h3">Cities</Typography>
+        <Typography variant="h4">Cities</Typography>
         <br></br>
         <DropDownSelector options={dropDownOptions} onSelect={handleSelect} defaultValue={dropDownOptions[0]} />
         <div>
