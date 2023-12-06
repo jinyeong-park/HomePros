@@ -8,7 +8,7 @@ _At HomePros, we use housing data, economic factors, and social indicators to he
 
 ### Our Key Features:
 
-- **Data-Driven Insights:** We analyze housing prices, safety records, tax info, weather, job opportunities, education options to provide you with valuable insights.
+- **Data-Driven Insights:** We analyze housing prices, safety records, tax info and weather to provide you with valuable insights.
 - **Personalized Recommendations:** Tailored to your preferences, our platform offers recommendations that align with your unique needs.
 - **Simplified Decision-Making:** Say goodbye to the complexity of choice. We simplify the process, helping you make decisions with confidence.
 
@@ -21,34 +21,38 @@ _At HomePros, we use housing data, economic factors, and social indicators to he
 
 ### List of Extra Features:
 
-- Source and include education information.
-- User login system, so the user can store favorite city/states.
-- Allow users to review cities.
-- Comparison feature to compare cities or states.
+- Integrated live hourly weather information for each city though an external API call to https://api.weather.gov/points/${latitude},${longitude} and polls every 20 minutes for updates
+- Pulling images for each city from an external API where `imgSource` is a combination of city and state https://source.unsplash.com/random/1280x720/?${imgSource},USA
 
 ### List of Pages Description:
 
 1. **Page 1 (Main):**
 
-   - Display the top 10 cities (price under $500k-1m & safety score & weather.... ) and top 5 states by tax (based on State-Local Tax Burden).
-   - Implement a simple search bar for a city or state.
+   - This is the main page where users can search for city and/or state. This page has two search boxes. The user can enter a city and the state or just a state and hit search. Upon searching the user will be redirected to the state or cities information page.
 
-2. **Page 2:**
+2. **Page 2 (StateInfoPage):**
 
-   - Clicking into a city will provide average statistics that we have for the city including crime and weather data.
-   - Visualization with the city’s historical house/rent data.
-   - Advanced filtering option to search other cities and states.
+- This page shows a detailed overview of a state including some key statistics in a table on the left of the page and an interactive map showing the index scores of the cities in that state.
 
-3. **Page 3:**
-   - Clicking into a state will provide average tax statistics for a state and the top 3-5 cities associated with the state.
-   - Advanced filtering options to search other cities or states.
+3. **Page 3 (CityPage):**
+
+   - This page shows a detailed overview of a city including some key statistics in a table on the left of the page and an interactive map showing the location of the city.
+
+4. **Page 4 (Cities):**
+
+   - The page can be accessed through the navigation bar and shows all the cities with an option for advanced search criteria.
+   - The advanced search includes the fields tax burden, average home price, average rent price, total crime, and population.
+   - You can also sort results by each of the factors in ascending order. Each card also has the city's current weather and can be clicked to lead to the city specific information page.
+
+5. **Page 5 (States):**
+   - The page can be accessed through the navigation bar and shows all the states linking each state to the StateInfoPage.
+   - The state cards can be sorted by tax burden, alphabetically, index score, or total crime in ascending order.
 
 ## 2. Architecture
 
 ### List of Technologies Used:
 
-- AWS RDS
-- MySQL
+- AWS RDS (MySQL)
 - Node.JS
 - JavaScript
 - ReactJS
