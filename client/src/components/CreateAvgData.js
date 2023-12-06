@@ -16,7 +16,6 @@ const CreateAvgData = (resJson, category) => {
                 acc[yearMonthKey].sum += entry.rental_price;
                 acc[yearMonthKey].count += 1;
             }
-            // console.log('acc', acc)
             return acc;
     
           }, {});

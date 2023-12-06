@@ -28,16 +28,12 @@ const LineChart = ({ city, state }) => {
          
           const response = await fetch(endpoint);
           const resJson = await response.json();
-          // console.log('resJson', resJson)
+      
 
           if (resJson.length > 0) {
             // call helper function - CreateAvgData
             const reorganizedData = CreateAvgData(resJson, category);
-
-                        
-            //resJson?.filter((d) => d.property_type === "Condo/Co-op").map((d) => d.median_sale_price)
-
-            
+         
             const processedData = ({
               labels: reorganizedData?.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
               datasets: [
@@ -174,7 +170,7 @@ const LineChart = ({ city, state }) => {
                 }));
               } else if ( category === 'Avg Rent Price')  {
                   reorganizedData = CreateAvgData(resJson, category);
-                  // console.log('Avg Home Price - reorganizedData1', reorganizedData)
+
                   setAveragedData((prevData) => ({
                     ...prevData,
                     labels: reorganizedData?.map((d, i, arr) => d.month ? (i > 0 && arr[i - 1].year === d.year ? `` : `${d.year}`) : `${d.year}`),
