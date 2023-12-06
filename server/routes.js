@@ -800,7 +800,7 @@ const search_cities = async function (req, res) {
     AND city LIKE '${city}%'
     )
     
-    SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, r.avg_rental_price, t.tax_burden
+    SELECT c.city, c.county, c.state, c.population, cri.total_crimes, h.avg_sales_price, r.avg_rental_price, t.tax_burden, l.latitude, l.longitude
     FROM TaxBurden t
     JOIN CityPop c
     ON t.state = c.state
@@ -810,6 +810,8 @@ const search_cities = async function (req, res) {
     ON c.city_id = h.city_id
     JOIN Rent2022 r
     ON c.city_id = r.city_id
+    JOIN Location l
+    ON c.city_id = l.city_id
     ORDER BY ${order}
     LIMIT ${pageSize} OFFSET ${offset}`,
     (err, data) => {
