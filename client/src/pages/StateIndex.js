@@ -22,7 +22,7 @@ export default function StateIndex() {
     setHasMorePages(true);
     setPageSize(15);
     setPageNumber(1);
-    fetchData(value, 15, 1);
+    // fetchData(value, 15, 1);
   };
 
   const fetchData = (option, size, number) => {
@@ -93,7 +93,7 @@ export default function StateIndex() {
     console.log(pageNumber);// Fetch data when the page number changes 
     fetchData(selectedValue, pageSize, pageNumber);
     
-    }, [pageNumber]);
+    }, [pageNumber, selectedValue]);
 
   const dropDownOptions = ['Alphabetical', 'Score', 'Tax Burden', 'Crime'];
 
