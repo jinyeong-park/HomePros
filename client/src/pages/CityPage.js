@@ -12,11 +12,11 @@ export function CityPage() {
   return (
     <>
       <h2 style={{ textAlign: 'center', margin: '70px 0px' }}>{cityname + ', '} {statename}</h2>
-      <div className="container" style={{ display: 'flex', padding: '20px', overflowX: 'hidden' }}>
-        <div className="chart-container" style={{ flex: '1', marginRight: '2%', marginBottom: '40px' }}>
+      <div className="container" style={{ display: 'flex', padding: '15px', overflowX: 'hidden' }}>
+        <div className="chart-container" style={{ flex: '1', marginLeft: '2%', marginRight: '2%', marginBottom: '40px' }}>
           <LineChart city={cityname} state={statename} />
         </div>
-        <div className="map-container" style={{ flex: '1', paddingTop: '90px', textAlign: 'center' }}>
+        <div className="map-container" style={{ flex: '1', paddingTop: '95px', textAlign: 'center' }}>
           <Map city={cityname} state={statename} />
         </div>
       </div>
