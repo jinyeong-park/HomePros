@@ -14,32 +14,13 @@ export function CityPage() {
         {cityname + ', '} {statename}
       </h2>
       <div
-        className="container"
-        style={{
-          display: 'flex',
-          padding: '10px',
-          overflowX: 'hidden',
+        className="container" style={{display: 'flex', padding: '10px', overflowX: 'hidden',
         }}
       >
-        <div
-          className="chart-container"
-          style={{
-            flex: '1',
-            marginLeft: '60px',
-            marginRight: '10px',
-            marginBottom: '40px',
-          }}
-        >
+        <div className="chart-container" style={{flex: '1', marginLeft: '60px', marginRight: '10px', marginBottom: '40px',}}>
           <LineChart city={cityname} state={statename} />
         </div>
-        <div
-          className="map-container"
-          style={{
-            flex: '1',
-            paddingTop: '110px',
-            textAlign: 'center',
-          }}
-        >
+        <div className="map-container" style={{flex: '1', paddingTop: '110px', textAlign: 'center',}}>
           <Map city={cityname} state={statename} />
         </div>
       </div>
