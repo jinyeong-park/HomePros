@@ -11,7 +11,7 @@ export function CityPage() {
 
   return (
     <>
-      <h2 style={{ textAlign: 'center', margin: '70px 0px' }}>{cityname + ', '} {statename}</h2>
+      <h2 style={{ textAlign: 'center', margin: '50px 0px' }}>{cityname + ', '} {statename}</h2>
       <div className="container" style={{ display: 'flex', padding: '10px', overflowX: 'hidden' }}>
         <div className="chart-container" style={{ flex: '1', marginLeft: '60px', marginRight: '15px', marginBottom: '40px' }}>
           <LineChart city={cityname} state={statename} />
