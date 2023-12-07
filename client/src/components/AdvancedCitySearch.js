@@ -3,7 +3,7 @@ import { Modal, Box, Typography, Slider, Button, Grid, Item } from '@mui/materia
 
 const AdvancedSearchModal = ({ open, onClose, onApplyFilters }) => {
     const [avgHomePriceRange, setAvgHomePriceRange] = useState([0, 10000000]);
-    const [rentRange, setRentRange] = useState([0, 1000000]);
+    const [rentRange, setRentRange] = useState([0, 50000]);
     const [taxBurdenRange, setTaxBurdenRange] = useState([0, 1]);
     const [totalCrimeRange, setTotalCrimeRange] = useState([0, 100000]);
     const [populationRange, setPopulationRange] = useState([0, 100000000]); 
@@ -84,7 +84,7 @@ const AdvancedSearchModal = ({ open, onClose, onApplyFilters }) => {
           valueLabelFormat={(value) => `$${value}`}
           step = {100}
           min={0}
-          max={1000000}
+          max={50000}
         />
         </Grid>
 
