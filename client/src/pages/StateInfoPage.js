@@ -14,7 +14,8 @@ import TablePagination from "@mui/material/TablePagination";
 import stateUrls from "../data/state_index_score_urls.json";
 import { Link, Link as RouterLink, useParams } from "react-router-dom";
 import { useTheme } from "@emotion/react";
-import { Grid, useMediaQuery } from "@mui/material";
+import { Grid, IconButton, Tooltip, useMediaQuery } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 const config = require("../config.json");
 
 const backend = `http://${config.server_host}:${config.server_port}`;
@@ -50,6 +51,9 @@ const StateInfoPage = () => {
     ) : (
       <p>Map is not available</p>
     );
+
+  const note =
+    "Index Score is calculated based on several socio-economic criteria to rank the cities";
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
@@ -138,7 +142,18 @@ const StateInfoPage = () => {
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ fontWeight: "bold" }}>City Name</TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }}>{category}</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    {category}
+                    {category === "Index Score" && (
+                      <sup>
+                        <Tooltip title={note}>
+                          <IconButton>
+                            <InfoIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </sup>
+                    )}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
