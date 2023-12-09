@@ -50,8 +50,6 @@ export default function NavBar() {
           </NavLink>
           <NavText href="/cities" text="Cities" />
           <NavText href="/states" text="States" />
-          {/* <NavText href="/compare" text="Compare" /> */}
-          <NavText href="/advancedsearch" text="Advanced Search" />
         </Toolbar>
       </Container>
     </AppBar>
