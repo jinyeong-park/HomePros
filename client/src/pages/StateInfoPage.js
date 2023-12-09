@@ -17,6 +17,7 @@ import { useTheme } from "@emotion/react";
 import { Grid, IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 const config = require("../config.json");
 
 const backend = `http://${config.server_host}:${config.server_port}`;
@@ -116,6 +117,7 @@ const StateInfoPage = () => {
     setPage(newPage);
     // await fetchDataForCategory(category, newPage);
   };
+  // Custom Pagination Actions Component
 
   return (
     <Box sx={{ p: 4, width: "100%", mx: "auto" }}>
@@ -221,6 +223,9 @@ const StateInfoPage = () => {
                 </Table>
               </TableContainer>
               <TablePagination
+                sx={{
+                  "& .MuiTablePagination-displayedRows": { display: "none" },
+                }}
                 rowsPerPageOptions={[]}
                 component="div"
                 count={paginationCount} // Use totalRows for the count
