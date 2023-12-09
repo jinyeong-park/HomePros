@@ -16,19 +16,25 @@ import { Link, Link as RouterLink, useParams } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { Grid, IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+import CloudOffIcon from "@mui/icons-material/CloudOff";
 const config = require("../config.json");
 
 const backend = `http://${config.server_host}:${config.server_port}`;
+
 const StateInfoPage = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   // Use the provided iframe HTML to embed the map
   const { state } = useParams();
   const stateName = state.toString().toLocaleLowerCase();
   const [category, setCategory] = useState("Index Score");
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const rowsPerPage = 5;
+
   const [rows, setRows] = useState([]);
+  const [hasMoreData, setHasMoreData] = useState(true);
+  const paginationCount = hasMoreData ? -1 : page * rowsPerPage;
   const categories = ["Index Score", "Rent", "Avg Home Price", "Total Crime"];
   const categoryMap = {
     "Index Score": "index_score",
@@ -36,14 +42,14 @@ const StateInfoPage = () => {
     "Avg Home Price": "avg_sales_price",
     "Total Crime": "crime_rate",
   };
-  const rowsPerPageOptions = [5, 10, 25];
+  // const rowsPerPageOptions = [10];
   const mapIframe =
     stateName && stateUrls[stateName] ? (
       <iframe
         src={stateUrls[stateName].index_score}
-        width="640"
-        height="480"
-        style={{ border: "none" }}
+        width="100%"
+        height="90%"
+        style={{ minHeight: "450px", border: "none" }}
         title={`${
           stateName.charAt(0).toUpperCase() + stateName.slice(1)
         } State Map`}
@@ -59,15 +65,6 @@ const StateInfoPage = () => {
     setCategory(event.target.value);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   // Define a function to generate the URL for city details
   const generateCityUrl = (cityName) => {
     const citySlug = encodeURIComponent(
@@ -78,8 +75,9 @@ const StateInfoPage = () => {
     );
     return `/city/${citySlug}/${stateSlug}`;
   };
+
   useEffect(() => {
-    const fetchDataForCategory = async (selectedCategory) => {
+    const fetchDataForCategory = async (selectedCategory, page = 0) => {
       const categoryEndpointMap = {
         "Index Score": "/top_cities",
         Rent: "/rentrank_cities",
@@ -90,22 +88,35 @@ const StateInfoPage = () => {
       const endpoint = categoryEndpointMap[selectedCategory];
       try {
         const response = await fetch(
-          backend + endpoint + `?state=${stateName}`
+          backend +
+            endpoint +
+            `?state=${stateName}&page=${page + 1}&page_size=${rowsPerPage}`
         );
         const data = await response.json();
         console.log(data);
-        setRows(data);
+        const data_arr = Object.values(data);
+        if (data_arr.length === 0) {
+          setHasMoreData(false);
+        } else {
+          setHasMoreData(true);
+          setRows(data_arr);
+        }
       } catch (error) {
         console.error("Failed to fetch data:", error);
         // Handle errors or set error state here
       }
     };
     // Fetch data for the default category on component mount
-    fetchDataForCategory(category);
-  }, [category, stateName]);
+    fetchDataForCategory(category, page);
+  }, [category, stateName, page]);
+
+  const handleChangePage = async (event, newPage) => {
+    setPage(newPage);
+    // await fetchDataForCategory(category, newPage);
+  };
 
   return (
-    <Box sx={{ p: 4, width: "100%", maxWidth: 1200, mx: "auto" }}>
+    <Box sx={{ p: 4, width: "100%", mx: "auto" }}>
       <Typography
         variant="h3"
         sx={{
@@ -117,77 +128,116 @@ const StateInfoPage = () => {
       >
         {stateName.charAt(0).toUpperCase() + stateName.slice(1)}
       </Typography>
+
       <Grid
         container
-        justifyContent="center"
         spacing={8}
         direction={isSmallScreen ? "column-reverse" : "row"}
+        sx={{
+          minWidth: "40%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <Grid item xs={12} md={6}>
-          {/* Dropdown Menu for selecting the category */}
-          <Select
-            value={category}
-            onChange={handleCategoryChange}
-            sx={{ float: "right", mb: 2 }} // Position the dropdown to the right
+        {!hasMoreData && page === 0 ? (
+          // Display a styled message when data is empty
+          <Grid
+            sx={{
+              minWidth: 450,
+            }}
           >
-            {categories.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-          {/* Table with pagination */}
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 450 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ fontWeight: "bold" }}>City Name</TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }}>
-                    {category}
-                    {category === "Index Score" && (
-                      <sup>
-                        <Tooltip title={note}>
-                          <IconButton>
-                            <InfoIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </sup>
-                    )}
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows &&
-                  rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => (
-                      <TableRow key={row.city}>
-                        <TableCell component="th" scope="row">
-                          <Link
-                            component={RouterLink}
-                            to={generateCityUrl(row.city)}
-                          >
-                            {row.city}
-                          </Link>
-                        </TableCell>
-                        <TableCell>{row[categoryMap[category]]}</TableCell>
-                      </TableRow>
-                    ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[...rowsPerPageOptions]}
-            component="div"
-            count={rows.length}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Grid>
+            <CloudOffIcon style={{ fontSize: 60, color: "lightgray" }} />
+            <Typography variant="subtitle1" color="textSecondary">
+              No Data Available
+            </Typography>
+          </Grid>
+        ) : (
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              minWidth: 450,
+            }}
+          >
+            <>
+              <Select
+                value={category}
+                onChange={handleCategoryChange}
+                sx={{ float: "right", mb: 2 }} // Position the dropdown to the right
+              >
+                {categories.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
 
-        <Grid item xs={12} md={6}>
+              <TableContainer component={Paper}>
+                <Table
+                  sx={{ float: "left", minWidth: 450 }}
+                  aria-label="simple table"
+                >
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        City Name
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        {category}
+                        {category === "Index Score" && (
+                          <sup>
+                            <Tooltip title={note}>
+                              <IconButton>
+                                <InfoIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </sup>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rows &&
+                      rows
+                        // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row) => (
+                          <TableRow key={row.city}>
+                            <TableCell component="th" scope="row">
+                              <Link
+                                component={RouterLink}
+                                to={generateCityUrl(row.city)}
+                              >
+                                {row.city}
+                              </Link>
+                            </TableCell>
+                            <TableCell>{row[categoryMap[category]]}</TableCell>
+                          </TableRow>
+                        ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[]}
+                component="div"
+                count={paginationCount} // Use totalRows for the count
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+              />
+            </>
+          </Grid>
+        )}
+        <Grid
+          item
+          xs={12}
+          md={6}
+          style={{
+            width: isSmallScreen ? "100%" : "60%",
+            minHeight: "450px",
+          }}
+        >
           {mapIframe}
         </Grid>
       </Grid>
