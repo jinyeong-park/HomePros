@@ -35,6 +35,7 @@ const StateInfoPage = () => {
   const [rows, setRows] = useState([]);
   const [hasMoreData, setHasMoreData] = useState(true);
   const paginationCount = hasMoreData ? -1 : page * rowsPerPage;
+
   const categories = ["Index Score", "Rent", "Avg Home Price", "Total Crime"];
   const categoryMap = {
     "Index Score": "index_score",
@@ -99,8 +100,8 @@ const StateInfoPage = () => {
           setHasMoreData(false);
         } else {
           setHasMoreData(true);
-          setRows(data_arr);
         }
+        setRows(data_arr);
       } catch (error) {
         console.error("Failed to fetch data:", error);
         // Handle errors or set error state here
@@ -111,6 +112,7 @@ const StateInfoPage = () => {
   }, [category, stateName, page]);
 
   const handleChangePage = async (event, newPage) => {
+    // const updatePage = hasMoreData ? newPage : page;
     setPage(newPage);
     // await fetchDataForCategory(category, newPage);
   };
