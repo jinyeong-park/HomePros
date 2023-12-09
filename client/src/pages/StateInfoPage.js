@@ -94,7 +94,7 @@ const StateInfoPage = () => {
             `?state=${stateName}&page=${page + 1}&page_size=${rowsPerPage}`
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         const data_arr = Object.values(data);
         if (data_arr.length === 0) {
           setHasMoreData(false);
