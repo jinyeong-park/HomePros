@@ -29,7 +29,9 @@ const fetchSuggestions = throttle(
   },
   200
 );
-
+function isOnlyLetters(str) {
+  return /^[A-Za-z]+$/.test(str);
+}
 function App() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -83,7 +85,10 @@ function App() {
       alert("State is required");
       return;
     }
-
+    if (!isOnlyLetters(state) || !isOnlyLetters(city)) {
+      alert("Invalid values for state or city!");
+      return;
+    }
     // Check if both city and state have been submitted
     if (city && state) {
       // Navigate to the CityInfoPage with both city and state names
