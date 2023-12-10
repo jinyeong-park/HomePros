@@ -85,8 +85,12 @@ function App() {
       alert("State is required");
       return;
     }
-    if (!isOnlyLetters(state) || !isOnlyLetters(city)) {
+    if (city && state && (!isOnlyLetters(state) || !isOnlyLetters(city))) {
       alert("Invalid values for state or city!");
+      return;
+    }
+    if (!city && state && !isOnlyLetters(state)) {
+      alert("Invalid values for state!");
       return;
     }
     // Check if both city and state have been submitted
