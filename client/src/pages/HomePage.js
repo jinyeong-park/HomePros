@@ -29,7 +29,9 @@ const fetchSuggestions = throttle(
   },
   200
 );
-
+function isOnlyLetters(str) {
+  return /^[A-Za-z ]+$/.test(str);
+}
 function App() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
