@@ -36,7 +36,7 @@ export default function StateIndex() {
       console.log('Applied filters:', filters);
       // setAppliedFilters(filters);
       setAppliedFilters((prevFilters) => {
-         setStateData([])
+        setStateData([])
         console.log("app filter", stateData);
         setLoading(true)
         setHasMorePages(true);
@@ -51,18 +51,23 @@ export default function StateIndex() {
         setHasMorePages(true);
         setPageSize(15);
         setPageNumber(1); */
-      fetchData(selectedValue, pageSize, pageNumber, filters)
+      // fetchData(selectedValue, 15, 1, filters)
     };
     
     const handleSelect = (value) => {
-      setSelectedValue(value);
       // Reset page size and number when a new option is selected
-      setStateData([])
-      setLoading(true)
-      setHasMorePages(true);
-      setPageSize(15);
-      setPageNumber(1);
-      fetchData(value, pageSize, pageNumber, appliedFilters);
+      setSelectedValue((prevValue) => {
+        setStateData([])
+        console.log("app filter", stateData);
+        setLoading(true)
+        setHasMorePages(true);
+        setPageSize(15);
+        setPageNumber(1);
+        
+        return value;
+      });  
+      
+      // fetchData(value, 15, 1, appliedFilters);
     };
 
     const fetchData = (option, size, number, filters) => {
@@ -147,7 +152,7 @@ export default function StateIndex() {
       console.log("before", stateData);
       fetchData(selectedValue, pageSize, pageNumber, appliedFilters);
       
-    }, [pageNumber]);
+    }, [pageNumber, selectedValue,appliedFilters]);
 
     const dropDownOptions = ['Alphabetical', 'Tax Burden', 'Crime', 'Avg Sale Price', 'Avg Rent', 'Population'];
     console.log("after",stateData);

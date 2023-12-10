@@ -3,8 +3,8 @@ import { Modal, Box, Typography, Slider, Button, Grid, Item } from '@mui/materia
 
 const AdvancedSearchModal = ({ open, onClose, onApplyFilters }) => {
     const [avgHomePriceRange, setAvgHomePriceRange] = useState([0, 10000000]);
-    const [rentRange, setRentRange] = useState([0, 1000000]);
-    const [taxBurdenRange, setTaxBurdenRange] = useState([0, 1]);
+    const [rentRange, setRentRange] = useState([0, 50000]);
+    const [taxBurdenRange, setTaxBurdenRange] = useState([0, 100]);
     const [totalCrimeRange, setTotalCrimeRange] = useState([0, 100000]);
     const [populationRange, setPopulationRange] = useState([0, 100000000]); 
   
@@ -33,7 +33,7 @@ const AdvancedSearchModal = ({ open, onClose, onApplyFilters }) => {
         onApplyFilters({
           avg_sales_price: avgHomePriceRange,
           avg_rental_price: rentRange,
-          tax_burden: taxBurdenRange,
+          tax_burden: [taxBurdenRange[0]/100, taxBurdenRange[1]/100],
           total_crimes: totalCrimeRange,
           population: populationRange,
         });
@@ -84,7 +84,7 @@ const AdvancedSearchModal = ({ open, onClose, onApplyFilters }) => {
           valueLabelFormat={(value) => `$${value}`}
           step = {100}
           min={0}
-          max={1000000}
+          max={50000}
         />
         </Grid>
 
@@ -97,9 +97,9 @@ const AdvancedSearchModal = ({ open, onClose, onApplyFilters }) => {
           onChange={handleTaxBurdenChange}
           valueLabelDisplay="on"
           valueLabelFormat={(value) => `${value}%`}
-          step = {0.01}
+          step = {1}
           min={0}
-          max={1}
+          max={100}
         /></Grid>
         <Grid item xs={5}>
         
