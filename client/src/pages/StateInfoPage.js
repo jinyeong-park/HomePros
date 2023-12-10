@@ -109,7 +109,26 @@ const StateInfoPage = () => {
       }
     };
     // Fetch data for the default category on component mount
-    fetchDataForCategory(category, page);
+    const checkState = async () => {
+      const endstate = "/state";
+      try {
+        const sate_res = await fetch(
+          backend + endstate + `?state=${stateName}`
+        );
+        const state_data = await sate_res.json();
+
+        if (Object.values(state_data).length === 0) {
+          setHasMoreData(false);
+          setRows([]);
+        } else {
+          fetchDataForCategory(category, page);
+        }
+      } catch (error) {
+        console.error("Failed to fetch state data:", error);
+        // Handle errors or set error state here
+      }
+    };
+    checkState();
   }, [category, stateName, page]);
 
   const handleChangePage = async (event, newPage) => {
