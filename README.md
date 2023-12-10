@@ -56,3 +56,17 @@ _At HomePros, we use housing data, economic factors, and social indicators to he
 - Node.JS
 - JavaScript
 - ReactJS
+
+## Demo
+
+https://drive.google.com/file/d/1hQr75ejrSfqmQsGSBiXHrfwL0O62pPLM/view?usp=drive_link
+
+## Build Instructions
+
+1. Clone repository
+2. Navigate to the server folder in terminal and enter `npm i`
+3. Run `npm start` to start the server
+3. Navigate to the client folder in terminal and enter `npm i`
+4. Run `npm run build` in the client folder
+5. Run `serve -s build` to start a local version of the frontend
+6. Navigate to `http://localhost:3000`
