@@ -29,9 +29,7 @@ const fetchSuggestions = throttle(
   },
   200
 );
-function isOnlyLetters(str) {
-  return /^[A-Za-z]+$/.test(str);
-}
+
 function App() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -83,14 +81,6 @@ function App() {
     // Check if city is filled, then state must also be filled
     if (!state) {
       alert("State is required");
-      return;
-    }
-    if (city && state && (!isOnlyLetters(state) || !isOnlyLetters(city))) {
-      alert("Invalid values for state or city!");
-      return;
-    }
-    if (!city && state && !isOnlyLetters(state)) {
-      alert("Invalid values for state!");
       return;
     }
     // Check if both city and state have been submitted
